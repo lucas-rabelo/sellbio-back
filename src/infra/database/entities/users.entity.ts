@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 
 @Entity('users')
-export class User {
+export class UsersEntity {
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
@@ -49,14 +49,14 @@ export class User {
     nullable: false, 
     unique: false 
   })
-  password_hash: string;
+  passwordHash: string;
 
   @Column({ 
     type: "text", 
     nullable: true, 
     unique: false, 
   })
-  avatar_url?: string;
+  avatarUrl?: string;
 
   @Column({
     type: "enum",
@@ -76,11 +76,11 @@ export class User {
   isActived: boolean;
 
   @CreateDateColumn()
-  created_at: string;
+  createdAt: string;
 
   @UpdateDateColumn({ nullable: true })
-  updated_at?: string;
+  updatedAt?: string;
 
   @DeleteDateColumn({ nullable: true })
-  deleted_at?: string;
+  deletedAt?: string;
 }

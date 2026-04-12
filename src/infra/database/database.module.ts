@@ -2,6 +2,10 @@ import { EnvService } from '@/core/env';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { UsersEntity } from './entities';
+
+const entities = [UsersEntity];
+
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -9,15 +13,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       useFactory: (env: EnvService) => {
         const isLocal = env.isDevelopment();
 
-        const user = env.get('DATABASE_USER');
-        const pass = env.get('DATABASE_PASS');
-        const host = env.get('DATABASE_HOST');
-        const port = env.get('DATABASE_PORT');
-        const name = env.get('DATABASE_NAME');
-
         return {
           type: 'postgres',
-          url: `postgresql://${user}:${pass}@${host}:${port}/${name}`,
+          url: env.urlDatabase(),
           autoLoadEntities: true,
           synchronize: false,
           logging: isLocal,
@@ -25,6 +23,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         };
       },
     }),
+    TypeOrmModule.forFeature(entities)
   ],
+  exports: [TypeOrmModule]
 })
 export class DatabaseModule { }
