@@ -4,7 +4,7 @@ type AppPostProps = {
   path?: string,
   summary: string,
   body: ZodDto,
-  okResponse: ZodDto
+  okResponse?: ZodDto
 };
 
 type ParamProps = {
@@ -23,6 +23,10 @@ type AppPutProps = AppPostProps & {
   param: ParamProps;
 };
 
+type AppPatchProps = Omit<AppPostProps, "body"> & {
+  param: ParamProps;
+};
+
 type AppGetListProps = Omit<AppGetProps, 'param'> & {
   query: ZodDto;
 };
@@ -37,4 +41,10 @@ type AppDeleteProps = {
   okResponse: ZodDto
 };
 
-export type { AppDeleteProps, AppGetListProps, AppGetProps, AppPostProps, AppPutProps };
+export type {
+  AppDeleteProps,
+  AppGetListProps,
+  AppGetProps, AppPatchProps, AppPostProps,
+  AppPutProps
+};
+

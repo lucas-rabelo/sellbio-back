@@ -8,6 +8,7 @@ const readUserResponseSchema = z.object({
   birthDate: z.string(),
   phone: z.string(),
   avatarUrl: z.string(),
+  isActived: z.boolean(),
   role: z.string(),
 });
 

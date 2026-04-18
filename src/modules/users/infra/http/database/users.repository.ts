@@ -1,16 +1,10 @@
-import type { DeletedAndUpdatedResponseDto } from "@/infra";
-import type {
-  CreateUserRequestDto,
-  ListUserRequestDto,
-  ListUserResponseDto,
-  ReadUserResponseDto,
-  UpdateUserRequestDto
-} from "../../../dtos";
+import type { User } from "@/app/modules/users/application/entities/user/users";
+import type { ListUserRequestProps, ListUserResponseProps } from "../../../application/use-cases/list/types";
 
 export abstract class UsersRepository {
-  abstract create(data: CreateUserRequestDto): Promise<ReadUserResponseDto>;
-  abstract delete(uuid: string): Promise<DeletedAndUpdatedResponseDto>;
-  abstract update(uuid: string, data: UpdateUserRequestDto): Promise<DeletedAndUpdatedResponseDto>;
-  abstract read(uuid: string): Promise<ReadUserResponseDto | null>;
-  abstract list(filters: ListUserRequestDto): Promise<ListUserResponseDto>;
+  abstract create(user: User): Promise<void>;
+  abstract findByUuid(uuid: string): Promise<User | null>;
+  abstract findByEmail(email: string): Promise<User | null>;
+  abstract list(filters: ListUserRequestProps): Promise<ListUserResponseProps>;
+  abstract save(user: User): Promise<void>;
 }

@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule, type SwaggerCustomOptions } from '@nestjs/swagger';
-import { cleanupOpenApiDoc } from 'nestjs-zod';
+import { cleanupOpenApiDoc, ZodValidationPipe } from 'nestjs-zod';
 import { SwaggerTheme, type SwaggerThemeName } from 'swagger-themes';
 import { AppModule } from './app.module';
 
@@ -8,6 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors();
+  app.useGlobalPipes(new ZodValidationPipe());
 
   const documentBuilder = new DocumentBuilder()
     .setTitle('SellBio API')

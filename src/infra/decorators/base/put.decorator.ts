@@ -1,4 +1,4 @@
-import type { AppPutProps } from "@/infra/types/decorators";
+import type { AppPutProps } from "@/app/infra/types/decorators";
 import { applyDecorators, Put } from "@nestjs/common";
 import { ApiBody, ApiOkResponse, ApiOperation, ApiParam } from "@nestjs/swagger";
 

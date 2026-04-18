@@ -1,4 +1,4 @@
-import { BadRequestResponseDto } from "@/core/errors";
+import { BadRequestResponseDto } from "@/app/core/errors";
 import { applyDecorators, Controller } from "@nestjs/common";
 import { 
   ApiBadRequestResponse, 

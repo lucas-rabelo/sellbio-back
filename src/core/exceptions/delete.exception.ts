@@ -2,8 +2,8 @@ import { HttpStatus } from "@nestjs/common";
 import { DEFAULT_MESSAGES } from "../constants";
 import { ApplicationException } from "./application.exception";
 
-export class DeleteException extends ApplicationException {
-  constructor() {
-    super(DEFAULT_MESSAGES.ERROR_DELETE, HttpStatus.BAD_REQUEST);
+export class BadRequestDeleteException extends ApplicationException {
+  constructor(message: string) {
+    super(DEFAULT_MESSAGES.ERROR_DELETE + ` ${message}`, HttpStatus.BAD_REQUEST);
   }
 }

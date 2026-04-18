@@ -1,6 +1,6 @@
-import { listResponseSchema } from "@/infra";
+import { listResponseSchema } from "@/app/infra";
 import z from "zod";
-import { ReadUserResponseDto, readUserResponseSchema } from "./read-user-response.dto";
+import { readUserResponseSchema } from "./read-user-response.dto";
 import { createZodDto } from "nestjs-zod";
 
 const listUserResponseSchema = z.object({

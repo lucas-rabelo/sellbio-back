@@ -1,8 +1,12 @@
-import { ROLE_ENUM } from '@/core';
+import { ROLE_ENUM } from '@/app/core';
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'zod';
 
-const updateUserSchema = z.object({
+const updateUserRequestSchema = z.object({
+  uuid: z.uuid(),
+});
+
+const updateUserBodySchema = z.object({
   name: z.string()
     .min(3, 'Nome deve ter pelo menos 3 caracteres')
     .max(50, 'Nome muito longo')
@@ -26,7 +30,22 @@ const updateUserSchema = z.object({
   role: z.enum([ROLE_ENUM.ADMIN, ROLE_ENUM.AGENCY, ROLE_ENUM.SELLER]).optional().default(ROLE_ENUM.SELLER),
 });
 
-class UpdateUserRequestDto extends createZodDto(updateUserSchema) {};
+const updateUserSchema = z.object({
+  request: updateUserRequestSchema,
+  body: updateUserBodySchema
+});
 
-export { updateUserSchema, UpdateUserRequestDto };
+
+class UpdateUserBodyDto extends createZodDto(updateUserBodySchema) {};
+class UpdateUserRequestDto extends createZodDto(updateUserRequestSchema) {};
+class UpdateUserDto extends createZodDto(updateUserSchema) {};
+
+export { 
+  updateUserSchema,
+  updateUserRequestSchema,
+  updateUserBodySchema,
+  UpdateUserRequestDto, 
+  UpdateUserBodyDto,
+  UpdateUserDto 
+};
 

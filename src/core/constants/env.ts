@@ -1,7 +1,8 @@
 export const NODE_ENV = {
   DEV: 'dev',
   HML: "hml",
-  PRD: "prod"
+  PRD: "prod",
+  TEST: "test",
 } as const;
 
 export const LOG_LEVEL = {

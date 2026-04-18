@@ -1,4 +1,4 @@
-import { ROLE_ENUM } from "@/core/constants";
+import { ROLE_ENUM } from "@/app/core/constants";
 import {
   Column,
   CreateDateColumn,

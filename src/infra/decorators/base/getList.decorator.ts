@@ -1,4 +1,4 @@
-import type { AppGetListProps } from "@/infra/types/decorators";
+import type { AppGetListProps } from "@/app/infra/types/decorators";
 import { applyDecorators, Get } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiQuery } from "@nestjs/swagger";
 
