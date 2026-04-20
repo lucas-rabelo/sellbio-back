@@ -1,7 +1,10 @@
-import { AppController, AppPost } from "@/infra/decorators/base";
-import { CreateUserUseCase } from "@/modules/users/application";
-import { CreateUserRequestDto, ReadUserResponseDto } from "@/modules/users/dtos";
+import { AppController } from "@/app/infra/decorators/base/controller.decorator";
+import { AppPost } from "@/app/infra/decorators/base/post.decorator";
 import { Body } from "@nestjs/common";
+
+import { CreateUserUseCase } from "@/app/modules/users/application/use-cases/create/create-user.use-case";
+import type { CreateUserRequestProps } from "../../../application/use-cases/create/types";
+import { CreateUserRequestDto, CreateUserResponseDto } from "../../../dtos/create-user-request.dto";
 
 @AppController('Users')
 export class CreateUserController {
@@ -12,10 +15,10 @@ export class CreateUserController {
   @AppPost({
     summary: "Creating a new user",
     body: CreateUserRequestDto,
-    okResponse: ReadUserResponseDto,
+    okResponse: CreateUserResponseDto,
   })
   async handle(
-    @Body() body: CreateUserRequestDto
+    @Body() body: CreateUserRequestDto,
   ) {
     return this.useCase.execute(body);
   }

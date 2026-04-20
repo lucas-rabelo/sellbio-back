@@ -1,8 +1,9 @@
-import { DeletedAndUpdatedResponseDto } from "@/infra";
-import { AppController, AppPut } from "@/infra/decorators/base";
-import { UpdateUserUseCase } from "@/modules/users/application";
-import { UpdateUserRequestDto } from "@/modules/users/dtos";
+import { AppController } from "@/app/infra/decorators/base/controller.decorator";
+import { AppPut } from "@/app/infra/decorators/base/put.decorator";
+import { UpdateUserUseCase } from "@/app/modules/users/application/use-cases/update/update-user.use-case";
 import { Body, Param, ParseUUIDPipe } from "@nestjs/common";
+import type { UpdateUserRequestParamsProps } from "../../../application/use-cases/update/types";
+import { UpdateUserRequestBodyDto } from "../../../dtos/update-user-request.dto";
 
 @AppController('Users')
 export class UpdateUserController {
@@ -11,15 +12,13 @@ export class UpdateUserController {
   ) { }
 
   @AppPut({
+    path: ':userUuid',
     summary: "Update a user",
-    param: { name: 'uuid', type: 'string' },
-    body: UpdateUserRequestDto,
-    okResponse: DeletedAndUpdatedResponseDto,
   })
   async handle(
-    @Param('uuid', ParseUUIDPipe) uuid: string,
-    @Body() body: UpdateUserRequestDto,
+    @Param('userUuid', ParseUUIDPipe) userUuid: UpdateUserRequestParamsProps,
+    @Body() body: UpdateUserRequestBodyDto,
   ) {
-    return this.useCase.execute(uuid, body);
+    return this.useCase.execute({ userUuid, body });
   }
 }

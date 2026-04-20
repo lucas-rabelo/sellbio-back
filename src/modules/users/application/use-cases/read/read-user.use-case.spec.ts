@@ -12,9 +12,20 @@ describe("Read user", () => {
     const userMaked = makeUser();
     await userRepository.create(userMaked);
 
-    const { user } = await readUser.execute({ userUuid: userMaked.uuid });
+    const user = await readUser.execute(userMaked.uuid);
 
-    expect(userRepository.users[0]).toEqual(user);
+    const userFounded = {
+      uuid: userRepository.users[0].uuid,
+      name: userRepository.users[0].name,
+      email: userRepository.users[0].email,
+      birthDate: userRepository.users[0].birthDate,
+      phone: userRepository.users[0].phone,
+      avatarUrl: userRepository.users[0].avatarUrl ?? '',
+      isActived: userRepository.users[0].isActived,
+      role: userRepository.users[0].role,
+    }
+
+    expect(userFounded).toEqual(user);
   });
 
   it('should not be able to read a non exist user', async () => {
@@ -22,9 +33,7 @@ describe("Read user", () => {
     const readUser = new ReadUserUseCase(usersRepository);
 
     expect(() => {
-      return readUser.execute({
-        userUuid: 'fake-user-uuid',
-      });
+      return readUser.execute('fake-user-uuid');
     }).rejects.toThrow(new NotFoundException(CONTEXT_USER.READ));
   })
 })

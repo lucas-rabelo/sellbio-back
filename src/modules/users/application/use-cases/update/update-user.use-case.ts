@@ -11,24 +11,33 @@ export class UpdateUserUseCase {
     private readonly usersRepository: UsersRepository,
   ) { }
 
-  async execute({ userUuid, data }: UpdateUserRequestProps): Promise<UpdateUserResponseProps> {
+  async execute({ userUuid, body }: UpdateUserRequestProps): Promise<UpdateUserResponseProps> {
     const user = await this.usersRepository.findByUuid(userUuid);
 
     if (!user) {
       throw new NotFoundException(CONTEXT_USER.UPDATE);
     }
 
-    if (data.name) user.name = data.name;
-    if (data.email) user.email = data.email;
-    if (data.phone) user.phone = data.phone;
-    if (data.birthDate) user.birthDate = new Date(data.birthDate);
-    if (data.avatarUrl) user.avatarUrl = data.avatarUrl;
-    if (data.password) user.passwordHash = Password.create(data.password, data.confirmPassword);
+    if (body.name) user.name = body.name;
+    if (body.email) user.email = body.email;
+    if (body.phone) user.phone = body.phone;
+    if (body.birthDate) user.birthDate = new Date(body.birthDate);
+    if (body.avatarUrl) user.avatarUrl = body.avatarUrl;
+    if (body.password) user.passwordHash = Password.create(CONTEXT_USER.UPDATE,body.password, body.confirmPassword);
+
+    user.touch();
 
     await this.usersRepository.save(user);
 
     return {
-      user,
+      uuid: user.uuid,
+      name: user.name,
+      email: user.email,
+      birthDate: user.birthDate,
+      phone: user.phone,
+      avatarUrl: user.avatarUrl ?? '',
+      isActived: user.isActived,
+      role: user.role,
     };
   }
 }

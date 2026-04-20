@@ -10,7 +10,7 @@ export class ReadUserUseCase {
     private readonly usersRepository: UsersRepository,
   ) { }
 
-  async execute({ userUuid }: ReadUserRequestProps): Promise<ReadUserResponseProps> {
+  async execute(userUuid: ReadUserRequestProps): Promise<ReadUserResponseProps> {
     const user = await this.usersRepository.findByUuid(userUuid);
 
     if (!user) {
@@ -18,7 +18,14 @@ export class ReadUserUseCase {
     }
 
     return {
-      user
+      uuid: user.uuid,
+      name: user.name,
+      email: user.email,
+      birthDate: user.birthDate,
+      phone: user.phone,
+      avatarUrl: user.avatarUrl ?? '',
+      isActived: user.isActived,
+      role: user.role,
     };
   }
 }

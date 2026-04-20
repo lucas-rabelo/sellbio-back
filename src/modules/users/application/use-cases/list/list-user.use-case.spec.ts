@@ -26,6 +26,8 @@ describe("List user", () => {
 
     const { total, data } = await listUser.execute({
       name: 'Teste',
+      page: 1,
+      pageSize: 10,
     });
 
     expect(data).toHaveLength(4);

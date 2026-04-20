@@ -1,12 +1,17 @@
 import type { AppPatchProps } from "@/app/infra/types/decorators/methods";
-import { applyDecorators, Patch } from "@nestjs/common";
+import { applyDecorators, HttpCode, Patch } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiParam } from "@nestjs/swagger";
 
-export function AppPatch({ path, param, summary, okResponse }: AppPatchProps) {
+export function AppPatch({ path, param, summary, okResponse, httpCode }: AppPatchProps) {
+  const ApiParamDecorator = param ? ApiParam(param) : () => { };
+  const ApiOkResponseDecorator = okResponse ? ApiOkResponse({ type: okResponse }) : () => { };
+  const HttpCodeDecorator = httpCode ? HttpCode(httpCode) : () => { };
+
   return applyDecorators(
     Patch(path),
-    ApiParam(param),
+    ApiParamDecorator,
     ApiOperation({ summary }),
-    ApiOkResponse({ type: okResponse }),
+    ApiOkResponseDecorator,
+    HttpCodeDecorator
   );
 };

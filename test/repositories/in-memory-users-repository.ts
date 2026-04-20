@@ -54,7 +54,16 @@ export class InMemoryUserRepository implements UsersRepository {
 
     return {
       total,
-      data: users,
+      data: users.map(user => ({
+        uuid: user.uuid,
+        name: user.name,
+        email: user.email,
+        birthDate: user.birthDate.toISOString(),
+        phone: user.phone,
+        avatarUrl: user.avatarUrl ?? '',
+        isActived: user.isActived,
+        role: user.role,
+      })),
     };
   }
 

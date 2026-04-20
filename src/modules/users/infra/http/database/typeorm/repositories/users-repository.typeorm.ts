@@ -1,11 +1,12 @@
 import { UsersEntity } from '@/app/infra/database/entities/users.entity';
 import { User as DomainUser } from '@/app/modules/users/application/entities/user/users';
-import type { ListUserRequestDto } from '@/app/modules/users/dtos/requests/list-user-request.dto';
+import type { ListUserRequestDto } from '@/app/modules/users/dtos/list-user-request.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Like, Repository, type FindOptionsOrder, type FindOptionsWhere } from 'typeorm';
 import type { UsersRepository } from '../../users.repository';
 import { UserMapper } from '../mappers/users.mapper';
+import type { ListUserRequestProps, ListUserResponseProps } from '@/app/modules/users/application/use-cases/list/types';
 
 @Injectable()
 export class UsersRepositoryTypeOrm implements UsersRepository {
@@ -39,7 +40,7 @@ export class UsersRepositoryTypeOrm implements UsersRepository {
     return UserMapper.toDomain(user);
   }
 
-  async list(params: ListUserRequestDto) {
+  async list(params: ListUserRequestProps): Promise<ListUserResponseProps> {
     const { page = 1, pageSize = 10, name, email, role, uuid } = params;
 
     const skip = Number((page - 1) * pageSize);
@@ -63,7 +64,7 @@ export class UsersRepositoryTypeOrm implements UsersRepository {
       where.role = Equal(role);
     }
 
-    const [entities, total] = await this.repository.findAndCount({
+    const [users, total] = await this.repository.findAndCount({
       where,
       take,
       skip,
@@ -72,7 +73,7 @@ export class UsersRepositoryTypeOrm implements UsersRepository {
 
     return {
       total,
-      data: entities.map(entity => UserMapper.toDomain(entity)),
+      data: users.map(user => UserMapper.toDomain(user)),
     };
   }
 

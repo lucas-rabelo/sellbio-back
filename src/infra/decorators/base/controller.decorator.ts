@@ -12,7 +12,7 @@ export function AppController(prefix: string) {
   return applyDecorators(
     ApiTags(prefix),
     Controller(prefix.toLowerCase()),
-    ApiBearerAuth(),
+    // ApiBearerAuth(),
     ApiBadRequestResponse({ type: BadRequestResponseDto }),
     ApiUnauthorizedResponse({ type: BadRequestResponseDto }),
     ApiInternalServerErrorResponse({ type: BadRequestResponseDto }),

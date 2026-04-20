@@ -12,13 +12,13 @@ export class UserMapper {
     typeOrmUser.email = domainUser.email;
     typeOrmUser.passwordHash = domainUser.passwordHash.value;
     typeOrmUser.phone = domainUser.phone;
-    typeOrmUser.birthDate = domainUser.birthDate.toISOString();
+    typeOrmUser.birthDate = domainUser.birthDate;
     typeOrmUser.avatarUrl = domainUser.avatarUrl ?? '';
     typeOrmUser.role = domainUser.role;
     typeOrmUser.isActived = domainUser.isActived;
-    typeOrmUser.createdAt = domainUser.createdAt.toISOString();
-    typeOrmUser.updatedAt = domainUser.updatedAt ? domainUser.updatedAt.toISOString() : '';
-    typeOrmUser.deletedAt = domainUser.deletedAt ? domainUser.deletedAt.toISOString() : '';
+    typeOrmUser.createdAt = domainUser.createdAt;
+    typeOrmUser.updatedAt = domainUser.updatedAt ?? undefined;
+    typeOrmUser.deletedAt = domainUser.deletedAt ?? undefined;
 
     return typeOrmUser;
   }
@@ -31,8 +31,8 @@ export class UserMapper {
         phone: typeOrmUser.phone,
         birthDate: new Date(typeOrmUser.birthDate),
         passwordHash: Password.restore(typeOrmUser.passwordHash),
-        avatarUrl: typeOrmUser.avatarUrl,
-        role: ROLE_ENUM[typeOrmUser.role],
+        avatarUrl: typeOrmUser.avatarUrl ?? '',
+        role: ROLE_ENUM[typeOrmUser.role.toUpperCase()],
         isActived: typeOrmUser.isActived,
         createdAt: new Date(typeOrmUser.createdAt),
         updatedAt: typeOrmUser.updatedAt ? new Date(typeOrmUser.updatedAt) : null,

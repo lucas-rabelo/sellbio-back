@@ -1,15 +1,15 @@
-import { ROLE_ENUM } from '@/app/core';
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'zod';
+import { readUserResponseSchema } from './read-user-request.dto';
 
-const createUserSchema = z.object({
+const createUserRequestSchema = z.object({
   name: z.string()
     .min(3, 'Nome deve ter pelo menos 3 caracteres')
     .max(50, 'Nome muito longo'),
-  email: z.string(),
+  email: z.email('E-mail inválido'),
   birthDate: z.string(),
   phone: z.string()
-    .regex(/^\d{13,14}$/, 'Telefone deve conter apenas números (12 ou 13 dígitos)'),
+    .regex(/^\d{12,13}$/, 'Telefone deve conter apenas números (12 ou 13 dígitos)'),
   password: z.string()
     .min(8, 'A senha deve ter pelo menos 8 caracteres')
     .regex(/[A-Z]/, 'Deve conter pelo menos uma letra maiúscula')
@@ -20,13 +20,14 @@ const createUserSchema = z.object({
   avatarUrl: z.string()
     .optional()
     .or(z.literal('')),
-  role: z.enum([ROLE_ENUM.ADMIN, ROLE_ENUM.AGENCY, ROLE_ENUM.SELLER]).default(ROLE_ENUM.SELLER),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
+  isActived: z.boolean().default(true),
+  role: z.enum(['ADMIN', 'AGENCY', 'SELLER']).default('SELLER'),
 });
 
-class CreateUserRequestDto extends createZodDto(createUserSchema) {};
+const createUserResponseSchema = readUserResponseSchema;
 
-export { createUserSchema, CreateUserRequestDto };
+class CreateUserRequestDto extends createZodDto(createUserRequestSchema) { };
 
+class CreateUserResponseDto extends createZodDto(createUserResponseSchema) { };
+
+export { CreateUserRequestDto, CreateUserResponseDto, createUserRequestSchema, createUserResponseSchema };

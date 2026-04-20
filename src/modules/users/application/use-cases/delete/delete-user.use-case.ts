@@ -10,7 +10,7 @@ export class DeleteUserUseCase {
     private readonly usersRepository: UsersRepository,
   ) { }
 
-  async execute({ userUuid }: DeleteUserRequestProps): Promise<DeleteUserResponseProps> {
+  async execute(userUuid: DeleteUserRequestProps): Promise<DeleteUserResponseProps> {
     const user = await this.usersRepository.findByUuid(userUuid);
     if (!user) {
       throw new NotFoundException(CONTEXT_USER.DELETE);

@@ -1,13 +1,17 @@
-import type { AppPutProps } from "@/app/infra/types/decorators";
-import { applyDecorators, Put } from "@nestjs/common";
-import { ApiBody, ApiOkResponse, ApiOperation, ApiParam } from "@nestjs/swagger";
+import type { AppPutProps } from "@/app/infra/types/decorators/methods";
+import { applyDecorators, HttpCode, Put } from "@nestjs/common";
+import { ApiOkResponse, ApiOperation, ApiParam } from "@nestjs/swagger";
 
-export function AppPut({ path, body, param, summary, okResponse }: AppPutProps) {
+export function AppPut({ path, param, summary, okResponse, httpCode }: AppPutProps) {
+  const ApiParamDecorator = param ? ApiParam(param) : () => { };
+  const ApiOkResponseDecorator = okResponse ? ApiOkResponse({ type: okResponse }) : () => { };
+  const HttpCodeDecorator = httpCode ? HttpCode(httpCode) : () => { };
+
   return applyDecorators(
     Put(path),
-    ApiParam(param),
-    ApiBody({ type: body }),
+    ApiParamDecorator,
     ApiOperation({ summary }),
-    ApiOkResponse({ type: okResponse }),
+    ApiOkResponseDecorator,
+    HttpCodeDecorator
   );
 };

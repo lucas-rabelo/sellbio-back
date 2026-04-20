@@ -1,4 +1,3 @@
-import { ROLE_ENUM } from "@/app/core/constants";
 import {
   Column,
   CreateDateColumn,
@@ -59,11 +58,10 @@ export class UsersEntity {
   avatarUrl?: string;
 
   @Column({
-    type: "enum",
-    enum: ROLE_ENUM,
+    type: "varchar",
+    length: 255,
     unique: false,
     nullable: false,
-    default: ROLE_ENUM.SELLER
   })
   role: string;
 
@@ -78,9 +76,9 @@ export class UsersEntity {
   @CreateDateColumn()
   createdAt: string;
 
-  @UpdateDateColumn({ nullable: true })
+  @UpdateDateColumn({ nullable: true, default: null })
   updatedAt?: string;
 
-  @DeleteDateColumn({ nullable: true })
+  @DeleteDateColumn({ nullable: true, default: null })
   deletedAt?: string;
 }

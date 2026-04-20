@@ -1,49 +1,28 @@
+import type { ApiParamOptions } from "@nestjs/swagger";
 import type { ZodDto } from "nestjs-zod";
 
-type AppPostProps = {
+type AppMethodProps = {
   path?: string,
   summary: string,
-  body: ZodDto,
-  okResponse?: ZodDto
+  body?: ZodDto,
+  query?: ZodDto,
+  okResponse?: ZodDto,
+  param?: ApiParamOptions;
+  httpCode?: number;
 };
 
-type ParamProps = {
-  name: string;
-  type: string;
-}
+type AppPostProps = Omit<AppMethodProps, "query" | "">;
 
-type AppGetProps = {
-  path?: string,
-  param: ParamProps | ZodDto;
-  summary: string,
-  okResponse: ZodDto
-};
+type AppGetProps = Omit<AppMethodProps, "body">;
 
-type AppPutProps = AppPostProps & {
-  param: ParamProps;
-};
+type AppPutProps = Omit<AppMethodProps, "query">;
 
-type AppPatchProps = Omit<AppPostProps, "body"> & {
-  param: ParamProps;
-};
+type AppPatchProps = Omit<AppMethodProps, "body" | "query">;
 
-type AppGetListProps = Omit<AppGetProps, 'param'> & {
-  query: ZodDto;
-};
-
-type AppDeleteProps = {
-  path?: string,
-  param: {
-    name: string,
-    type: string | ZodDto,
-  }
-  summary: string,
-  okResponse: ZodDto
-};
+type AppDeleteProps = Omit<AppMethodProps, 'body' | 'query'>;
 
 export type {
   AppDeleteProps,
-  AppGetListProps,
   AppGetProps, AppPatchProps, AppPostProps,
   AppPutProps
 };

@@ -1,11 +1,10 @@
-import type { User } from "../../entities/user/users";
-import type { CreateUserRequestProps } from "../create/types";
+import type z from "zod";
+import type { updateUserRequestSchema, updateUserResponseSchema } from "../../../dtos/update-user-request.dto";
 
-export type UpdateUserRequestProps = {
-  userUuid: string;
-  data: Partial<CreateUserRequestProps>;
-};
+export type UpdateUserRequestProps = z.infer<typeof updateUserRequestSchema>;
 
-export interface UpdateUserResponseProps {
-  user: User;
-}
+export type UpdateUserRequestParamsProps = z.infer<typeof updateUserRequestSchema.shape.userUuid>;
+
+export type UpdateUserRequestBodyProps = z.infer<typeof updateUserRequestSchema.shape.body>;
+
+export type UpdateUserResponseProps = z.infer<typeof updateUserResponseSchema>;

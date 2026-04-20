@@ -1,8 +1,9 @@
-import { AppController } from "@/infra/decorators/base";
-import { AppGetList } from "@/infra/decorators/base/getList.decorator";
-import { ListUserUseCase } from "@/modules/users/application";
-import { ListUserRequestDto, ListUserResponseDto } from "@/modules/users/dtos";
-import { Body } from "@nestjs/common";
+import { AppController } from "@/app/infra/decorators/base/controller.decorator";
+import { AppGet } from "@/app/infra/decorators/base/get.decorator";
+import { ListUserUseCase } from "@/app/modules/users/application/use-cases/list/list-user.use-case";
+import { ListUserRequestDto, ListUserResponseDto } from "@/app/modules/users/dtos/list-user-request.dto";
+import { Query } from "@nestjs/common";
+import type { ListUserRequestProps } from "../../../application/use-cases/list/types";
 
 @AppController('Users')
 export class ListUserController {
@@ -10,14 +11,14 @@ export class ListUserController {
     private readonly useCase: ListUserUseCase,
   ) { }
 
-  @AppGetList({
+  @AppGet({
     summary: "List users",
     query: ListUserRequestDto,
     okResponse: ListUserResponseDto,
   })
   async handle(
-    @Body() body: ListUserRequestDto
+    @Query() filters: ListUserRequestProps,
   ) {
-    return this.useCase.execute(body);
+    return this.useCase.execute(filters);
   }
 }

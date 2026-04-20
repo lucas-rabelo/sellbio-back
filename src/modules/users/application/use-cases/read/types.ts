@@ -1,9 +1,6 @@
-import type { User } from "../../entities/user/users";
+import type z from "zod";
+import type { readUserRequestSchema, readUserResponseSchema } from "../../../dtos/read-user-request.dto";
 
-export interface ReadUserRequestProps {
-  userUuid: string;
-};
+export type ReadUserRequestProps = z.infer<typeof readUserRequestSchema>;
 
-export interface ReadUserResponseProps {
-  user: User;
-}
+export type ReadUserResponseProps = z.infer<typeof readUserResponseSchema>;

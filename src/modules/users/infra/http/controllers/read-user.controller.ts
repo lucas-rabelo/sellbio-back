@@ -1,8 +1,9 @@
-import { AppController } from "@/infra/decorators/base";
-import { AppGet } from "@/infra/decorators/base/get.decorator";
-import { ReadUserUseCase } from "@/modules/users/application";
-import { ReadUserResponseDto } from "@/modules/users/dtos";
+import { AppController } from "@/app/infra/decorators/base/controller.decorator";
+import { AppGet } from "@/app/infra/decorators/base/get.decorator";
+import { ReadUserUseCase } from "@/app/modules/users/application/use-cases/read/read-user.use-case";
 import { Param, ParseUUIDPipe } from "@nestjs/common";
+import type { ReadUserRequestProps } from "../../../application/use-cases/read/types";
+import { ReadUserResponseDto } from "../../../dtos/read-user-request.dto";
 
 @AppController('Users')
 export class ReadUserController {
@@ -11,14 +12,13 @@ export class ReadUserController {
   ) { }
 
   @AppGet({
-    path: ':uuid',
+    path: ':userUuid',
     summary: "Read a user",
-    param: { name: 'uuid', type: 'string' },
     okResponse: ReadUserResponseDto,
   })
   async handle(
-    @Param('uuid', ParseUUIDPipe) uuid: string
+    @Param('userUuid', ParseUUIDPipe) userUuid: ReadUserRequestProps,
   ) {
-    return this.useCase.execute(uuid);
+    return this.useCase.execute(userUuid);
   }
 }

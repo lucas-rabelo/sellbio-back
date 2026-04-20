@@ -14,15 +14,26 @@ describe('Create user', () => {
       name: 'Lucas Rabelo de Souza',
       email: 'lucas.rabelo@email.com',
       phone: '5516978546985',
-      birthDate: new Date(),
+      birthDate: new Date().toISOString(),
       password: '12ab34CD@',
       confirmPassword: '12ab34CD@',
       role: ROLE_ENUM.SELLER as keyof typeof ROLE_ENUM,
       isActived: true,
     });
 
+    const userCreated = {
+      uuid: userRepository.users[0].uuid,
+      name: userRepository.users[0].name,
+      email: userRepository.users[0].email,
+      birthDate: userRepository.users[0].birthDate.toISOString(),
+      phone: userRepository.users[0].phone,
+      avatarUrl: userRepository.users[0].avatarUrl ?? '',
+      isActived: userRepository.users[0].isActived,
+      role: userRepository.users[0].role,
+    };
+
     expect(userRepository.users).toHaveLength(1);
-    expect(userRepository.users[0]).toEqual(user);
+    expect(userCreated).toEqual(user);
   });
 
   it("should not be able to create user with email already exist", async () => {
@@ -37,7 +48,7 @@ describe('Create user', () => {
         name: 'Lucas Rabelo de Souza',
         email: 'lucas.rabelo@email.com',
         phone: '5516978546985',
-        birthDate: new Date(),
+        birthDate: new Date().toISOString(),
         password: '12ab34CD@',
         confirmPassword: '12ab34CD@',
         role: ROLE_ENUM.SELLER as keyof typeof ROLE_ENUM,

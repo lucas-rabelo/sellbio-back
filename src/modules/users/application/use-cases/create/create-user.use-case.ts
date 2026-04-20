@@ -21,14 +21,21 @@ export class CreateUserUseCase {
 
     const user = new User({
       ...request,
-      passwordHash: Password.create(request.password, request.confirmPassword),
+      passwordHash: Password.create(CONTEXT_USER.CREATE,request.password, request.confirmPassword),
       birthDate: new Date(request.birthDate),
     });
 
     await this.usersRepository.create(user);
 
     return {
-      user,
+      uuid: user.uuid,
+      name: user.name,
+      email: user.email,
+      birthDate: user.birthDate,
+      phone: user.phone,
+      avatarUrl: user.avatarUrl ?? '',
+      isActived: user.isActived,
+      role: user.role,
     };
   }
 }

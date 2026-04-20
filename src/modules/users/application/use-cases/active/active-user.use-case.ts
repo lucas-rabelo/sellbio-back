@@ -10,7 +10,7 @@ export class ActiveUserUseCase {
     private readonly usersRepository: UsersRepository,
   ) { }
 
-  async execute({ userUuid }: ActiveUserRequestProps): Promise<ActiveUserResponseProps> {
+  async execute(userUuid: ActiveUserRequestProps): Promise<ActiveUserResponseProps> {
     const user = await this.usersRepository.findByUuid(userUuid);
 
     if (!user) {
@@ -18,6 +18,7 @@ export class ActiveUserUseCase {
     }
 
     user.activate();
+    user.touch();
 
     await this.usersRepository.save(user);
   }

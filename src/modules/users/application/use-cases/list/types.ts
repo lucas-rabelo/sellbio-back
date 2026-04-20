@@ -1,14 +1,6 @@
-import type { RoleEnumProps } from "@/app/core";
-import type { User } from "../../entities/user/users";
+import type z from "zod";
+import type { listUserRequestSchema, listUserResponseSchema } from "../../../dtos/list-user-request.dto";
 
-export interface ListUserRequestProps {
-  uuid?: string;
-  name?: string;
-  email?: string;
-  role?: RoleEnumProps;
-};
+export type ListUserRequestProps = z.infer<typeof listUserRequestSchema>;
 
-export interface ListUserResponseProps {
-  total: number;
-  data: User[];
-}
+export type ListUserResponseProps = z.infer<typeof listUserResponseSchema>;

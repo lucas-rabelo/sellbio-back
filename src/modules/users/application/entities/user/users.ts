@@ -29,7 +29,6 @@ export class User {
 
   public set name(name: string) {
     this.props.name = name;
-    this.touch();
   }
 
   public get name(): string {
@@ -38,7 +37,6 @@ export class User {
 
   public set email(email: string) {
     this.props.email = email;
-    this.touch();
   }
 
   public get email(): string {
@@ -47,16 +45,14 @@ export class User {
 
   public set birthDate(birthDate: Date) {
     this.props.birthDate = birthDate;
-    this.touch();
   }
 
-  public get birthDate(): Date {
-    return this.props.birthDate;
+  public get birthDate(): string {
+    return this.props.birthDate.toISOString();
   }
 
   public set phone(phone: string) {
     this.props.phone = phone;
-    this.touch();
   }
 
   public get phone(): string {
@@ -65,7 +61,6 @@ export class User {
 
   public set passwordHash(passwordHash: Password) {
     this.props.passwordHash = passwordHash;
-    this.touch();
   }
 
   public get passwordHash(): Password {
@@ -74,7 +69,6 @@ export class User {
 
   public set avatarUrl(avatarUrl: string | null | undefined) {
     this.props.avatarUrl = avatarUrl;
-    this.touch();
   }
 
   public get avatarUrl(): string | null | undefined {
@@ -83,7 +77,6 @@ export class User {
 
   public set role(role: RoleEnumProps) {
     this.props.role = role;
-    this.touch();
   }
 
   public get role(): RoleEnumProps {
@@ -104,23 +97,23 @@ export class User {
     return this.props.isActived;
   }
 
-  public get createdAt(): Date {
-    return this.props.createdAt;
+  public get createdAt(): string {
+    return this.props.createdAt.toISOString();
   }
 
-  public get updatedAt(): Date | null {
-    return this.props.updatedAt;
+  public get updatedAt(): string | null {
+    return this.props.updatedAt ? this.props.updatedAt.toISOString() : null;
   }
 
   public delete() {
     this.props.deletedAt = new Date();
   }
 
-  public get deletedAt(): Date | null {
-    return this.props.deletedAt;
+  public get deletedAt(): string | null {
+    return this.props.deletedAt ? this.props.deletedAt.toISOString() : null;
   }
 
-  private touch() {
+  public touch() {
     this.props.updatedAt = new Date();
   }
 }
