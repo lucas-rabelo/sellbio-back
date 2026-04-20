@@ -23,4 +23,14 @@ export class EnvService {
   isDevelopment() {
     return env.NODE_ENV === NODE_ENV.DEV;
   }
+
+  urlDatabase() {
+    const user = this.get('DATABASE_USER');
+    const pass = this.get('DATABASE_PASS');
+    const host = this.get('DATABASE_HOST');
+    const port = this.get('DATABASE_PORT');
+    const name = this.get('DATABASE_NAME');
+
+    return `postgresql://${user}:${pass}@${host}:${port}/${name}`;
+  }
 }

@@ -22,7 +22,9 @@
     "noFallthroughCasesInSwitch": false,
     "strictPropertyInitialization": false,
     "paths": {
-      "@/*": ["./src/*"],
-    }
+      "@/app/*": ["./src/*"],
+      "@/test/*": ["./test/*"],
+    },
+    "types": ["node", "jest"]
   }
 }
