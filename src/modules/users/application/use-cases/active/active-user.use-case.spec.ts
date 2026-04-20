@@ -9,11 +9,11 @@ describe('Active user', () => {
     const userRepository = new InMemoryUserRepository();
     const activeUser = new ActiveUserUseCase(userRepository);
 
-    const user = makeUser();
+    const user = makeUser(CONTEXT_USER.CREATE);
 
     await userRepository.create(user);
 
-    await activeUser.execute({ userUuid: user.uuid });
+    await activeUser.execute(user.uuid);
 
     expect(userRepository.users[0].isActived).toBeTruthy();
   });
@@ -23,9 +23,7 @@ describe('Active user', () => {
     const activeUser = new ActiveUserUseCase(usersRepository);
 
     expect(() => {
-      return activeUser.execute({
-        userUuid: 'fake-user-uuid',
-      });
+      return activeUser.execute('fake-user-uuid');
     }).rejects.toThrow(new NotFoundException(CONTEXT_USER.ACTIVE));
   })
 });

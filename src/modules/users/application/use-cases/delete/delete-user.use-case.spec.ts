@@ -9,9 +9,9 @@ describe("Delete user", () => {
     const userRepository = new InMemoryUserRepository();
     const deleteUser = new DeleteUserUseCase(userRepository);
 
-    const user = makeUser();
+    const user = makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(user);
-    await deleteUser.execute({ userUuid: user.uuid });
+    await deleteUser.execute(user.uuid);
 
     expect(userRepository.users[0].deletedAt).toEqual(expect.any(Date));
   });
@@ -21,9 +21,7 @@ describe("Delete user", () => {
     const deleteUser = new DeleteUserUseCase(userRepository);
 
     expect(() => {
-      return deleteUser.execute({
-        userUuid: 'fake-user-uuid',
-      });
+      return deleteUser.execute('fake-user-uuid');
     }).rejects.toThrow(new NotFoundException(CONTEXT_USER.DELETE));
   });
 })

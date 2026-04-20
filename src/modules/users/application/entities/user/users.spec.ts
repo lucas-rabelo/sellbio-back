@@ -1,9 +1,10 @@
 import { User } from './users';
 import { Password } from '../password/password';
 import { ROLE_ENUM } from '@/app/core';
+import { CONTEXT_USER } from '../../constants/contexts';
 
 describe('User Domain Entity', () => {
-  const createValidPassword = () => Password.restore('any_valid_hash');
+  const createValidPassword = () => Password.create(CONTEXT_USER.CREATE, '12ab34CD@', '12ab34CD@');
   const dataUser = {
     name: 'Lucas Souza',
     email: 'lucas@example.com',

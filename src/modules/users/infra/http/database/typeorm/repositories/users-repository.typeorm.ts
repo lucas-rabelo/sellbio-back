@@ -73,7 +73,7 @@ export class UsersRepositoryTypeOrm implements UsersRepository {
 
     return {
       total,
-      data: users.map(user => UserMapper.toDomain(user)),
+      data: users.map(user => UserMapper.toDTO(user)),
     };
   }
 

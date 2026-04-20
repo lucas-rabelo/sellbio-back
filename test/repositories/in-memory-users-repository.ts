@@ -58,7 +58,7 @@ export class InMemoryUserRepository implements UsersRepository {
         uuid: user.uuid,
         name: user.name,
         email: user.email,
-        birthDate: user.birthDate.toISOString(),
+        birthDate: user.birthDate.toLocaleString("pt-BR", { timeZone: "UTC" }),
         phone: user.phone,
         avatarUrl: user.avatarUrl ?? '',
         isActived: user.isActived,

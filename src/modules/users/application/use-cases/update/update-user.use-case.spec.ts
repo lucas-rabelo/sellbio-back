@@ -9,7 +9,7 @@ describe("Update user", () => {
     const userRepository = new InMemoryUserRepository();
     const updateUser = new UpdateUserUseCase(userRepository);
 
-    const userMaked = makeUser();
+    const userMaked = makeUser(CONTEXT_USER.UPDATE);
     await userRepository.create(userMaked);
 
     const request = {
@@ -23,7 +23,7 @@ describe("Update user", () => {
       uuid: userRepository.users[0].uuid,
       name: userRepository.users[0].name,
       email: userRepository.users[0].email,
-      birthDate: userRepository.users[0].birthDate,
+      birthDate: userRepository.users[0].birthDate.toLocaleString("pt-BR", { timeZone: "UTC" }),
       phone: userRepository.users[0].phone,
       avatarUrl: userRepository.users[0].avatarUrl ?? '',
       isActived: userRepository.users[0].isActived,
@@ -37,7 +37,7 @@ describe("Update user", () => {
     const userRepository = new InMemoryUserRepository();
     const updateUser = new UpdateUserUseCase(userRepository);
 
-    const userMaked = makeUser();
+    const userMaked = makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(userMaked);
 
     const request = {

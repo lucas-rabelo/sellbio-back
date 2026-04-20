@@ -5,13 +5,13 @@ import { User } from "@/app/modules/users/application/entities/user/users";
 
 type Override = Partial<UserProps>;
 
-export function makeUser(override: Override = {}) {
+export function makeUser(context: string, override: Override = {}) {
   return new User({
     name: 'Lucas Rabelo de Souza',
     email: 'lucas.rabelo@email.com',
     phone: '5516978546985',
     birthDate: new Date(),
-    passwordHash: Password.create('12ab34CD@', '12ab34CD@'),
+    passwordHash: Password.create(context, '12ab34CD@', '12ab34CD@'),
     role: ROLE_ENUM.SELLER as keyof typeof ROLE_ENUM,
     ...override,
   });

@@ -10,7 +10,7 @@ describe('Create user', () => {
     const userRepository = new InMemoryUserRepository();
     const createUser = new CreateUserUseCase(userRepository);
 
-    const { user } = await createUser.execute({
+    const user = await createUser.execute({
       name: 'Lucas Rabelo de Souza',
       email: 'lucas.rabelo@email.com',
       phone: '5516978546985',
@@ -25,7 +25,7 @@ describe('Create user', () => {
       uuid: userRepository.users[0].uuid,
       name: userRepository.users[0].name,
       email: userRepository.users[0].email,
-      birthDate: userRepository.users[0].birthDate.toISOString(),
+      birthDate: new Date(userRepository.users[0].birthDate).toISOString(),
       phone: userRepository.users[0].phone,
       avatarUrl: userRepository.users[0].avatarUrl ?? '',
       isActived: userRepository.users[0].isActived,
@@ -40,7 +40,7 @@ describe('Create user', () => {
     const userRepository = new InMemoryUserRepository();
     const createUser = new CreateUserUseCase(userRepository);
 
-    const user = makeUser();
+    const user = makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(user);
 
     expect(async () => {

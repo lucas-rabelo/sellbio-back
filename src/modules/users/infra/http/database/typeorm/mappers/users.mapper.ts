@@ -1,5 +1,5 @@
 import { ROLE_ENUM } from '@/app/core';
-import { UsersEntity as TypeOrmUser } from '@/app/infra/database/entities/users.entity';
+import { UsersEntity as TypeOrmUser, type UsersEntity } from '@/app/infra/database/entities/users.entity';
 import { Password } from '@/app/modules/users/application/entities/password/password';
 import { User as DomainUser } from '@/app/modules/users/application/entities/user/users';
 
@@ -12,13 +12,13 @@ export class UserMapper {
     typeOrmUser.email = domainUser.email;
     typeOrmUser.passwordHash = domainUser.passwordHash.value;
     typeOrmUser.phone = domainUser.phone;
-    typeOrmUser.birthDate = domainUser.birthDate;
+    typeOrmUser.birthDate = new Date(domainUser.birthDate).toISOString();
     typeOrmUser.avatarUrl = domainUser.avatarUrl ?? '';
     typeOrmUser.role = domainUser.role;
     typeOrmUser.isActived = domainUser.isActived;
-    typeOrmUser.createdAt = domainUser.createdAt;
-    typeOrmUser.updatedAt = domainUser.updatedAt ?? undefined;
-    typeOrmUser.deletedAt = domainUser.deletedAt ?? undefined;
+    typeOrmUser.createdAt = new Date(domainUser.createdAt).toISOString();
+    typeOrmUser.updatedAt = domainUser.updatedAt ? new Date(domainUser.updatedAt).toISOString() : undefined;
+    typeOrmUser.deletedAt = domainUser.deletedAt ? new Date(domainUser.deletedAt).toISOString() : undefined;
 
     return typeOrmUser;
   }
@@ -40,5 +40,20 @@ export class UserMapper {
       },
       typeOrmUser.uuid,
     );
+  }
+
+static toDTO(user: UsersEntity) {
+    return {
+      uuid: user.uuid,
+      name: user.name,
+      email: user.email,
+      birthDate: new Date(user.birthDate).toISOString(), 
+      phone: user.phone,
+      isActived: user.isActived,
+      role: user.role,
+      avatarUrl: user.avatarUrl,
+      createdAt: new Date(user.createdAt).toISOString(),
+      updatedAt: user.updatedAt ? new Date(user.updatedAt).toISOString() : null,
+    };
   }
 }

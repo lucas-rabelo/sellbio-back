@@ -11,20 +11,11 @@ export class ListUserUseCase {
   ) { }
 
   async execute(request: ListUserRequestProps): Promise<ListUserResponseProps> {
-    const { total, data: users } = await this.usersRepository.list(request);
+    const { total, data } = await this.usersRepository.list(request);
 
     return {
       total,
-      data: users.map(user => ({
-        uuid: user.uuid,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        birthDate: user.birthDate,
-        avatarUrl: user.avatarUrl,
-        role: user.role,
-        isActived: user.isActived,
-      })),
+      data,
     };
   }
 }

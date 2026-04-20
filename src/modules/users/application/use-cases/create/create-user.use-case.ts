@@ -31,7 +31,7 @@ export class CreateUserUseCase {
       uuid: user.uuid,
       name: user.name,
       email: user.email,
-      birthDate: user.birthDate,
+      birthDate: new Date(user.birthDate).toISOString(),
       phone: user.phone,
       avatarUrl: user.avatarUrl ?? '',
       isActived: user.isActived,

@@ -9,10 +9,10 @@ describe('Deactivate user', () => {
     const userRepository = new InMemoryUserRepository();
     const deactiveUser = new DeactivateUserUseCase(userRepository);
 
-    const user = makeUser();
+    const user = makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(user);
 
-    await deactiveUser.execute({ userUuid: user.uuid });
+    await deactiveUser.execute(user.uuid);
 
     expect(userRepository.users[0].isActived).toBeFalsy();
   });
@@ -22,9 +22,7 @@ describe('Deactivate user', () => {
     const deactiveUser = new DeactivateUserUseCase(usersRepository);
 
     expect(() => {
-      return deactiveUser.execute({
-        userUuid: 'fake-user-uuid',
-      });
+      return deactiveUser.execute('fake-user-uuid');
     }).rejects.toThrow(new NotFoundException(CONTEXT_USER.DEACTIVE));
   })
 });

@@ -17,9 +17,9 @@ export class User {
       ...props,
       isActived: props.isActived ?? true,
       avatarUrl: props.avatarUrl ?? null,
-      createdAt: props.createdAt ?? new Date(),
-      updatedAt: props.updatedAt ?? null,
-      deletedAt: props.deletedAt ?? null,
+      createdAt: props.createdAt instanceof Date ? props.createdAt : (props.createdAt ? new Date(props.createdAt) : new Date()),
+      updatedAt: props.updatedAt instanceof Date ? props.updatedAt : (props.updatedAt ? new Date(props.updatedAt) : null),
+      deletedAt: props.deletedAt instanceof Date ? props.deletedAt : (props.deletedAt ? new Date(props.deletedAt) : null),
     };
   }
 
@@ -29,6 +29,7 @@ export class User {
 
   public set name(name: string) {
     this.props.name = name;
+    this.touch();
   }
 
   public get name(): string {
@@ -37,6 +38,7 @@ export class User {
 
   public set email(email: string) {
     this.props.email = email;
+    this.touch();
   }
 
   public get email(): string {
@@ -45,14 +47,16 @@ export class User {
 
   public set birthDate(birthDate: Date) {
     this.props.birthDate = birthDate;
+    this.touch();
   }
 
-  public get birthDate(): string {
-    return this.props.birthDate.toISOString();
+  public get birthDate(): Date | string {
+    return this.props.birthDate;
   }
 
   public set phone(phone: string) {
     this.props.phone = phone;
+    this.touch();
   }
 
   public get phone(): string {
@@ -61,6 +65,7 @@ export class User {
 
   public set passwordHash(passwordHash: Password) {
     this.props.passwordHash = passwordHash;
+    this.touch();
   }
 
   public get passwordHash(): Password {
@@ -69,6 +74,7 @@ export class User {
 
   public set avatarUrl(avatarUrl: string | null | undefined) {
     this.props.avatarUrl = avatarUrl;
+    this.touch();
   }
 
   public get avatarUrl(): string | null | undefined {
@@ -77,6 +83,7 @@ export class User {
 
   public set role(role: RoleEnumProps) {
     this.props.role = role;
+    this.touch();
   }
 
   public get role(): RoleEnumProps {
@@ -97,20 +104,20 @@ export class User {
     return this.props.isActived;
   }
 
-  public get createdAt(): string {
-    return this.props.createdAt.toISOString();
+  public get createdAt(): Date | string {
+    return this.props.createdAt;
   }
 
-  public get updatedAt(): string | null {
-    return this.props.updatedAt ? this.props.updatedAt.toISOString() : null;
+  public get updatedAt(): Date | string | null {
+    return this.props.updatedAt ? this.props.updatedAt : null;
   }
 
   public delete() {
     this.props.deletedAt = new Date();
   }
 
-  public get deletedAt(): string | null {
-    return this.props.deletedAt ? this.props.deletedAt.toISOString() : null;
+  public get deletedAt(): Date | string | null {
+    return this.props.deletedAt ? this.props.deletedAt : null;
   }
 
   public touch() {
