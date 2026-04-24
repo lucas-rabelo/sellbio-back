@@ -1,6 +1,6 @@
-import { HTTP_STATUS } from "@/app/core";
-import { AppController } from "@/app/infra/decorators/base/controller.decorator";
-import { AppPatch } from "@/app/infra/decorators/base/patch.decorator";
+import { HTTP_STATUS } from "@/core";
+import { AppController } from "@/infra/decorators/base/controller.decorator";
+import { AppPatch } from "@/infra/decorators/base/patch.decorator";
 import { Param, ParseUUIDPipe } from "@nestjs/common";
 import { DeactivateUserUseCase } from "../../../application/use-cases/deactivate/deactivate-user.use-case";
 import type { DeactivateUserRequestProps } from "../../../application/use-cases/deactivate/types";

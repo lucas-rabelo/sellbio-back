@@ -1,4 +1,4 @@
-import { ROLE_ENUM } from '@/app/core';
+import { ROLE_ENUM } from '@/core';
 import { InMemoryAuthRepository } from '@/test/repositories/in-memory-auth-repository';
 import { CONTEXT_USER } from '../../constants/contexts';
 import { Password } from '../password/password';

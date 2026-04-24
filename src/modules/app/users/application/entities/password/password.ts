@@ -1,4 +1,4 @@
-import { BadRequestException } from "@/app/core/exceptions/bad-request.exception";
+import { BadRequestException } from "@/core/exceptions/bad-request.exception";
 import { CONTEXT_USER } from "../../constants/contexts";
 
 export class Password {

@@ -1,4 +1,4 @@
-import type { AppPostProps } from "@/app/infra/types/decorators/methods";
+import type { AppPostProps } from "@/infra/types/decorators/methods";
 import { applyDecorators, HttpCode, Post } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiParam } from "@nestjs/swagger";
 

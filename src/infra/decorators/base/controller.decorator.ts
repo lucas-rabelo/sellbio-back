@@ -1,4 +1,4 @@
-import { BadRequestResponseDto } from "@/app/core/errors";
+import { BadRequestResponseDto } from "@/core/errors";
 import { applyDecorators, Controller } from "@nestjs/common";
 import { 
   ApiBadRequestResponse, 
@@ -12,7 +12,6 @@ export function AppController(prefix: string) {
   return applyDecorators(
     ApiTags(prefix),
     Controller(prefix.toLowerCase()),
-    // ApiBearerAuth(),
     ApiBadRequestResponse({ type: BadRequestResponseDto }),
     ApiUnauthorizedResponse({ type: BadRequestResponseDto }),
     ApiInternalServerErrorResponse({ type: BadRequestResponseDto }),

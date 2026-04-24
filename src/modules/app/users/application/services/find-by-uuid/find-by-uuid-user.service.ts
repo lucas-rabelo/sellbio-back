@@ -1,4 +1,4 @@
-import { BadRequestException } from '@/app/core/exceptions/bad-request.exception';
+import { BadRequestException } from '@/core/exceptions/bad-request.exception';
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from '../../../infra/http/database/users.repository';
 import { CONTEXT_USER } from '../../constants/contexts';

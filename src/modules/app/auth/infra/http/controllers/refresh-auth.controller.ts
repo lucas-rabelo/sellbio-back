@@ -1,8 +1,8 @@
-import { AppController } from '@/app/infra/decorators/base/controller.decorator';
-import { AppPost } from '@/app/infra/decorators/base/post.decorator';
+import { AppController } from '@/infra/decorators/base/controller.decorator';
+import { AppPost } from '@/infra/decorators/base/post.decorator';
 import { Body } from '@nestjs/common';
-import { RefreshTokenAuthUseCase } from '@/app/modules/app/auth/application/use-cases/refresh/refresh-token-auth.use-case';
-import { RefreshAuthRequestDto, RefreshAuthResponseDto } from '@/app/modules/app/auth/dtos/refresh-auth.dto';
+import { RefreshTokenAuthUseCase } from '@/modules/app/auth/application/use-cases/refresh/refresh-token-auth.use-case';
+import { RefreshAuthRequestDto, RefreshAuthResponseDto } from '@/modules/app/auth/dtos/refresh-auth.dto';
 
 @AppController('Auth')
 export class RefreshAuthController {

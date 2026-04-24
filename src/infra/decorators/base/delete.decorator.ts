@@ -1,4 +1,4 @@
-import type { AppDeleteProps } from "@/app/infra/types/decorators/methods";
+import type { AppDeleteProps } from "@/infra/types/decorators/methods";
 import { applyDecorators, Delete, HttpCode } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiParam } from "@nestjs/swagger";
 

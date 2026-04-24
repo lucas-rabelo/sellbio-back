@@ -1,4 +1,4 @@
-import type { AppPatchProps } from "@/app/infra/types/decorators/methods";
+import type { AppPatchProps } from "@/infra/types/decorators/methods";
 import { applyDecorators, HttpCode, Patch } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiParam } from "@nestjs/swagger";
 

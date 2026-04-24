@@ -1,4 +1,4 @@
-import { EnvService } from '@/app/core/env';
+import { EnvService } from '@/core/env';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 

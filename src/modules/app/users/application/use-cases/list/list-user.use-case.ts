@@ -1,4 +1,4 @@
-import { ROLE_ENUM } from "@/app/core";
+import { ROLE_ENUM } from "@/core";
 import { Injectable } from "@nestjs/common";
 import { UsersRepository } from "../../../infra/http/database/users.repository";
 import type { ListUserRequestProps, ListUserResponseProps } from "./types";

@@ -1,5 +1,5 @@
-import { AppController } from "@/app/infra/decorators/base/controller.decorator";
-import { AppPost } from "@/app/infra/decorators/base/post.decorator";
+import { AppController } from "@/infra/decorators/base/controller.decorator";
+import { AppPost } from "@/infra/decorators/base/post.decorator";
 import { Body } from "@nestjs/common";
 import { RegisterAuthUseCase } from "../../../application/use-cases/register/register-auth.use-case";
 import { RegisterAuthRequestDto, RegisterAuthResponseDto } from "../../../dtos/register-auth.dto";

@@ -1,5 +1,5 @@
-import { BadRequestException } from "@/app/core/exceptions/bad-request.exception";
-import { CreateUserUseCase } from "@/app/modules/app/users/application/use-cases/create/create-user.use-case";
+import { BadRequestException } from "@/core/exceptions/bad-request.exception";
+import { CreateUserUseCase } from "@/modules/app/users/application/use-cases/create/create-user.use-case";
 import { Injectable } from "@nestjs/common";
 import { CONTEXT_AUTH } from "../../constants/contexts";
 import { CreateAccessTokenJwtAuthService } from "../../services/create-access-token/create-access-token-jwt-auth.service";

@@ -1,4 +1,4 @@
-import { NotFoundException } from "@/app/core/exceptions/not-found.exception";
+import { NotFoundException } from "@/core/exceptions/not-found.exception";
 import { Injectable } from "@nestjs/common";
 import { UsersRepository } from "../../../infra/http/database/users.repository";
 import type { DeactivateUserRequestProps, DeactivateUserResponseProps } from "./types";

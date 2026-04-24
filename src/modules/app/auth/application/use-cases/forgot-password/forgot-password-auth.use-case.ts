@@ -1,5 +1,5 @@
-import { BadRequestException } from '@/app/core/exceptions/bad-request.exception';
-import { FindByEmailUserService } from '@/app/modules/app/users/application/services/find-by-email/find-by-email-user.service';
+import { BadRequestException } from '@/core/exceptions/bad-request.exception';
+import { FindByEmailUserService } from '@/modules/app/users/application/services/find-by-email/find-by-email-user.service';
 import { Injectable } from '@nestjs/common';
 import { CONTEXT_AUTH } from '../../constants/contexts';
 import { CreateAccessTokenJwtAuthService } from '../../services/create-access-token/create-access-token-jwt-auth.service';

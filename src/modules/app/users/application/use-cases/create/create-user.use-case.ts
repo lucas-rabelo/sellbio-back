@@ -1,6 +1,6 @@
-import { DEFAULT_MESSAGES } from "@/app/core/constants/messages";
-import { BadRequestException } from "@/app/core/exceptions/bad-request.exception";
-import { EncryptedPasswordAuthService } from "@/app/modules/app/auth/application/services/encrypted-password/encrypted-password-auth.service";
+import { DEFAULT_MESSAGES } from "@/core/constants/messages";
+import { BadRequestException } from "@/core/exceptions/bad-request.exception";
+import { EncryptedPasswordAuthService } from "@/modules/app/auth/application/services/encrypted-password/encrypted-password-auth.service";
 import { Injectable } from "@nestjs/common";
 import { UsersRepository } from "../../../infra/http/database/users.repository";
 import { CONTEXT_USER } from "../../constants/contexts";

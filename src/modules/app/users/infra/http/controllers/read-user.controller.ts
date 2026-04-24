@@ -1,6 +1,6 @@
-import { AppController } from "@/app/infra/decorators/base/controller.decorator";
-import { AppGet } from "@/app/infra/decorators/base/get.decorator";
-import { ReadUserUseCase } from "@/app/modules/app/users/application/use-cases/read/read-user.use-case";
+import { AppController } from "@/infra/decorators/base/controller.decorator";
+import { AppGet } from "@/infra/decorators/base/get.decorator";
+import { ReadUserUseCase } from "@/modules/app/users/application/use-cases/read/read-user.use-case";
 import { Param, ParseUUIDPipe } from "@nestjs/common";
 import type { ReadUserRequestProps } from "../../../application/use-cases/read/types";
 import { ReadUserResponseDto } from "../../../dtos/read-user.dto";
