@@ -6,6 +6,9 @@ export const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
   APP_NAME: z.string().default(APP_NAME),
 
+  SECRET_ENV: z.string(),
+  FRONT_END_URL: z.string(),
+
   DATABASE_HOST: z.string(),
   DATABASE_PORT: z.coerce.number(),
   DATABASE_USER: z.string(),
