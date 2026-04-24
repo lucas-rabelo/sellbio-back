@@ -1,9 +1,0 @@
-export const CONTEXT_USER = {
-  CREATE: '[CREATE USER]',
-  DELETE: '[DELETE USER]',
-  LIST: '[LIST USER]',
-  UPDATE: '[UPDATE USER]',
-  ACTIVE: '[ACTIVE USER]',
-  DEACTIVE: '[DEACTIVE USER]',
-  READ: '[READ USER]',
-} as const;

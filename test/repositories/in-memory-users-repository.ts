@@ -1,6 +1,6 @@
-import type { User } from '@/app/modules/users/application/entities/user/users';
-import type { ListUserRequestProps, ListUserResponseProps } from '@/app/modules/users/application/use-cases/list/types';
-import type { UsersRepository } from "@/app/modules/users/infra/http/database/users.repository";
+import type { User } from '@/app/modules/app/users/application/entities/user/users';
+import type { ListUserRequestProps, ListUserResponseProps } from '@/app/modules/app/users/application/use-cases/list/types';
+import type { UsersRepository } from "@/app/modules/app/users/infra/http/database/users.repository";
 
 export class InMemoryUserRepository implements UsersRepository {
   public users: User[] = [];

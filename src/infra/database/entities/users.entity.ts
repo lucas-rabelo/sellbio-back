@@ -73,6 +73,14 @@ export class UsersEntity {
   })
   isActived: boolean;
 
+  @Column({
+    type: "text",
+    nullable: true,
+    unique: true,
+    default: null,
+  })
+  refreshToken?: string;
+
   @CreateDateColumn()
   createdAt: string;
 
