@@ -9,7 +9,7 @@ import { CreateRefreshTokenJwtAuthService } from '../../services/create-refresh-
 import { UpdateUserUseCase } from '@/app/modules/app/users/application/use-cases/update/update-user.use-case';
 import type { RefreshAuthRequestProps, RefreshAuthResponseProps } from './types';
 import type Redis from 'ioredis';
-import { REDIS_CLIENT } from '@/infra/redis/redis.module';
+import { REDIS_CLIENT } from '@/app/infra/redis/redis.module';
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7; // seconds
 const GRACE_SECONDS = 60; // same as create service
@@ -69,7 +69,7 @@ export class RefreshTokenAuthUseCase {
     if (!isCurrent && !isPrev) {
       // Possible token reuse detected. Revoke all refresh tokens for this user.
       try {
-        await this.updateUserUseCase.execute({ userUuid: uuid as string, body: { refreshToken: null } });
+        await this.updateUserUseCase.execute({ userUuid: uuid as string, body: { refreshToken: undefined } });
         if (this.redisClient) await this.redisClient.del(redisKey, prevKey);
       } catch (e) {
         // ignore errors while revoking

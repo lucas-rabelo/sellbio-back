@@ -7,7 +7,7 @@ import { ValidateTokenJwtAuthService } from '../validate-token-jwt/validate-toke
 import { EncryptedPasswordAuthService } from '../encrypted-password/encrypted-password-auth.service';
 import type { CreateRefreshTokenJwtAuthRequestProps, CreateRefreshTokenJwtAuthResponseProps } from './types';
 import type Redis from 'ioredis';
-import { REDIS_CLIENT } from '@/infra/redis/redis.module';
+import { REDIS_CLIENT } from '@/app/infra/redis/redis.module';
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7; // seconds
 const GRACE_SECONDS = 60; // allow previous token for 60s to handle concurrency
