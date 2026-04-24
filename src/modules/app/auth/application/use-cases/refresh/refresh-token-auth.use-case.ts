@@ -61,35 +61,28 @@ export class RefreshTokenAuthUseCase {
         storedPrev = p;
       }
     } catch (e) {
-      // ignore redis errors
     }
 
-    // Compare against current first, then previous (grace)
     const isCurrent = storedCurrent ? await this.comparePasswordAuthService.execute(refreshToken, storedCurrent) : false;
     const isPrev = !isCurrent && storedPrev ? await this.comparePasswordAuthService.execute(refreshToken, storedPrev) : false;
 
     if (!isCurrent && !isPrev) {
-      // Possible token reuse detected. Revoke all refresh tokens for this user.
       try {
         await this.updateUserUseCase.execute({ userUuid: uuid, body: { refreshToken: undefined } });
         if (this.redisClient) await this.redisClient.del(redisKey, prevKey);
       } catch (e) {
-        // ignore errors while revoking
       }
 
       throw new BadRequestException(CONTEXT_AUTH.REFRESH_TOKEN, 'Invalid refresh token');
     }
 
-    // If token matched previous (grace), delete prev so it can't be reused
     if (isPrev) {
       try {
         if (this.redisClient) await this.redisClient.del(prevKey);
       } catch (e) {
-        // ignore
       }
     }
 
-    // Build typed payloads for token services
     const userForAccess: CreateAccessTokenJwtAuthRequestProps = user;
     const userForRefresh: CreateRefreshTokenJwtAuthRequestProps = user;
 

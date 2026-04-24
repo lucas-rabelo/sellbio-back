@@ -46,14 +46,12 @@ export class CreateRefreshTokenJwtAuthService {
 
     const hashedRefreshToken = await this.encryptedPasswordAuthService.execute(refreshToken);
 
-    // try to get existing hashed token to populate prev key
     let oldHashed: string | null = null;
     try {
       if (this.redisClient) {
         oldHashed = await this.redisClient.get(`refresh:user:${user.uuid}`);
       }
     } catch (e) {
-      // ignore
     }
 
     await this.updateUserUseCase.execute({
@@ -61,17 +59,14 @@ export class CreateRefreshTokenJwtAuthService {
       body: { refreshToken: hashedRefreshToken },
     });
 
-    // store current hashed refresh token in Redis (rotation support)
     try {
       if (this.redisClient) {
         if (oldHashed) {
-          // keep a very short-lived previous token to handle concurrent requests
           await this.redisClient.set(`refresh:user:${user.uuid}:prev`, oldHashed, 'EX', GRACE_SECONDS);
         }
         await this.redisClient.set(`refresh:user:${user.uuid}`, hashedRefreshToken, 'EX', SEVEN_DAYS);
       }
     } catch (e) {
-      // ignore redis errors to avoid breaking token issuance
     }
 
     return {
