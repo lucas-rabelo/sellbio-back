@@ -11,6 +11,9 @@ import type { RefreshAuthRequestProps, RefreshAuthResponseProps } from './types'
 import type Redis from 'ioredis';
 import { REDIS_CLIENT } from '@/infra/redis/redis.module';
 
+const SEVEN_DAYS = 60 * 60 * 24 * 7; // seconds
+const GRACE_SECONDS = 60; // same as create service
+
 @Injectable()
 export class RefreshTokenAuthUseCase {
   constructor(
@@ -45,32 +48,43 @@ export class RefreshTokenAuthUseCase {
     }
 
     const redisKey = `refresh:user:${uuid}`;
+    const prevKey = `${redisKey}:prev`;
 
-    let storedHash: string | null = null;
+    let storedCurrent: string | null = null;
+    let storedPrev: string | null = null;
     try {
-      if (this.redisClient) storedHash = await this.redisClient.get(redisKey);
+      if (this.redisClient) {
+        const [c, p] = await this.redisClient.mget(redisKey, prevKey);
+        storedCurrent = c;
+        storedPrev = p;
+      }
     } catch (e) {
       // ignore redis errors
     }
 
-    const tokenHashToCompare = storedHash ?? user.refreshToken;
+    // Compare against current first, then previous (grace)
+    const isCurrent = storedCurrent ? await this.comparePasswordAuthService.execute(refreshToken, storedCurrent) : false;
+    const isPrev = !isCurrent && storedPrev ? await this.comparePasswordAuthService.execute(refreshToken, storedPrev) : false;
 
-    if (!tokenHashToCompare) {
-      throw new BadRequestException(CONTEXT_AUTH.REFRESH_TOKEN, 'Invalid refresh token');
-    }
-
-    const isTokenValid = await this.comparePasswordAuthService.execute(refreshToken, tokenHashToCompare as string);
-
-    if (!isTokenValid) {
+    if (!isCurrent && !isPrev) {
       // Possible token reuse detected. Revoke all refresh tokens for this user.
       try {
         await this.updateUserUseCase.execute({ userUuid: uuid as string, body: { refreshToken: null } });
-        if (this.redisClient) await this.redisClient.del(redisKey);
+        if (this.redisClient) await this.redisClient.del(redisKey, prevKey);
       } catch (e) {
         // ignore errors while revoking
       }
 
       throw new BadRequestException(CONTEXT_AUTH.REFRESH_TOKEN, 'Invalid refresh token');
+    }
+
+    // If token matched previous (grace), delete prev so it can't be reused
+    if (isPrev) {
+      try {
+        if (this.redisClient) await this.redisClient.del(prevKey);
+      } catch (e) {
+        // ignore
+      }
     }
 
     const { accessToken } = this.createAccessTokenJwtAuthService.execute(user as any);

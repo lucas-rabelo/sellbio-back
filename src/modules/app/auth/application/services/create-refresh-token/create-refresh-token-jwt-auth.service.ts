@@ -9,6 +9,9 @@ import type { CreateRefreshTokenJwtAuthRequestProps, CreateRefreshTokenJwtAuthRe
 import type Redis from 'ioredis';
 import { REDIS_CLIENT } from '@/infra/redis/redis.module';
 
+const SEVEN_DAYS = 60 * 60 * 24 * 7; // seconds
+const GRACE_SECONDS = 60; // allow previous token for 60s to handle concurrency
+
 @Injectable()
 export class CreateRefreshTokenJwtAuthService {
   constructor(
@@ -27,7 +30,7 @@ export class CreateRefreshTokenJwtAuthService {
         email: user.email,
       },
       {
-        expiresIn: '1d',
+        expiresIn: '7d',
         subject: user.uuid,
       },
     );
@@ -43,6 +46,16 @@ export class CreateRefreshTokenJwtAuthService {
 
     const hashedRefreshToken = await this.encryptedPasswordAuthService.execute(refreshToken);
 
+    // try to get existing hashed token to populate prev key
+    let oldHashed: string | null = null;
+    try {
+      if (this.redisClient) {
+        oldHashed = await this.redisClient.get(`refresh:user:${user.uuid}`);
+      }
+    } catch (e) {
+      // ignore
+    }
+
     await this.updateUserUseCase.execute({
       userUuid: user.uuid,
       body: { refreshToken: hashedRefreshToken },
@@ -51,7 +64,11 @@ export class CreateRefreshTokenJwtAuthService {
     // store current hashed refresh token in Redis (rotation support)
     try {
       if (this.redisClient) {
-        await this.redisClient.set(`refresh:user:${user.uuid}`, hashedRefreshToken, 'EX', 60 * 60 * 24);
+        if (oldHashed) {
+          // keep a very short-lived previous token to handle concurrent requests
+          await this.redisClient.set(`refresh:user:${user.uuid}:prev`, oldHashed, 'EX', GRACE_SECONDS);
+        }
+        await this.redisClient.set(`refresh:user:${user.uuid}`, hashedRefreshToken, 'EX', SEVEN_DAYS);
       }
     } catch (e) {
       // ignore redis errors to avoid breaking token issuance
