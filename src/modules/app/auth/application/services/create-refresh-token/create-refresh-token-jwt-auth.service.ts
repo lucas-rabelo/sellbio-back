@@ -10,7 +10,7 @@ import type Redis from 'ioredis';
 import { REDIS_CLIENT } from '@/app/infra/redis/redis.module';
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7; // seconds
-const GRACE_SECONDS = 60; // allow previous token for 60s to handle concurrency
+const GRACE_SECONDS = 30; // reduced grace window
 
 @Injectable()
 export class CreateRefreshTokenJwtAuthService {

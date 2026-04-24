@@ -10,9 +10,11 @@ import { UpdateUserUseCase } from '@/app/modules/app/users/application/use-cases
 import type { RefreshAuthRequestProps, RefreshAuthResponseProps } from './types';
 import type Redis from 'ioredis';
 import { REDIS_CLIENT } from '@/app/infra/redis/redis.module';
+import type { CreateAccessTokenJwtAuthRequestProps } from '../../services/create-access-token/types';
+import type { CreateRefreshTokenJwtAuthRequestProps } from '../../services/create-refresh-token/types';
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7; // seconds
-const GRACE_SECONDS = 60; // same as create service
+const GRACE_SECONDS = 30; // reduced grace window
 
 @Injectable()
 export class RefreshTokenAuthUseCase {
@@ -39,9 +41,9 @@ export class RefreshTokenAuthUseCase {
       throw new BadRequestException(CONTEXT_AUTH.REFRESH_TOKEN, 'Invalid token');
     }
 
-    const uuid = data.uuid ?? data.sub;
+    const uuid = String(data.uuid ?? data.sub);
 
-    const user = await this.findByUuidUserService.execute(uuid as string);
+    const user = await this.findByUuidUserService.execute(uuid);
 
     if (!user) {
       throw new BadRequestException(CONTEXT_AUTH.REFRESH_TOKEN, 'Invalid refresh token');
@@ -69,7 +71,7 @@ export class RefreshTokenAuthUseCase {
     if (!isCurrent && !isPrev) {
       // Possible token reuse detected. Revoke all refresh tokens for this user.
       try {
-        await this.updateUserUseCase.execute({ userUuid: uuid as string, body: { refreshToken: undefined } });
+        await this.updateUserUseCase.execute({ userUuid: uuid, body: { refreshToken: undefined } });
         if (this.redisClient) await this.redisClient.del(redisKey, prevKey);
       } catch (e) {
         // ignore errors while revoking
@@ -87,8 +89,12 @@ export class RefreshTokenAuthUseCase {
       }
     }
 
-    const { accessToken } = this.createAccessTokenJwtAuthService.execute(user as any);
-    const { refreshToken: newRefreshToken } = await this.createRefreshTokenJwtAuthService.execute(user as any);
+    // Build typed payloads for token services
+    const userForAccess: CreateAccessTokenJwtAuthRequestProps = user;
+    const userForRefresh: CreateRefreshTokenJwtAuthRequestProps = user;
+
+    const { accessToken } = this.createAccessTokenJwtAuthService.execute(userForAccess);
+    const { refreshToken: newRefreshToken } = await this.createRefreshTokenJwtAuthService.execute(userForRefresh);
 
     return {
       accessToken,
