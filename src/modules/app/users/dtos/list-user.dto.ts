@@ -1,4 +1,4 @@
-import { listRequestSchema, listResponseSchema } from "@/app/infra";
+import { listRequestSchema, listResponseSchema } from "@/infra";
 import { createZodDto } from "nestjs-zod";
 import z from "zod";
 import { readUserResponseSchema } from "./read-user.dto";

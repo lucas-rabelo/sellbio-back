@@ -1,5 +1,5 @@
-import { BadRequestException } from '@/app/core/exceptions/bad-request.exception';
-import { UpdateUserUseCase } from '@/app/modules/app/users/application/use-cases/update/update-user.use-case';
+import { BadRequestException } from '@/core/exceptions/bad-request.exception';
+import { UpdateUserUseCase } from '@/modules/app/users/application/use-cases/update/update-user.use-case';
 import { Injectable, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CONTEXT_AUTH } from '../../constants/contexts';
@@ -7,7 +7,7 @@ import { ValidateTokenJwtAuthService } from '../validate-token-jwt/validate-toke
 import { EncryptedPasswordAuthService } from '../encrypted-password/encrypted-password-auth.service';
 import type { CreateRefreshTokenJwtAuthRequestProps, CreateRefreshTokenJwtAuthResponseProps } from './types';
 import type Redis from 'ioredis';
-import { REDIS_CLIENT } from '@/app/infra/redis/redis.module';
+import { REDIS_CLIENT } from '@/infra/redis/redis.module';
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7; // seconds
 const GRACE_SECONDS = 30; // reduced grace window

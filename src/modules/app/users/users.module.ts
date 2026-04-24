@@ -1,6 +1,6 @@
 import { forwardRef, Module } from "@nestjs/common";
 
-import { DatabaseModule } from "@/app/infra";
+import { DatabaseModule } from "@/infra";
 
 import { AuthModule } from "../auth/auth.module";
 

@@ -1,8 +1,8 @@
-import { AppController } from "@/app/infra/decorators/base/controller.decorator";
-import { AppPost } from "@/app/infra/decorators/base/post.decorator";
+import { AppController } from "@/infra/decorators/base/controller.decorator";
+import { AppPost } from "@/infra/decorators/base/post.decorator";
 import { Body } from "@nestjs/common";
 
-import { CreateUserUseCase } from "@/app/modules/app/users/application/use-cases/create/create-user.use-case";
+import { CreateUserUseCase } from "@/modules/app/users/application/use-cases/create/create-user.use-case";
 import type { CreateUserRequestProps } from "../../../application/use-cases/create/types";
 import { CreateUserRequestDto, CreateUserResponseDto } from "../../../dtos/create-user.dto";
 

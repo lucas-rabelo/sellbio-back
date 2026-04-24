@@ -1,5 +1,5 @@
-import type { RoleEnumProps } from "@/app/core";
-import type { Replace } from "@/app/core/helpers/Replace";
+import type { RoleEnumProps } from "@/core";
+import type { Replace } from "@/core/helpers/Replace";
 import { randomUUID } from "crypto";
 import { Password } from "../password/password";
 import type { UserProps, UserReplaceProps } from "./types";

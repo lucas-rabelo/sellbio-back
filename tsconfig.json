@@ -22,8 +22,8 @@
     "noFallthroughCasesInSwitch": false,
     "strictPropertyInitialization": false,
     "paths": {
-      "@/app/*": ["./src/*"],
-      "@/test/*": ["./test/*"],
+      "@/*": ["./src/*"],
+      "@/test/*": ["./test/*"]
     },
     "types": ["node", "jest"]
   }

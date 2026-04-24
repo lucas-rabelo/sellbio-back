@@ -1,4 +1,4 @@
-import { NotFoundException } from "@/app/core/exceptions/not-found.exception";
+import { NotFoundException } from "@/core/exceptions/not-found.exception";
 import { makeUser } from "@/test/factories/user-factory";
 import { InMemoryAuthRepository } from "@/test/repositories/in-memory-auth-repository";
 import { InMemoryUserRepository } from "@/test/repositories/in-memory-users-repository";

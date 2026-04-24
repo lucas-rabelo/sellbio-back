@@ -1,15 +1,15 @@
-import { BadRequestException } from '@/app/core/exceptions/bad-request.exception';
+import { BadRequestException } from '@/core/exceptions/bad-request.exception';
 import { Injectable, Inject } from '@nestjs/common';
 import { CONTEXT_AUTH } from '../../constants/contexts';
 import { ValidateTokenJwtAuthService } from '../../services/validate-token-jwt/validate-token-jwt-auth.service';
-import { FindByUuidUserService } from '@/app/modules/app/users/application/services/find-by-uuid/find-by-uuid-user.service';
+import { FindByUuidUserService } from '@/modules/app/users/application/services/find-by-uuid/find-by-uuid-user.service';
 import { ComparePasswordAuthService } from '../../services/compare-password/compare-password-auth.service';
 import { CreateAccessTokenJwtAuthService } from '../../services/create-access-token/create-access-token-jwt-auth.service';
 import { CreateRefreshTokenJwtAuthService } from '../../services/create-refresh-token/create-refresh-token-jwt-auth.service';
-import { UpdateUserUseCase } from '@/app/modules/app/users/application/use-cases/update/update-user.use-case';
+import { UpdateUserUseCase } from '@/modules/app/users/application/use-cases/update/update-user.use-case';
 import type { RefreshAuthRequestProps, RefreshAuthResponseProps } from './types';
 import type Redis from 'ioredis';
-import { REDIS_CLIENT } from '@/app/infra/redis/redis.module';
+import { REDIS_CLIENT } from '@/infra/redis/redis.module';
 import type { CreateAccessTokenJwtAuthRequestProps } from '../../services/create-access-token/types';
 import type { CreateRefreshTokenJwtAuthRequestProps } from '../../services/create-refresh-token/types';
 

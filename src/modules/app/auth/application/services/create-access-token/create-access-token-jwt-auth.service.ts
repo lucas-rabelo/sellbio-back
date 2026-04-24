@@ -1,4 +1,4 @@
-import { BadRequestException } from '@/app/core/exceptions/bad-request.exception';
+import { BadRequestException } from '@/core/exceptions/bad-request.exception';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CONTEXT_AUTH } from '../../constants/contexts';

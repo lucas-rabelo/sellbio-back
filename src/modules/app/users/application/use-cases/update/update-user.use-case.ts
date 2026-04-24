@@ -1,10 +1,10 @@
-import { NotFoundException } from "@/app/core/exceptions/not-found.exception";
+import { NotFoundException } from "@/core/exceptions/not-found.exception";
 import { Injectable } from "@nestjs/common";
 import { UsersRepository } from "../../../infra/http/database/users.repository";
 import { CONTEXT_USER } from "../../constants/contexts";
 import { Password } from "../../entities/password/password";
 import type { UpdateUserRequestProps, UpdateUserResponseProps } from "./types";
-import { EncryptedPasswordAuthService } from "@/app/modules/app/auth/application/services/encrypted-password/encrypted-password-auth.service";
+import { EncryptedPasswordAuthService } from "@/modules/app/auth/application/services/encrypted-password/encrypted-password-auth.service";
 
 @Injectable()
 export class UpdateUserUseCase {

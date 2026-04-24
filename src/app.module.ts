@@ -1,4 +1,4 @@
-import { EnvModule } from '@/app/core/env';
+import { EnvModule } from '@/core/env';
 import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';

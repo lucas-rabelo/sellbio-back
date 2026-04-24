@@ -2,7 +2,7 @@ import { InMemoryUserRepository } from "@/test/repositories/in-memory-users-repo
 import { FindByEmailUserService } from "./find-by-email-user.service";
 import { CONTEXT_USER } from "../../constants/contexts";
 import { makeUser } from "@/test/factories/user-factory";
-import { BadRequestException } from "@/app/core/exceptions/bad-request.exception";
+import { BadRequestException } from "@/core/exceptions/bad-request.exception";
 
 describe("Find By Email User Service", () => {
   it("should be able to find user with email", async () => {

@@ -1,7 +1,7 @@
-import { ROLE_ENUM } from '@/app/core';
-import { UsersEntity as TypeOrmUser, type UsersEntity } from '@/app/infra/database/entities/users.entity';
-import { Password } from '@/app/modules/app/users/application/entities/password/password';
-import { User as DomainUser } from '@/app/modules/app/users/application/entities/user/users';
+import { ROLE_ENUM } from '@/core';
+import { UsersEntity as TypeOrmUser, type UsersEntity } from '@/infra/database/entities/users.entity';
+import { Password } from '@/modules/app/users/application/entities/password/password';
+import { User as DomainUser } from '@/modules/app/users/application/entities/user/users';
 
 export class UserMapper {
   static toTypeOrm(domainUser: DomainUser): TypeOrmUser {

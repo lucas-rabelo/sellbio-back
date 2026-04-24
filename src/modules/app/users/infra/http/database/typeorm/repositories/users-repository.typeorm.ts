@@ -1,12 +1,12 @@
-import { UsersEntity } from '@/app/infra/database/entities/users.entity';
-import { User as DomainUser } from '@/app/modules/app/users/application/entities/user/users';
-import type { ListUserRequestDto } from '@/app/modules/app/users/dtos/list-user.dto';
+import { UsersEntity } from '@/infra/database/entities/users.entity';
+import { User as DomainUser } from '@/modules/app/users/application/entities/user/users';
+import type { ListUserRequestDto } from '@/modules/app/users/dtos/list-user.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Like, Repository, type FindOptionsOrder, type FindOptionsWhere } from 'typeorm';
 import type { UsersRepository } from '../../users.repository';
 import { UserMapper } from '../mappers/users.mapper';
-import type { ListUserRequestProps, ListUserResponseProps } from '@/app/modules/app/users/application/use-cases/list/types';
+import type { ListUserRequestProps, ListUserResponseProps } from '@/modules/app/users/application/use-cases/list/types';
 
 @Injectable()
 export class UsersRepositoryTypeOrm implements UsersRepository {

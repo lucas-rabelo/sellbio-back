@@ -1,5 +1,5 @@
-import { DEFAULT_MESSAGES, ROLE_ENUM } from "@/app/core";
-import { BadRequestException } from "@/app/core/exceptions/bad-request.exception";
+import { DEFAULT_MESSAGES, ROLE_ENUM } from "@/core";
+import { BadRequestException } from "@/core/exceptions/bad-request.exception";
 import { makeUser } from "@/test/factories/user-factory";
 import { InMemoryAuthRepository } from "@/test/repositories/in-memory-auth-repository";
 import { InMemoryUserRepository } from "@/test/repositories/in-memory-users-repository";
