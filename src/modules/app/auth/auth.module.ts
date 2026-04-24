@@ -6,6 +6,8 @@ import { UsersModule } from "../users/users.module";
 import { ComparePasswordAuthService } from "./application/services/compare-password/compare-password-auth.service";
 import { CreateAccessTokenJwtAuthService } from "./application/services/create-access-token/create-access-token-jwt-auth.service";
 import { CreateRefreshTokenJwtAuthService } from "./application/services/create-refresh-token/create-refresh-token-jwt-auth.service";
+import { RefreshTokenAuthUseCase } from './application/use-cases/refresh/refresh-token-auth.use-case';
+import { RefreshAuthController } from './infra/http/controllers/refresh-auth.controller';
 import { EncryptedPasswordAuthService } from "./application/services/encrypted-password/encrypted-password-auth.service";
 import { ValidateTokenJwtAuthService } from "./application/services/validate-token-jwt/validate-token-jwt-auth.service";
 
@@ -25,11 +27,13 @@ import { RegisterAuthController } from './infra/http/controllers/register-auth.c
     ValidateTokenJwtAuthService,
 
     LoginAuthUseCase,
+    RefreshTokenAuthUseCase,
     RegisterAuthUseCase,
   ],
   controllers: [
     LoginAuthController,
     RegisterAuthController,
+    RefreshAuthController,
   ],
   exports: [EncryptedPasswordAuthService],
 })

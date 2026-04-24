@@ -16,6 +16,7 @@ import { ReadUserUseCase } from "./application/use-cases/read/read-user.use-case
 import { UpdateUserUseCase } from "./application/use-cases/update/update-user.use-case";
 
 import { FindByEmailUserService } from "./application/services/find-by-email/find-by-email-user.service";
+import { FindByUuidUserService } from "./application/services/find-by-uuid/find-by-uuid-user.service";
 import { ActiveUserController } from './infra/http/controllers/active-user.controller';
 import { CreateUserController } from "./infra/http/controllers/create-user.controller";
 import { DeleteUserController } from "./infra/http/controllers/delete-user.controller";
@@ -28,6 +29,7 @@ import { UpdateUserController } from "./infra/http/controllers/update-user.contr
   imports: [DatabaseModule, forwardRef(() => AuthModule)],
   providers: [
     FindByEmailUserService,
+    FindByUuidUserService,
     ActiveUserUseCase,
     CreateUserUseCase,
     DeleteUserUseCase,
@@ -51,6 +53,7 @@ import { UpdateUserController } from "./infra/http/controllers/update-user.contr
   ],
   exports: [
     FindByEmailUserService,
+    FindByUuidUserService,
     CreateUserUseCase,
     UpdateUserUseCase,
   ]

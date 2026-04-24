@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CONTEXT_AUTH } from '../../constants/contexts';
 import { ValidateTokenJwtAuthService } from '../validate-token-jwt/validate-token-jwt-auth.service';
+import { EncryptedPasswordAuthService } from '../encrypted-password/encrypted-password-auth.service';
 import type { CreateRefreshTokenJwtAuthRequestProps, CreateRefreshTokenJwtAuthResponseProps } from './types';
 
 @Injectable()
@@ -12,6 +13,7 @@ export class CreateRefreshTokenJwtAuthService {
     private readonly jwtService: JwtService,
     private readonly updateUserUseCase: UpdateUserUseCase,
     private readonly validateTokenJwtAuthService: ValidateTokenJwtAuthService,
+    private readonly encryptedPasswordAuthService: EncryptedPasswordAuthService,
   ) { }
 
   async execute(user: CreateRefreshTokenJwtAuthRequestProps): Promise<CreateRefreshTokenJwtAuthResponseProps> {
@@ -36,9 +38,11 @@ export class CreateRefreshTokenJwtAuthService {
       );
     }
 
+    const hashedRefreshToken = await this.encryptedPasswordAuthService.execute(refreshToken);
+
     await this.updateUserUseCase.execute({
       userUuid: user.uuid,
-      body: { refreshToken },
+      body: { refreshToken: hashedRefreshToken },
     });
 
     return {
