@@ -1,7 +1,10 @@
-import { ROLE_ENUM } from '@/core';
-import { UsersEntity as TypeOrmUser, type UsersEntity } from '@/infra/database/entities/users.entity';
-import { Password } from '@/modules/app/users/application/entities/password/password';
-import { User as DomainUser } from '@/modules/app/users/application/entities/user/users';
+import { ROLE_ENUM, type RoleEnumProps } from '@/src/core';
+import {
+  UsersEntity as TypeOrmUser,
+  type UsersEntity,
+} from '@/src/infra/database/entities/users.entity';
+import { Password } from '@/src/modules/app/users/application/entities/password/password';
+import { User as DomainUser } from '@/src/modules/app/users/application/entities/user/users';
 
 export class UserMapper {
   static toTypeOrm(domainUser: DomainUser): TypeOrmUser {
@@ -17,8 +20,12 @@ export class UserMapper {
     typeOrmUser.role = domainUser.role;
     typeOrmUser.isActived = domainUser.isActived;
     typeOrmUser.createdAt = new Date(domainUser.createdAt).toISOString();
-    typeOrmUser.updatedAt = domainUser.updatedAt ? new Date(domainUser.updatedAt).toISOString() : undefined;
-    typeOrmUser.deletedAt = domainUser.deletedAt ? new Date(domainUser.deletedAt).toISOString() : undefined;
+    typeOrmUser.updatedAt = domainUser.updatedAt
+      ? new Date(domainUser.updatedAt).toISOString()
+      : undefined;
+    typeOrmUser.deletedAt = domainUser.deletedAt
+      ? new Date(domainUser.deletedAt).toISOString()
+      : undefined;
 
     return typeOrmUser;
   }
@@ -32,22 +39,26 @@ export class UserMapper {
         birthDate: new Date(typeOrmUser.birthDate),
         passwordHash: Password.use(typeOrmUser.passwordHash),
         avatarUrl: typeOrmUser.avatarUrl ?? '',
-        role: ROLE_ENUM[typeOrmUser.role.toUpperCase()],
+        role: ROLE_ENUM[typeOrmUser.role.toUpperCase()] as RoleEnumProps,
         isActived: typeOrmUser.isActived,
         createdAt: new Date(typeOrmUser.createdAt),
-        updatedAt: typeOrmUser.updatedAt ? new Date(typeOrmUser.updatedAt) : null,
-        deletedAt: typeOrmUser.deletedAt ? new Date(typeOrmUser.deletedAt) : null,
+        updatedAt: typeOrmUser.updatedAt
+          ? new Date(typeOrmUser.updatedAt)
+          : null,
+        deletedAt: typeOrmUser.deletedAt
+          ? new Date(typeOrmUser.deletedAt)
+          : null,
       },
       typeOrmUser.uuid,
     );
   }
 
-static toDTO(user: UsersEntity) {
+  static toDTO(user: UsersEntity) {
     return {
       uuid: user.uuid,
       name: user.name,
       email: user.email,
-      birthDate: new Date(user.birthDate).toISOString(), 
+      birthDate: new Date(user.birthDate).toISOString(),
       phone: user.phone,
       isActived: user.isActived,
       role: user.role,

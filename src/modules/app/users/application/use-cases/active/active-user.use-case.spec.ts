@@ -1,8 +1,8 @@
-import { NotFoundException } from "@/core/exceptions/not-found.exception";
-import { makeUser } from "@/test/factories/user-factory";
-import { InMemoryUserRepository } from "@/test/repositories/in-memory-users-repository";
-import { CONTEXT_USER } from "../../constants/contexts";
-import { ActiveUserUseCase } from "./active-user.use-case";
+import { NotFoundException } from '@/src/core/exceptions/not-found.exception';
+import { makeUser } from '@/test/factories/user-factory';
+import { InMemoryUserRepository } from '@/test/repositories/in-memory-users-repository';
+import { CONTEXT_USER } from '../../constants/contexts';
+import { ActiveUserUseCase } from './active-user.use-case';
 
 describe('Active user', () => {
   it('should be able to active a user', async () => {
@@ -22,8 +22,8 @@ describe('Active user', () => {
     const usersRepository = new InMemoryUserRepository();
     const activeUser = new ActiveUserUseCase(usersRepository);
 
-    expect(() => {
+    await expect(() => {
       return activeUser.execute('fake-user-uuid');
     }).rejects.toThrow(new NotFoundException(CONTEXT_USER.ACTIVE));
-  })
+  });
 });

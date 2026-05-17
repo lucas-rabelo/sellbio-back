@@ -1,5 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule, type SwaggerCustomOptions } from '@nestjs/swagger';
+import {
+  DocumentBuilder,
+  SwaggerModule,
+  type SwaggerCustomOptions,
+} from '@nestjs/swagger';
 import { cleanupOpenApiDoc, ZodValidationPipe } from 'nestjs-zod';
 import { SwaggerTheme, type SwaggerThemeName } from 'swagger-themes';
 import { AppModule } from './app.module';
@@ -20,7 +24,7 @@ async function bootstrap() {
   const theme = new SwaggerTheme();
   const options: SwaggerCustomOptions = {
     customCss: theme.getBuffer('dark' as SwaggerThemeName),
-    customSiteTitle: 'SellBio API Docs'
+    customSiteTitle: 'SellBio API Docs',
   };
 
   const document = SwaggerModule.createDocument(app, documentBuilder);

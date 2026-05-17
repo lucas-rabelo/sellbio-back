@@ -1,11 +1,11 @@
-import { DEFAULT_MESSAGES, ROLE_ENUM } from "@/core";
-import { BadRequestException } from "@/core/exceptions/bad-request.exception";
-import { makeUser } from "@/test/factories/user-factory";
-import { InMemoryAuthRepository } from "@/test/repositories/in-memory-auth-repository";
-import { InMemoryUserRepository } from "@/test/repositories/in-memory-users-repository";
-import { CONTEXT_USER } from "../../constants/contexts";
-import { CreateUserUseCase } from "./create-user.use-case";
-import type { CreateUserRequestProps } from "./types";
+import { DEFAULT_MESSAGES, ROLE_ENUM } from '@/src/core';
+import { BadRequestException } from '@/src/core/exceptions/bad-request.exception';
+import { makeUser } from '@/test/factories/user-factory';
+import { InMemoryAuthRepository } from '@/test/repositories/in-memory-auth-repository';
+import { InMemoryUserRepository } from '@/test/repositories/in-memory-users-repository';
+import { CONTEXT_USER } from '../../constants/contexts';
+import { CreateUserUseCase } from './create-user.use-case';
+import type { CreateUserRequestProps } from './types';
 
 describe('Create user', () => {
   const request: CreateUserRequestProps = {
@@ -19,7 +19,7 @@ describe('Create user', () => {
     isActived: true,
   };
 
-  it("should be able to create user", async () => {
+  it('should be able to create user', async () => {
     const userRepository = new InMemoryUserRepository();
     const authRepository = new InMemoryAuthRepository();
     const createUser = new CreateUserUseCase(userRepository, authRepository);
@@ -41,7 +41,7 @@ describe('Create user', () => {
     expect(userCreated).toEqual(user);
   });
 
-  it("should not be able to create user with email already exist", async () => {
+  it('should not be able to create user with email already exist', async () => {
     const userRepository = new InMemoryUserRepository();
     const authRepository = new InMemoryAuthRepository();
     const createUser = new CreateUserUseCase(userRepository, authRepository);
@@ -49,10 +49,13 @@ describe('Create user', () => {
     const user = await makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(user);
 
-    expect(async () => {
-      return await createUser.execute(request);
-    }).rejects.toThrow(new BadRequestException(CONTEXT_USER.CREATE, DEFAULT_MESSAGES.ERROR_CREATE + " E-mail already exist"));
+    await expect(() => {
+      return createUser.execute(request);
+    }).rejects.toThrow(
+      new BadRequestException(
+        CONTEXT_USER.CREATE,
+        DEFAULT_MESSAGES.ERROR_CREATE + ' E-mail already exist',
+      ),
+    );
   });
-
-  it("", async () => { })
 });

@@ -1,8 +1,8 @@
-import { NotFoundException } from "@/core/exceptions/not-found.exception";
-import { makeUser } from "@/test/factories/user-factory";
-import { InMemoryUserRepository } from "@/test/repositories/in-memory-users-repository";
-import { CONTEXT_USER } from "../../constants/contexts";
-import { DeactivateUserUseCase } from "./deactivate-user.use-case";
+import { NotFoundException } from '@/src/core/exceptions/not-found.exception';
+import { makeUser } from '@/test/factories/user-factory';
+import { InMemoryUserRepository } from '@/test/repositories/in-memory-users-repository';
+import { CONTEXT_USER } from '../../constants/contexts';
+import { DeactivateUserUseCase } from './deactivate-user.use-case';
 
 describe('Deactivate user', () => {
   it('should be able to deactive a user', async () => {
@@ -21,8 +21,8 @@ describe('Deactivate user', () => {
     const usersRepository = new InMemoryUserRepository();
     const deactiveUser = new DeactivateUserUseCase(usersRepository);
 
-    expect(() => {
+    await expect(() => {
       return deactiveUser.execute('fake-user-uuid');
     }).rejects.toThrow(new NotFoundException(CONTEXT_USER.DEACTIVE));
-  })
+  });
 });

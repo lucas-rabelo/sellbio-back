@@ -10,6 +10,12 @@ const findByUuidUserResponseSchema = z.object({
   refreshToken: z.string().optional(),
 });
 
-class FindByUuidUserResponseDto extends createZodDto(findByUuidUserResponseSchema) { };
+class FindByUuidUserResponseDto extends createZodDto(
+  findByUuidUserResponseSchema,
+) {}
 
-export { FindByUuidUserResponseDto, findByUuidUserRequestSchema, findByUuidUserResponseSchema };
+export {
+  FindByUuidUserResponseDto,
+  findByUuidUserRequestSchema,
+  findByUuidUserResponseSchema,
+};
