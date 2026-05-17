@@ -1,6 +1,5 @@
 import { NotFoundException } from '@/src/core/exceptions/not-found.exception';
 import { makeUser } from '@/test/factories/user-factory';
-import { InMemoryAuthRepository } from '@/test/repositories/in-memory-auth-repository';
 import { InMemoryUserRepository } from '@/test/repositories/in-memory-users-repository';
 import { CONTEXT_USER } from '../../constants/contexts';
 import { UpdateUserUseCase } from './update-user.use-case';
@@ -8,8 +7,7 @@ import { UpdateUserUseCase } from './update-user.use-case';
 describe('Update user', () => {
   it('should be able update user', async () => {
     const userRepository = new InMemoryUserRepository();
-    const authRepository = new InMemoryAuthRepository();
-    const updateUser = new UpdateUserUseCase(userRepository, authRepository);
+    const updateUser = new UpdateUserUseCase(userRepository);
 
     const userMaked = await makeUser(CONTEXT_USER.UPDATE);
     await userRepository.create(userMaked);
@@ -40,8 +38,7 @@ describe('Update user', () => {
 
   it('should not be able to update user', async () => {
     const userRepository = new InMemoryUserRepository();
-    const authRepository = new InMemoryAuthRepository();
-    const updateUser = new UpdateUserUseCase(userRepository, authRepository);
+    const updateUser = new UpdateUserUseCase(userRepository);
 
     const userMaked = await makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(userMaked);

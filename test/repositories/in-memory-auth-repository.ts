@@ -1,6 +1,4 @@
-import { EncryptedPasswordAuthService } from '@/src/modules/app/auth/application/services/encrypted-password/encrypted-password-auth.service';
-
-export class InMemoryAuthRepository extends EncryptedPasswordAuthService {
+export class InMemoryAuthRepository {
   async hash(password: string): Promise<string> {
     return Promise.resolve(`${password}-hashed`);
   }

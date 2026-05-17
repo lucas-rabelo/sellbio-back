@@ -1,7 +1,6 @@
 import { DEFAULT_MESSAGES, ROLE_ENUM } from '@/src/core';
 import { BadRequestException } from '@/src/core/exceptions/bad-request.exception';
 import { makeUser } from '@/test/factories/user-factory';
-import { InMemoryAuthRepository } from '@/test/repositories/in-memory-auth-repository';
 import { InMemoryUserRepository } from '@/test/repositories/in-memory-users-repository';
 import { CONTEXT_USER } from '../../constants/contexts';
 import { CreateUserUseCase } from './create-user.use-case';
@@ -21,8 +20,7 @@ describe('Create user', () => {
 
   it('should be able to create user', async () => {
     const userRepository = new InMemoryUserRepository();
-    const authRepository = new InMemoryAuthRepository();
-    const createUser = new CreateUserUseCase(userRepository, authRepository);
+    const createUser = new CreateUserUseCase(userRepository);
 
     const user = await createUser.execute(request);
 
@@ -43,8 +41,7 @@ describe('Create user', () => {
 
   it('should not be able to create user with email already exist', async () => {
     const userRepository = new InMemoryUserRepository();
-    const authRepository = new InMemoryAuthRepository();
-    const createUser = new CreateUserUseCase(userRepository, authRepository);
+    const createUser = new CreateUserUseCase(userRepository);
 
     const user = await makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(user);
