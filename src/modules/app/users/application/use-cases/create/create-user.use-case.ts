@@ -1,29 +1,35 @@
-import { DEFAULT_MESSAGES } from "@/core/constants/messages";
-import { BadRequestException } from "@/core/exceptions/bad-request.exception";
-import { EncryptedPasswordAuthService } from "@/modules/app/auth/application/services/encrypted-password/encrypted-password-auth.service";
-import { Injectable } from "@nestjs/common";
-import { UsersRepository } from "../../../infra/http/database/users.repository";
-import { CONTEXT_USER } from "../../constants/contexts";
-import { Password } from "../../entities/password/password";
-import { User } from "../../entities/user/users";
-import type { CreateUserRequestProps, CreateUserResponseProps } from "./types";
+import { DEFAULT_MESSAGES } from '@/src/core/constants/messages';
+import { BadRequestException } from '@/src/core/exceptions/bad-request.exception';
+import { Injectable } from '@nestjs/common';
+import { UsersRepository } from '../../../infra/http/database/users.repository';
+import { CONTEXT_USER } from '../../constants/contexts';
+import { Password } from '../../entities/password/password';
+import { User } from '../../entities/user/users';
+import type { CreateUserRequestProps, CreateUserResponseProps } from './types';
 
 @Injectable()
 export class CreateUserUseCase {
-  constructor(
-    private readonly usersRepository: UsersRepository,
-    private readonly encryptedPasswordAuthService: EncryptedPasswordAuthService,
-  ) { }
+  constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute(request: CreateUserRequestProps): Promise<CreateUserResponseProps> {
-    const userAlreadyExists = await this.usersRepository.findByEmail(request.email);
+  async execute(
+    request: CreateUserRequestProps,
+  ): Promise<CreateUserResponseProps> {
+    const userAlreadyExists = await this.usersRepository.findByEmail(
+      request.email,
+    );
     if (userAlreadyExists) {
-      throw new BadRequestException(CONTEXT_USER.CREATE, DEFAULT_MESSAGES.ERROR_CREATE + " E-mail already exist");
+      throw new BadRequestException(
+        CONTEXT_USER.CREATE,
+        DEFAULT_MESSAGES.ERROR_CREATE + ' E-mail already exist',
+      );
     }
 
-    Password.validate(CONTEXT_USER.CREATE, request.password, request.confirmPassword);
-    const hash = await this.encryptedPasswordAuthService.execute(request.password);
-    const passwordHash = Password.use(hash);
+    Password.validate(
+      CONTEXT_USER.CREATE,
+      request.password,
+      request.confirmPassword,
+    );
+    const passwordHash = Password.use(request.password);
     const birthDate = new Date(request.birthDate);
 
     const user = new User({

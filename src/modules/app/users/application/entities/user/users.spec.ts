@@ -1,4 +1,4 @@
-import { ROLE_ENUM } from '@/core';
+import { ROLE_ENUM } from '@/src/core';
 import { InMemoryAuthRepository } from '@/test/repositories/in-memory-auth-repository';
 import { CONTEXT_USER } from '../../constants/contexts';
 import { Password } from '../password/password';
@@ -49,8 +49,7 @@ describe('User Domain Entity', () => {
 
     const initialUpdatedAt = user.updatedAt;
 
-
-    await new Promise(resolve => setTimeout(resolve, 10));
+    await new Promise((resolve) => setTimeout(resolve, 10));
 
     user.name = 'Updated Name';
 
@@ -112,15 +111,18 @@ describe('User Domain Entity', () => {
     const createValidPassword = () => Password.use(hash);
 
     const fixedUuid = 'custom-uuid-123';
-    const user = new User({
-      name: 'Test',
-      email: 'test@test.com',
-      passwordHash: createValidPassword(),
-      phone: '11',
-      birthDate: new Date(),
-      role: ROLE_ENUM.SELLER as keyof typeof ROLE_ENUM,
-      refreshToken: '',
-    }, fixedUuid);
+    const user = new User(
+      {
+        name: 'Test',
+        email: 'test@test.com',
+        passwordHash: createValidPassword(),
+        phone: '11',
+        birthDate: new Date(),
+        role: ROLE_ENUM.SELLER as keyof typeof ROLE_ENUM,
+        refreshToken: '',
+      },
+      fixedUuid,
+    );
 
     expect(user.uuid).toBe(fixedUuid);
   });

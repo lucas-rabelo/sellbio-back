@@ -1,5 +1,5 @@
-import type { RoleEnumProps } from "@/core";
-import type { Password } from "../password/password";
+import type { RoleEnumProps } from '@/src/core';
+import type { Password } from '../password/password';
 
 export interface UserProps {
   name: string;

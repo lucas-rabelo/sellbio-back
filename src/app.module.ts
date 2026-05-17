@@ -1,18 +1,12 @@
-import { EnvModule } from '@/core/env';
 import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 import { HttpExceptionFilter } from './core/exceptions/http.exception';
 
-import { AuthModule } from './modules/app/auth/auth.module';
-import { UsersModule } from './modules/app/users/users.module';
+import { AppplicationModule } from './modules/app/application.module';
 
 @Module({
-  imports: [
-    EnvModule,
-    AuthModule,
-    UsersModule,
-  ],
+  imports: [AppplicationModule],
   providers: [
     {
       provide: APP_PIPE,
@@ -26,6 +20,6 @@ import { UsersModule } from './modules/app/users/users.module';
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
-  ]
+  ],
 })
-export class AppModule { }
+export class AppModule {}

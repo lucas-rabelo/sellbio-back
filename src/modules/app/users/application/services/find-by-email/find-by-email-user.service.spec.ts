@@ -1,11 +1,11 @@
-import { InMemoryUserRepository } from "@/test/repositories/in-memory-users-repository";
-import { FindByEmailUserService } from "./find-by-email-user.service";
-import { CONTEXT_USER } from "../../constants/contexts";
-import { makeUser } from "@/test/factories/user-factory";
-import { BadRequestException } from "@/core/exceptions/bad-request.exception";
+import { InMemoryUserRepository } from '@/test/repositories/in-memory-users-repository';
+import { FindByEmailUserService } from './find-by-email-user.service';
+import { CONTEXT_USER } from '../../constants/contexts';
+import { makeUser } from '@/test/factories/user-factory';
+import { BadRequestException } from '@/src/core/exceptions/bad-request.exception';
 
-describe("Find By Email User Service", () => {
-  it("should be able to find user with email", async () => {
+describe('Find By Email User Service', () => {
+  it('should be able to find user with email', async () => {
     const userRepository = new InMemoryUserRepository();
     const findByEmailUser = new FindByEmailUserService(userRepository);
 
@@ -24,7 +24,7 @@ describe("Find By Email User Service", () => {
       avatarUrl: userRepository.users[0].avatarUrl ?? '',
       isActived: userRepository.users[0].isActived,
       role: userRepository.users[0].role,
-    }
+    };
 
     expect(userFounded).toEqual(user);
   });
@@ -33,8 +33,10 @@ describe("Find By Email User Service", () => {
     const usersRepository = new InMemoryUserRepository();
     const findByEmailUser = new FindByEmailUserService(usersRepository);
 
-    expect(() => {
+    await expect(() => {
       return findByEmailUser.execute('fake-user-email');
-    }).rejects.toThrow(new BadRequestException(CONTEXT_USER.FIND, 'User not found'));
+    }).rejects.toThrow(
+      new BadRequestException(CONTEXT_USER.FIND, 'User not found'),
+    );
   });
 });

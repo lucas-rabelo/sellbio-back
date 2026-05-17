@@ -11,20 +11,21 @@ const updateUserResponseSchema = readUserResponseSchema;
 
 const updateUserRequestSchema = z.object({
   userUuid: updateUserRequestParamSchema,
-  body: updateUserRequestBodySchema
+  body: updateUserRequestBodySchema,
 });
 
-class UpdateUserRequestBodyDto extends createZodDto(updateUserRequestBodySchema) { };
+class UpdateUserRequestBodyDto extends createZodDto(
+  updateUserRequestBodySchema,
+) {}
 
-class UpdateUserRequestDto extends createZodDto(updateUserRequestSchema) { };
+class UpdateUserRequestDto extends createZodDto(updateUserRequestSchema) {}
 
-class UpdateUserResponseDto extends createZodDto(updateUserResponseSchema) { };
+class UpdateUserResponseDto extends createZodDto(updateUserResponseSchema) {}
 
 export {
   UpdateUserRequestBodyDto,
   UpdateUserRequestDto,
   updateUserRequestSchema,
   UpdateUserResponseDto,
-  updateUserResponseSchema
+  updateUserResponseSchema,
 };
-

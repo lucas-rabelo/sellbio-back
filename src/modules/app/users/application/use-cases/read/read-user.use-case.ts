@@ -1,16 +1,16 @@
-import { NotFoundException } from "@/core/exceptions/not-found.exception";
-import { Injectable } from "@nestjs/common";
-import { UsersRepository } from "../../../infra/http/database/users.repository";
-import { CONTEXT_USER } from "../../constants/contexts";
-import type { ReadUserRequestProps, ReadUserResponseProps } from "./types";
+import { NotFoundException } from '@/src/core/exceptions/not-found.exception';
+import { Injectable } from '@nestjs/common';
+import { UsersRepository } from '../../../infra/http/database/users.repository';
+import { CONTEXT_USER } from '../../constants/contexts';
+import type { ReadUserRequestProps, ReadUserResponseProps } from './types';
 
 @Injectable()
 export class ReadUserUseCase {
-  constructor(
-    private readonly usersRepository: UsersRepository,
-  ) { }
+  constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute(userUuid: ReadUserRequestProps): Promise<ReadUserResponseProps> {
+  async execute(
+    userUuid: ReadUserRequestProps,
+  ): Promise<ReadUserResponseProps> {
     const user = await this.usersRepository.findByUuid(userUuid);
 
     if (!user) {
