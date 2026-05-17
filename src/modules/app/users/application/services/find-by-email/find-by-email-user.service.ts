@@ -1,14 +1,19 @@
-import { BadRequestException } from "@/core/exceptions/bad-request.exception";
-import { Injectable } from "@nestjs/common";
-import { UsersRepository } from "../../../infra/http/database/users.repository";
-import { CONTEXT_USER } from "../../constants/contexts";
-import type { FindByEmailUserRequestProps, FindByEmailUserResponseProps } from "./types";
+import { BadRequestException } from '@/src/core/exceptions/bad-request.exception';
+import { Injectable } from '@nestjs/common';
+import { UsersRepository } from '../../../infra/http/database/users.repository';
+import { CONTEXT_USER } from '../../constants/contexts';
+import type {
+  FindByEmailUserRequestProps,
+  FindByEmailUserResponseProps,
+} from './types';
 
 @Injectable()
 export class FindByEmailUserService {
-  constructor(private readonly usersRepository: UsersRepository) { }
+  constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute(email: FindByEmailUserRequestProps): Promise<FindByEmailUserResponseProps | null> {
+  async execute(
+    email: FindByEmailUserRequestProps,
+  ): Promise<FindByEmailUserResponseProps | null> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {

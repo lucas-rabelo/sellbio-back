@@ -1,7 +1,7 @@
-import { listRequestSchema, listResponseSchema } from "@/infra";
-import { createZodDto } from "nestjs-zod";
-import z from "zod";
-import { readUserResponseSchema } from "./read-user.dto";
+import { listRequestSchema, listResponseSchema } from '@/src/infra';
+import { createZodDto } from 'nestjs-zod';
+import z from 'zod';
+import { readUserResponseSchema } from './read-user.dto';
 
 const listUserRequestSchema = z.object({
   ...listRequestSchema.shape,
@@ -15,8 +15,13 @@ const listUserResponseSchema = z.object({
   data: z.array(readUserResponseSchema),
 });
 
-class ListUserRequestDto extends createZodDto(listUserRequestSchema) { };
+class ListUserRequestDto extends createZodDto(listUserRequestSchema) {}
 
-class ListUserResponseDto extends createZodDto(listUserResponseSchema) { };
+class ListUserResponseDto extends createZodDto(listUserResponseSchema) {}
 
-export { listUserRequestSchema, listUserResponseSchema, ListUserRequestDto, ListUserResponseDto };
+export {
+  listUserRequestSchema,
+  listUserResponseSchema,
+  ListUserRequestDto,
+  ListUserResponseDto,
+};

@@ -1,8 +1,8 @@
-import { ROLE_ENUM } from "@/app/core";
-import { Password } from "@/app/modules/app/users/application/entities/password/password";
-import type { UserProps } from "@/app/modules/app/users/application/entities/user/types";
-import { User } from "@/app/modules/app/users/application/entities/user/users";
-import { InMemoryAuthRepository } from "../repositories/in-memory-auth-repository";
+import { ROLE_ENUM } from '@/src/core';
+import { Password } from '@/src/modules/app/users/application/entities/password/password';
+import type { UserProps } from '@/src/modules/app/users/application/entities/user/types';
+import { User } from '@/src/modules/app/users/application/entities/user/users';
+import { InMemoryAuthRepository } from '../repositories/in-memory-auth-repository';
 
 type Override = Partial<UserProps>;
 

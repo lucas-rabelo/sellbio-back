@@ -1,26 +1,38 @@
-import type { RoleEnumProps } from "@/core";
-import type { Replace } from "@/core/helpers/Replace";
-import { randomUUID } from "crypto";
-import { Password } from "../password/password";
-import type { UserProps, UserReplaceProps } from "./types";
+import type { RoleEnumProps } from '@/src/core';
+import type { Replace } from '@/src/core/helpers/Replace';
+import { randomUUID } from 'crypto';
+import { Password } from '../password/password';
+import type { UserProps, UserReplaceProps } from './types';
 
 export class User {
   private _uuid: string;
   private props: UserProps;
 
-  constructor(
-    props: Replace<UserProps, UserReplaceProps>,
-    uuid?: string
-  ) {
+  constructor(props: Replace<UserProps, UserReplaceProps>, uuid?: string) {
     this._uuid = uuid ?? randomUUID();
     this.props = {
       ...props,
       isActived: props.isActived ?? true,
       avatarUrl: props.avatarUrl ?? null,
       refreshToken: props.refreshToken ?? null,
-      createdAt: props.createdAt instanceof Date ? props.createdAt : (props.createdAt ? new Date(props.createdAt) : new Date()),
-      updatedAt: props.updatedAt instanceof Date ? props.updatedAt : (props.updatedAt ? new Date(props.updatedAt) : null),
-      deletedAt: props.deletedAt instanceof Date ? props.deletedAt : (props.deletedAt ? new Date(props.deletedAt) : null),
+      createdAt:
+        props.createdAt instanceof Date
+          ? props.createdAt
+          : props.createdAt
+            ? new Date(props.createdAt)
+            : new Date(),
+      updatedAt:
+        props.updatedAt instanceof Date
+          ? props.updatedAt
+          : props.updatedAt
+            ? new Date(props.updatedAt)
+            : null,
+      deletedAt:
+        props.deletedAt instanceof Date
+          ? props.deletedAt
+          : props.deletedAt
+            ? new Date(props.deletedAt)
+            : null,
     };
   }
 

@@ -1,6 +1,6 @@
-import { HttpStatus } from "@nestjs/common";
-import { DEFAULT_MESSAGES } from "../constants";
-import { ApplicationException } from "./application.exception";
+import { HttpStatus } from '@nestjs/common';
+import { DEFAULT_MESSAGES } from '../constants';
+import { ApplicationException } from './application.exception';
 
 export class NotFoundException extends ApplicationException {
   constructor(context: string) {

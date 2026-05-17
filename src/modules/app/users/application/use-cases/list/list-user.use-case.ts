@@ -1,14 +1,10 @@
-import { ROLE_ENUM } from "@/core";
-import { Injectable } from "@nestjs/common";
-import { UsersRepository } from "../../../infra/http/database/users.repository";
-import type { ListUserRequestProps, ListUserResponseProps } from "./types";
-import { CONTEXT_USER } from "../../constants/contexts";
+import { Injectable } from '@nestjs/common';
+import { UsersRepository } from '../../../infra/http/database/users.repository';
+import type { ListUserRequestProps, ListUserResponseProps } from './types';
 
 @Injectable()
 export class ListUserUseCase {
-  constructor(
-    private readonly usersRepository: UsersRepository,
-  ) { }
+  constructor(private readonly usersRepository: UsersRepository) {}
 
   async execute(request: ListUserRequestProps): Promise<ListUserResponseProps> {
     const { total, data } = await this.usersRepository.list(request);

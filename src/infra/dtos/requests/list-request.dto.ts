@@ -1,5 +1,5 @@
-import { createZodDto } from "nestjs-zod";
-import z from "zod";
+import { createZodDto } from 'nestjs-zod';
+import z from 'zod';
 
 const listRequestSchema = z.object({
   uuid: z.string().optional(),
@@ -7,6 +7,6 @@ const listRequestSchema = z.object({
   pageSize: z.coerce.number().optional().default(10),
 });
 
-class ListRequestDto extends createZodDto(listRequestSchema) { };
+class ListRequestDto extends createZodDto(listRequestSchema) {}
 
 export { listRequestSchema, ListRequestDto };

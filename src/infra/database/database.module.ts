@@ -1,4 +1,4 @@
-import { EnvService } from '@/core/env';
+import { EnvService } from '@/src/core/env';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -23,8 +23,8 @@ const entities = [UsersEntity];
         };
       },
     }),
-    TypeOrmModule.forFeature(entities)
+    TypeOrmModule.forFeature(entities),
   ],
-  exports: [TypeOrmModule]
+  exports: [TypeOrmModule],
 })
-export class DatabaseModule { }
+export class DatabaseModule {}

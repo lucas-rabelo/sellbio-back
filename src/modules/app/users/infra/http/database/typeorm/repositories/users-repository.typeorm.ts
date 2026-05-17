@@ -1,19 +1,27 @@
-import { UsersEntity } from '@/infra/database/entities/users.entity';
-import { User as DomainUser } from '@/modules/app/users/application/entities/user/users';
-import type { ListUserRequestDto } from '@/modules/app/users/dtos/list-user.dto';
+import { UsersEntity } from '@/src/infra/database/entities/users.entity';
+import { User as DomainUser } from '@/src/modules/app/users/application/entities/user/users';
+import type {
+  ListUserRequestProps,
+  ListUserResponseProps,
+} from '@/src/modules/app/users/application/use-cases/list/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Equal, Like, Repository, type FindOptionsOrder, type FindOptionsWhere } from 'typeorm';
+import {
+  Equal,
+  Like,
+  Repository,
+  type FindOptionsOrder,
+  type FindOptionsWhere,
+} from 'typeorm';
 import type { UsersRepository } from '../../users.repository';
 import { UserMapper } from '../mappers/users.mapper';
-import type { ListUserRequestProps, ListUserResponseProps } from '@/modules/app/users/application/use-cases/list/types';
 
 @Injectable()
 export class UsersRepositoryTypeOrm implements UsersRepository {
   constructor(
     @InjectRepository(UsersEntity)
     private readonly repository: Repository<UsersEntity>,
-  ) { }
+  ) {}
 
   async create(user: DomainUser): Promise<void> {
     const raw = UserMapper.toTypeOrm(user);
@@ -22,7 +30,7 @@ export class UsersRepositoryTypeOrm implements UsersRepository {
 
   async findByUuid(uuid: string): Promise<DomainUser | null> {
     const user = await this.repository.findOne({
-      where: { uuid, deletedAt: undefined }
+      where: { uuid, deletedAt: undefined },
     });
 
     if (!user) return null;
@@ -32,7 +40,7 @@ export class UsersRepositoryTypeOrm implements UsersRepository {
 
   async findByEmail(email: string): Promise<DomainUser | null> {
     const user = await this.repository.findOne({
-      where: { email, deletedAt: undefined }
+      where: { email, deletedAt: undefined },
     });
 
     if (!user) return null;
@@ -47,7 +55,9 @@ export class UsersRepositoryTypeOrm implements UsersRepository {
     const take = Number(pageSize);
     const order: FindOptionsOrder<UsersEntity> = { createdAt: 'DESC' };
 
-    const where: FindOptionsWhere<UsersEntity> | FindOptionsWhere<UsersEntity>[] = { deletedAt: undefined };
+    const where:
+      | FindOptionsWhere<UsersEntity>
+      | FindOptionsWhere<UsersEntity>[] = { deletedAt: undefined };
     if (uuid) {
       where.uuid = Equal(uuid);
     }
@@ -73,7 +83,7 @@ export class UsersRepositoryTypeOrm implements UsersRepository {
 
     return {
       total,
-      data: users.map(user => UserMapper.toDTO(user)),
+      data: users.map((user) => UserMapper.toDTO(user)),
     };
   }
 

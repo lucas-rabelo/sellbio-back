@@ -1,3 +1,4 @@
+import type { AuthenticatedRequest } from '@/src/core/types/user-decorator';
 import {
   createParamDecorator,
   ExecutionContext,
@@ -6,17 +7,17 @@ import {
 
 export const User = createParamDecorator(
   (_: unknown, context: ExecutionContext) => {
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<AuthenticatedRequest>();
 
     if (request.user) {
       return {
         user: request.user,
         token: request.token,
       };
-    } else {
-      throw new NotFoundException(
-        'User not founded in request. Use the AuthGuard to get the user.',
-      );
     }
+
+    throw new NotFoundException(
+      'User not founded in request. Use the AuthGuard to get the user.',
+    );
   },
 );

@@ -1,9 +1,9 @@
-import type { IUseCase } from "./use-case.types";
+import type { IUseCase } from './use-case.types';
 
 export abstract class BaseUseCase<
   Input,
   Output,
-  Repository
+  Repository,
 > implements IUseCase<Input, Output> {
   protected repository: Repository;
 
