@@ -11,7 +11,10 @@ export class ValidateTokenJwtService {
     options: JwtVerifyOptions,
   ): Promise<null | ValidateTokenResponseProps> {
     try {
-      const validatedUnknown = (await this.jwtService.verifyAsync(token, options)) as unknown;
+      const validatedUnknown = (await this.jwtService.verifyAsync(
+        token,
+        options,
+      )) as unknown;
 
       if (validatedUnknown && typeof validatedUnknown === 'object') {
         return validatedUnknown as ValidateTokenResponseProps;

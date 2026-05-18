@@ -72,7 +72,7 @@ export class AuthRepositoryTypeorm implements AuthRepository {
   ): Promise<void> {
     await this.refreshRepository.update(
       { uuid: tokenUuid },
-      { revoked: true, replacedBy, replacedAt: new Date() },
+      { revoked: true, replacedBy, replacedAt: new Date().toISOString() },
     );
   }
 
@@ -109,8 +109,8 @@ export class AuthRepositoryTypeorm implements AuthRepository {
       {
         revoked: true,
         replacedBy: newToken.uuid,
-        replacedAt: new Date(),
-        lastUsedAt: new Date(),
+        replacedAt: new Date().toISOString(),
+        lastUsedAt: new Date().toISOString(),
       },
     );
   }
