@@ -2,9 +2,9 @@ import { EnvService } from '@/src/core/env';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UsersEntity } from './entities';
+import { UsersEntity, RefreshTokenEntity } from './entities';
 
-const entities = [UsersEntity];
+const entities = [UsersEntity, RefreshTokenEntity];
 
 @Module({
   imports: [

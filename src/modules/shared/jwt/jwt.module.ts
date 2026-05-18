@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule as NestJwtModule } from '@nestjs/jwt';
+import { CreateTokenJwtService } from './application/services/create-token';
+import { ValidateTokenJwtService } from './application/services/validate-token';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    JwtModule.registerAsync({
+    NestJwtModule.registerAsync({
       global: true,
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
@@ -14,6 +16,7 @@ import { JwtModule } from '@nestjs/jwt';
       }),
     }),
   ],
-  exports: [JwtModule],
+  providers: [CreateTokenJwtService, ValidateTokenJwtService],
+  exports: [CreateTokenJwtService, ValidateTokenJwtService],
 })
-export class SharedJwtModule {}
+export class JwtModule {}
