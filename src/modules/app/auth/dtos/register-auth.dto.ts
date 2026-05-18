@@ -6,7 +6,7 @@ const registerAuthRequestSchema = createUserRequestSchema;
 
 const registerAuthResponseSchema = z.object({
   access_token: z.jwt(),
-  refresh_token: z.jwt(),
+  refresh_token: z.string(),
 });
 
 class RegisterAuthRequestDto extends createZodDto(registerAuthRequestSchema) {}

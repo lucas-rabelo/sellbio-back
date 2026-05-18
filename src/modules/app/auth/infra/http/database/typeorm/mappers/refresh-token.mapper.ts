@@ -30,8 +30,8 @@ export class RefreshTokenMapper {
     if (domainToken.lastUsedAt instanceof Date)
       raw.lastUsedAt = domainToken.lastUsedAt.toISOString();
 
-    raw.ip = domainToken.ip ?? null;
-    raw.userAgent = domainToken.userAgent ?? null;
+    raw.ip = domainToken.ip ?? undefined;
+    raw.userAgent = domainToken.userAgent ?? undefined;
 
     return raw;
   }
