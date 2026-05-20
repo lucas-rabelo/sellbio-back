@@ -17,7 +17,7 @@ export class ForgotPasswordAuthUseCase {
     private readonly configService: ConfigService<EnvSchema>,
     private readonly findByEmailUserService: FindByEmailUserService,
     private readonly createTokenJwtService: CreateTokenJwtService,
-  ) { }
+  ) {}
 
   async execute(
     request: ForgotPasswordAuthRequestProps,
@@ -33,11 +33,12 @@ export class ForgotPasswordAuthUseCase {
       options: { expiresIn: '15 minutes' },
     });
 
-    const frontend: string | undefined = this.configService.get('FRONT_END_URL');
+    const frontend: string | undefined =
+      this.configService.get('FRONT_END_URL');
     if (!frontend) {
       throw new InternalServerErrorException(
-        CONTEXT_AUTH.FORGOT_PASSWORD, 
-        'Frontend URL is not configured'
+        CONTEXT_AUTH.FORGOT_PASSWORD,
+        'Frontend URL is not configured',
       );
     }
 
