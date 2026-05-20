@@ -36,9 +36,6 @@ export class ValidateTokenAuthUseCase {
       throw new NotFoundException(CONTEXT_AUTH.VALIDATE_TOKEN);
     }
 
-    return {
-      ...user,
-      password: user.passwordHash,
-    };
+    return user;
   }
 }

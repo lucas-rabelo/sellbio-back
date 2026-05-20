@@ -7,10 +7,7 @@ const validateTokenAuthRequestSchema = z.object({
   token: registerAuthResponseSchema.shape.access_token,
 });
 
-const validateTokenAuthResponseSchema = z.object({
-  ...readUserResponseSchema.shape,
-  password: z.string(),
-});
+const validateTokenAuthResponseSchema = readUserResponseSchema.shape;
 
 class ValidadeTokenAuthRequestDto extends createZodDto(
   validateTokenAuthRequestSchema,

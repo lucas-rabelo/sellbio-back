@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 
-import { DatabaseModule } from '@/src/infra';
+import { DatabaseModule } from '@/src/infra/database/database.module';
+import { JwtModule } from '../../shared/jwt/jwt.module';
+import { BcryptModule } from '../../shared/bcrypt/bcrypt.module';
 
 import { UsersRepositoryTypeOrm } from './infra/http/database/typeorm/repositories/users-repository.typeorm';
 import { UsersRepository } from './infra/http/database/users.repository';
@@ -15,6 +17,7 @@ import { UpdateUserUseCase } from './application/use-cases/update/update-user.us
 
 import { FindByEmailUserService } from './application/services/find-by-email/find-by-email-user.service';
 import { FindByUuidUserService } from './application/services/find-by-uuid/find-by-uuid-user.service';
+
 import { ActiveUserController } from './infra/http/controllers/active-user.controller';
 import { CreateUserController } from './infra/http/controllers/create-user.controller';
 import { DeleteUserController } from './infra/http/controllers/delete-user.controller';
@@ -24,7 +27,7 @@ import { ReadUserController } from './infra/http/controllers/read-user.controlle
 import { UpdateUserController } from './infra/http/controllers/update-user.controller';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, JwtModule, BcryptModule],
   providers: [
     FindByEmailUserService,
     FindByUuidUserService,

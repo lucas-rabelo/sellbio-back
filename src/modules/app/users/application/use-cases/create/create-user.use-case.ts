@@ -1,6 +1,7 @@
 import { DEFAULT_MESSAGES } from '@/src/core/constants/messages';
 import { BadRequestException } from '@/src/core/exceptions/bad-request.exception';
 import { Injectable } from '@nestjs/common';
+import { EncryptedBcryptService } from '@/src/modules/shared/bcrypt/application/services/encrypted/encrypted-bcrypt.service';
 import { UsersRepository } from '../../../infra/http/database/users.repository';
 import { CONTEXT_USER } from '../../constants/contexts';
 import { Password } from '../../entities/password/password';
@@ -9,7 +10,10 @@ import type { CreateUserRequestProps, CreateUserResponseProps } from './types';
 
 @Injectable()
 export class CreateUserUseCase {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly encryptedBcryptService: EncryptedBcryptService,
+  ) {}
 
   async execute(
     request: CreateUserRequestProps,
@@ -29,7 +33,10 @@ export class CreateUserUseCase {
       request.password,
       request.confirmPassword,
     );
-    const passwordHash = Password.use(request.password);
+    const encryptedPassword = await this.encryptedBcryptService.execute(
+      request.password,
+    );
+    const passwordHash = Password.use(encryptedPassword);
     const birthDate = new Date(request.birthDate);
 
     const user = new User({
