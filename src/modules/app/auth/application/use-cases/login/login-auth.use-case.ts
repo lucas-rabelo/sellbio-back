@@ -1,11 +1,10 @@
-import { BadRequestException } from '@/src/core/exceptions/bad-request.exception';
-import type { CompareBcryptService } from '@/src/modules/shared/bcrypt/application/services/compare';
-import type { EncryptedBcryptService } from '@/src/modules/shared/bcrypt/application/services/encrypted';
-import type { CreateTokenJwtService } from '@/src/modules/shared/jwt/application/services/create-token';
 import { Injectable } from '@nestjs/common';
-import { randomUUID, randomBytes } from 'crypto';
-import type { AuthRepository } from '../../../infra/http/database/auth.repository';
+import { BadRequestException } from '@/src/core/exceptions/bad-request.exception';
+import { CompareBcryptService } from '@/src/modules/shared/bcrypt/application/services/compare/compare-bcrypt.service';
+import { CreateTokenJwtService } from '@/src/modules/shared/jwt/application/services/create-token/create-token-jwt.service';
+import { AuthRepository } from '../../../infra/http/database/auth.repository';
 import { CONTEXT_AUTH } from '../../constants/contexts';
+import { CreateRefreshTokenService } from '../../services/create-refresh-token/create-refresh-token.service';
 import type { LoginAuthRequestProps, LoginAuthResponseProps } from './types';
 
 @Injectable()
@@ -13,8 +12,8 @@ export class LoginAuthUseCase {
   constructor(
     private readonly authRepository: AuthRepository,
     private readonly compareBcryptService: CompareBcryptService,
-    private readonly encryptedBcryptService: EncryptedBcryptService,
     private readonly createTokenJwtService: CreateTokenJwtService,
+    private readonly createRefreshTokenService: CreateRefreshTokenService,
   ) {}
 
   async execute(
@@ -60,21 +59,9 @@ export class LoginAuthUseCase {
       },
     });
 
-    // Create opaque refresh token
-    const tokenUuid = randomUUID();
-    const rawToken = randomBytes(64).toString('hex');
-    const tokenHash = await this.encryptedBcryptService.execute(rawToken);
-    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 1 day
-
-    await this.authRepository.createRefreshToken(
+    const refresh_token = await this.createRefreshTokenService.execute(
       user.uuid,
-      tokenUuid,
-      tokenHash,
-      expiresAt,
     );
-
-    // Return composite token: <uuid>.<raw>
-    const refresh_token = `${tokenUuid}.${rawToken}`;
 
     return {
       access_token,

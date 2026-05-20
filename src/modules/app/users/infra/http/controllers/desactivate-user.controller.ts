@@ -5,7 +5,7 @@ import { Param, ParseUUIDPipe } from '@nestjs/common';
 import { DeactivateUserUseCase } from '../../../application/use-cases/deactivate/deactivate-user.use-case';
 import type { DeactivateUserRequestProps } from '../../../application/use-cases/deactivate/types';
 
-@AppController('Users')
+@AppController('Users', '1')
 export class DeactivateUserController {
   constructor(private readonly useCase: DeactivateUserUseCase) {}
 

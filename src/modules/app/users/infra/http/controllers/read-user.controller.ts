@@ -5,7 +5,7 @@ import { Param, ParseUUIDPipe } from '@nestjs/common';
 import type { ReadUserRequestProps } from '../../../application/use-cases/read/types';
 import { ReadUserResponseDto } from '../../../dtos/read-user.dto';
 
-@AppController('Users')
+@AppController('Users', '1')
 export class ReadUserController {
   constructor(private readonly useCase: ReadUserUseCase) {}
 

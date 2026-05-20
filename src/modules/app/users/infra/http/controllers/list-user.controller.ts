@@ -8,7 +8,7 @@ import {
 import { Query } from '@nestjs/common';
 import type { ListUserRequestProps } from '../../../application/use-cases/list/types';
 
-@AppController('Users')
+@AppController('Users', '1')
 export class ListUserController {
   constructor(private readonly useCase: ListUserUseCase) {}
 

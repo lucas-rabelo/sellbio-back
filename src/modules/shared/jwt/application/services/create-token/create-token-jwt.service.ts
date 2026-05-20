@@ -2,7 +2,7 @@ import { InternalServerErrorException } from '@/src/core/exceptions/internal-ser
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CONTEXT_JWT } from '../../constants/contexts';
-import type { ValidateTokenJwtService } from '../validate-token';
+import { ValidateTokenJwtService } from '../validate-token/validate-token-jwt.service';
 import { CreateTokenRequestProps, CreateTokenResponseProps } from './types';
 
 @Injectable()

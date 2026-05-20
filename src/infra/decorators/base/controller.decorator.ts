@@ -7,10 +7,10 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-export function AppController(prefix: string) {
+export function AppController(prefix: string, version: string) {
   return applyDecorators(
     ApiTags(prefix),
-    Controller(prefix.toLowerCase()),
+    Controller({ path: prefix.toLowerCase(), version }),
     ApiBadRequestResponse({ type: BadRequestResponseDto }),
     ApiUnauthorizedResponse({ type: BadRequestResponseDto }),
     ApiInternalServerErrorResponse({ type: BadRequestResponseDto }),

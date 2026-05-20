@@ -7,7 +7,7 @@ import { AppPatch } from '@/src/infra/decorators/base/patch.decorator';
 import { ActiveUserUseCase } from '@/src/modules/app/users/application/use-cases/active/active-user.use-case';
 import type { ActiveUserRequestProps } from '../../../application/use-cases/active/types';
 
-@AppController('Users')
+@AppController('Users', '1')
 export class ActiveUserController {
   constructor(private readonly useCase: ActiveUserUseCase) {}
 

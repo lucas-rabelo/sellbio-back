@@ -3,7 +3,7 @@ import { createZodDto } from 'nestjs-zod';
 import z from 'zod';
 
 const validateTokenJwtResponseSchema = z.object({
-  ...readUserResponseSchema,
+  ...readUserResponseSchema.shape,
   password: z.string(),
 });
 

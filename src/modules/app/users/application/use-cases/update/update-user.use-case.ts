@@ -33,6 +33,9 @@ export class UpdateUserUseCase {
         body.password,
         body.confirmPassword,
       );
+
+      // set new password hash when password is provided
+      user.passwordHash = Password.use(body.password);
     }
 
     await this.usersRepository.save(user);

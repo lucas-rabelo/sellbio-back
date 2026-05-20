@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule as NestJwtModule } from '@nestjs/jwt';
-import { CreateTokenJwtService } from './application/services/create-token';
-import { ValidateTokenJwtService } from './application/services/validate-token';
+import { CreateTokenJwtService } from './application/services/create-token/create-token-jwt.service';
+import { ValidateTokenJwtService } from './application/services/validate-token/validate-token-jwt.service';
 
 @Module({
   imports: [

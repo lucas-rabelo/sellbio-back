@@ -8,7 +8,7 @@ import {
   CreateUserResponseDto,
 } from '../../../dtos/create-user.dto';
 
-@AppController('Users')
+@AppController('Users', '1')
 export class CreateUserController {
   constructor(private readonly useCase: CreateUserUseCase) {}
 

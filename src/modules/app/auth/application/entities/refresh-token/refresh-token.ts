@@ -1,26 +1,38 @@
-export type RefreshTokenProps = {
-  uuid: string;
-  userUuid: string;
-  tokenHash: string;
-  expiresAt: Date;
-  revoked?: boolean;
-  replacedBy?: string | null;
-  replacedAt?: Date;
-  createdAt?: Date;
-  lastUsedAt?: Date | null;
-  ip?: string | null;
-  userAgent?: string | null;
-};
+import type { Replace } from '@/src/core/helpers/Replace';
+import type { RefreshTokenProps, RefreshTokenReplaceProps } from './types';
+import { randomUUID } from 'crypto';
 
 export class RefreshToken {
+  private _uuid: string;
   private props: RefreshTokenProps;
 
-  private constructor(props: RefreshTokenProps) {
+  private constructor(
+    props: Replace<RefreshTokenProps, RefreshTokenReplaceProps>,
+    uuid?: string,
+  ) {
+    this._uuid = uuid ?? randomUUID();
     this.props = {
-      revoked: false,
-      replacedBy: null,
       ...props,
-    } as RefreshTokenProps;
+      revoked: false,
+      replacedAt:
+        props.replacedAt instanceof Date
+          ? props.replacedAt
+          : props.replacedAt
+            ? new Date(props.replacedAt)
+            : null,
+      createdAt:
+        props.createdAt instanceof Date
+          ? props.createdAt
+          : props.createdAt
+            ? new Date(props.createdAt)
+            : new Date(),
+      lastUsedAt:
+        props.lastUsedAt instanceof Date
+          ? props.lastUsedAt
+          : props.lastUsedAt
+            ? new Date(props.lastUsedAt)
+            : null,
+    };
   }
 
   public static create(props: RefreshTokenProps): RefreshToken {
@@ -28,7 +40,7 @@ export class RefreshToken {
   }
 
   public get uuid(): string {
-    return this.props.uuid;
+    return this._uuid;
   }
 
   public get userUuid(): string {
@@ -61,6 +73,10 @@ export class RefreshToken {
 
   public get createdAt(): Date | undefined {
     return this.props.createdAt;
+  }
+
+  public get replacedAt(): Date | null | undefined {
+    return this.props.replacedAt;
   }
 
   public get lastUsedAt(): Date | null | undefined {

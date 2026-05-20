@@ -6,7 +6,7 @@ import { DeleteUserUseCase } from '@/src/modules/app/users/application/use-cases
 import { Param, ParseUUIDPipe } from '@nestjs/common';
 import type { DeleteUserRequestProps } from '../../../application/use-cases/delete/types';
 
-@AppController('Users')
+@AppController('Users', '1')
 export class DeleteUserController {
   constructor(private readonly useCase: DeleteUserUseCase) {}
 

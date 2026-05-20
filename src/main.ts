@@ -7,12 +7,16 @@ import {
 import { cleanupOpenApiDoc, ZodValidationPipe } from 'nestjs-zod';
 import { SwaggerTheme, type SwaggerThemeName } from 'swagger-themes';
 import { AppModule } from './app.module';
+import { VersioningType } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors();
   app.useGlobalPipes(new ZodValidationPipe());
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
 
   const documentBuilder = new DocumentBuilder()
     .setTitle('SellBio API')

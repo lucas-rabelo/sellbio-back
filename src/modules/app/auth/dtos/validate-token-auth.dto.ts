@@ -8,7 +8,7 @@ const validateTokenAuthRequestSchema = z.object({
 });
 
 const validateTokenAuthResponseSchema = z.object({
-  ...readUserResponseSchema,
+  ...readUserResponseSchema.shape,
   password: z.string(),
 });
 

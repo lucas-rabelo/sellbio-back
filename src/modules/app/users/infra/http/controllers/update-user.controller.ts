@@ -5,7 +5,7 @@ import { Body, Param, ParseUUIDPipe } from '@nestjs/common';
 import type { UpdateUserRequestParamsProps } from '../../../application/use-cases/update/types';
 import { UpdateUserRequestBodyDto } from '../../../dtos/update-user.dto';
 
-@AppController('Users')
+@AppController('Users', '1')
 export class UpdateUserController {
   constructor(private readonly useCase: UpdateUserUseCase) {}
 
