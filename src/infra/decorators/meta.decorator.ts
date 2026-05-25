@@ -1,8 +1,5 @@
 import type { AuthenticatedRequest } from '@/src/core/types/user-decorator';
-import {
-  createParamDecorator,
-  ExecutionContext
-} from '@nestjs/common';
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
 export const Meta = createParamDecorator(
   (_: unknown, context: ExecutionContext) => {
