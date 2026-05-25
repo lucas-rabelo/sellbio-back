@@ -3,6 +3,11 @@ import { randomBytes, randomUUID } from 'crypto';
 import { EncryptedBcryptService } from '@/src/modules/shared/bcrypt/application/services/encrypted/encrypted-bcrypt.service';
 import { AuthRepository } from '../../../infra/http/database/auth.repository';
 
+export type CreateRefreshTokenMeta = {
+  ip?: string;
+  userAgent?: string;
+};
+
 @Injectable()
 export class CreateRefreshTokenService {
   constructor(
@@ -10,7 +15,10 @@ export class CreateRefreshTokenService {
     private readonly encryptedBcryptService: EncryptedBcryptService,
   ) {}
 
-  async execute(userUuid: string): Promise<string> {
+  async execute(
+    userUuid: string,
+    meta?: CreateRefreshTokenMeta,
+  ): Promise<string> {
     const tokenUuid = randomUUID();
     const rawToken = randomBytes(64).toString('hex');
     const tokenHash = await this.encryptedBcryptService.execute(rawToken);
@@ -22,6 +30,7 @@ export class CreateRefreshTokenService {
       tokenUuid,
       tokenHash,
       expiresAt,
+      meta,
     );
 
     const refresh_token = `${tokenUuid}.${rawToken}`;

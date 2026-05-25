@@ -1,36 +1,59 @@
 import { RefreshTokenEntity as TypeOrmRefreshToken } from '@/src/infra/database/entities/refresh-token.entity';
 import { RefreshToken as DomainRefreshToken } from '@/src/modules/app/auth/application/entities/refresh-token/refresh-token';
 
+export type RefreshTokenMapperInput = {
+  uuid?: string;
+  userUuid: string;
+  tokenHash: string;
+  expiresAt: Date | string;
+  revoked?: boolean;
+  replacedBy?: string | null;
+  replacedAt?: Date | string | null;
+  lastUsedAt?: Date | string | null;
+  ip?: string | null;
+  userAgent?: string | null;
+};
+
 export class RefreshTokenMapper {
-  static toTypeOrm(
-    domainToken: Partial<DomainRefreshToken>,
-  ): TypeOrmRefreshToken {
+  static toTypeOrm(input: RefreshTokenMapperInput): TypeOrmRefreshToken {
     const typeOrmRefreshToken = new TypeOrmRefreshToken();
 
-    if (domainToken.uuid) typeOrmRefreshToken.uuid = domainToken.uuid;
-    if (domainToken.userUuid)
-      typeOrmRefreshToken.userUuid = domainToken.userUuid;
-    if (domainToken.tokenHash)
-      typeOrmRefreshToken.tokenHash = domainToken.tokenHash;
+    if (input.uuid) typeOrmRefreshToken.uuid = input.uuid;
+    if (input.userUuid) typeOrmRefreshToken.userUuid = input.userUuid;
+    if (input.tokenHash) typeOrmRefreshToken.tokenHash = input.tokenHash;
 
-    if (domainToken.expiresAt instanceof Date) {
-      typeOrmRefreshToken.expiresAt = domainToken.expiresAt.toISOString();
-    } else if (typeof domainToken.expiresAt === 'string') {
-      typeOrmRefreshToken.expiresAt = domainToken.expiresAt;
+    // Handle expiresAt - must always have a value
+    if (input.expiresAt instanceof Date) {
+      typeOrmRefreshToken.expiresAt = input.expiresAt.toISOString();
+    } else if (typeof input.expiresAt === 'string') {
+      typeOrmRefreshToken.expiresAt = input.expiresAt;
     } else {
-      typeOrmRefreshToken.expiresAt = new Date(0).toISOString();
+      throw new Error('expiresAt is required and must be a Date or ISO string');
     }
 
-    typeOrmRefreshToken.revoked = domainToken.revoked ?? false;
-    typeOrmRefreshToken.replacedBy = domainToken.replacedBy ?? null;
-    typeOrmRefreshToken.replacedAt = domainToken.replacedAt
-      ? domainToken.replacedAt.toISOString()
-      : undefined;
-    typeOrmRefreshToken.lastUsedAt = domainToken.lastUsedAt
-      ? domainToken.lastUsedAt.toISOString()
-      : undefined;
-    typeOrmRefreshToken.ip = domainToken.ip ?? undefined;
-    typeOrmRefreshToken.userAgent = domainToken.userAgent ?? undefined;
+    typeOrmRefreshToken.revoked = input.revoked ?? false;
+    typeOrmRefreshToken.replacedBy = input.replacedBy ?? null;
+
+    // Handle replacedAt
+    if (input.replacedAt instanceof Date) {
+      typeOrmRefreshToken.replacedAt = input.replacedAt.toISOString();
+    } else if (typeof input.replacedAt === 'string') {
+      typeOrmRefreshToken.replacedAt = input.replacedAt;
+    } else {
+      typeOrmRefreshToken.replacedAt = undefined;
+    }
+
+    // Handle lastUsedAt
+    if (input.lastUsedAt instanceof Date) {
+      typeOrmRefreshToken.lastUsedAt = input.lastUsedAt.toISOString();
+    } else if (typeof input.lastUsedAt === 'string') {
+      typeOrmRefreshToken.lastUsedAt = input.lastUsedAt;
+    } else {
+      typeOrmRefreshToken.lastUsedAt = undefined;
+    }
+
+    typeOrmRefreshToken.ip = input.ip ?? undefined;
+    typeOrmRefreshToken.userAgent = input.userAgent ?? undefined;
 
     return typeOrmRefreshToken;
   }
@@ -45,6 +68,9 @@ export class RefreshTokenMapper {
       createdAt: typeOrmToken.createdAt
         ? new Date(typeOrmToken.createdAt)
         : undefined,
+      replacedAt: typeOrmToken.replacedAt
+        ? new Date(typeOrmToken.replacedAt)
+        : null,
       lastUsedAt: typeOrmToken.lastUsedAt
         ? new Date(typeOrmToken.lastUsedAt)
         : null,

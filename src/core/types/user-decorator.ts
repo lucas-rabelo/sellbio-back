@@ -5,5 +5,9 @@ export interface AuthenticatedRequest extends Request {
     uuid: string;
     email: string;
   };
+  meta: {
+    ip?: string;
+    userAgent?: string;
+  };
   token: string;
 }

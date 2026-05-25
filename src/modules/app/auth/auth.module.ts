@@ -15,12 +15,14 @@ import { LoginAuthUseCase } from './application/use-cases/login/login-auth.use-c
 import { ForgotPasswordAuthUseCase } from './application/use-cases/forgot-password/forgot-password-auth.use-case';
 import { ResetPasswordAuthUseCase } from './application/use-cases/reset-password/reset-password-auth.use-case';
 import { ValidateTokenAuthUseCase } from './application/use-cases/validate-token/validate-token-auth.use-case';
+import { ValidateRefreshTokenAuthUseCase } from './application/use-cases/validate-refresh-token/validate-refresh-token-auth.use-case';
 
 import { RegisterAuthController } from './infra/http/controllers/register-auth.controller';
 import { LoginAuthController } from './infra/http/controllers/login-auth.controller';
 import { ForgotPasswordAuthController } from './infra/http/controllers/forgot-password-auth.controller';
 import { ResetPasswordAuthController } from './infra/http/controllers/reset-password-auth.controller';
 import { ValidateTokenAuthController } from './infra/http/controllers/validate-token-auth.controller';
+import { ValidateRefreshTokenAuthController } from './infra/http/controllers/validate-refresh-token-auth.controller';
 
 @Module({
   imports: [DatabaseModule, JwtModule, BcryptModule, UsersModule],
@@ -30,6 +32,7 @@ import { ValidateTokenAuthController } from './infra/http/controllers/validate-t
     ForgotPasswordAuthUseCase,
     ResetPasswordAuthUseCase,
     ValidateTokenAuthUseCase,
+    ValidateRefreshTokenAuthUseCase,
     CreateRefreshTokenService,
     {
       provide: AuthRepository,
@@ -42,6 +45,7 @@ import { ValidateTokenAuthController } from './infra/http/controllers/validate-t
     ForgotPasswordAuthController,
     ResetPasswordAuthController,
     ValidateTokenAuthController,
+    ValidateRefreshTokenAuthController,
   ],
   exports: [],
 })

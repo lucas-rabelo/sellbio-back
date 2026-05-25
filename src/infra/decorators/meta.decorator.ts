@@ -1,11 +1,10 @@
 import type { AuthenticatedRequest } from '@/src/core/types/user-decorator';
 import {
   createParamDecorator,
-  ExecutionContext,
-  NotFoundException,
+  ExecutionContext
 } from '@nestjs/common';
 
-export const User = createParamDecorator(
+export const Meta = createParamDecorator(
   (_: unknown, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest<AuthenticatedRequest>();
 
@@ -21,19 +20,11 @@ export const User = createParamDecorator(
     }
     const userAgent = request.headers['user-agent'];
 
-    if (request.user) {
-      return {
-        meta: {
-          ip,
-          userAgent,
-        },
-        user: request.user,
-        token: request.token,
-      };
-    }
-
-    throw new NotFoundException(
-      'User not founded in request. Use the AuthGuard to get the user.',
-    );
+    return {
+      meta: {
+        ip,
+        userAgent,
+      },
+    };
   },
 );
