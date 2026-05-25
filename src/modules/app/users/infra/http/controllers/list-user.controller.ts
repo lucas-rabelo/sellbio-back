@@ -5,10 +5,12 @@ import {
   ListUserRequestDto,
   ListUserResponseDto,
 } from '@/src/modules/app/users/dtos/list-user.dto';
-import { Query } from '@nestjs/common';
+import { Query, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@/src/infra/guards/auth/auth.guard';
 import type { ListUserRequestProps } from '../../../application/use-cases/list/types';
 
-@AppController('Users')
+@AppController('Users', '1', true)
+@UseGuards(AuthGuard)
 export class ListUserController {
   constructor(private readonly useCase: ListUserUseCase) {}
 

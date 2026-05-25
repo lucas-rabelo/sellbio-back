@@ -9,8 +9,24 @@ export const User = createParamDecorator(
   (_: unknown, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest<AuthenticatedRequest>();
 
+    const forwarded = request.headers['x-forwarded-for'];
+    let ip: string | undefined;
+    if (forwarded) {
+      ip =
+        forwarded && typeof forwarded === 'string'
+          ? forwarded.split(',')[0].trim()
+          : forwarded[0];
+    } else {
+      ip = request.socket.remoteAddress;
+    }
+    const userAgent = request.headers['user-agent'];
+
     if (request.user) {
       return {
+        meta: {
+          ip,
+          userAgent,
+        },
         user: request.user,
         token: request.token,
       };

@@ -1,11 +1,13 @@
 import { AppController } from '@/src/infra/decorators/base/controller.decorator';
 import { AppPut } from '@/src/infra/decorators/base/put.decorator';
 import { UpdateUserUseCase } from '@/src/modules/app/users/application/use-cases/update/update-user.use-case';
-import { Body, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Body, Param, ParseUUIDPipe, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@/src/infra/guards/auth/auth.guard';
 import type { UpdateUserRequestParamsProps } from '../../../application/use-cases/update/types';
 import { UpdateUserRequestBodyDto } from '../../../dtos/update-user.dto';
 
-@AppController('Users')
+@AppController('Users', '1', true)
+@UseGuards(AuthGuard)
 export class UpdateUserController {
   constructor(private readonly useCase: UpdateUserUseCase) {}
 
