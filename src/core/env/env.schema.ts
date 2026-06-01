@@ -3,7 +3,7 @@ import { APP_NAME, NODE_ENV } from '../constants';
 
 export const envSchema = z.object({
   NODE_ENV: z.enum([NODE_ENV.DEV, NODE_ENV.HML, NODE_ENV.PRD, NODE_ENV.TEST]),
-  PORT: z.coerce.number().default(3000),
+  PORT: z.coerce.number().default(3333),
   APP_NAME: z.string().default(APP_NAME),
 
   SECRET_ENV: z.string(),
