@@ -2,9 +2,14 @@
 import { Global, Logger, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Redis from 'ioredis';
-import { REDIS_CLIENT } from './constants';
-import { RedisService } from './redis.service';
+
 import type { EnvSchema } from '@/src/core';
+
+import { REDIS_CLIENT } from './constants';
+
+import { RedisService } from './services/redis.service';
+
+import { HealthCheckController } from './controllers/health-check.controller';
 
 @Global()
 @Module({
@@ -37,6 +42,7 @@ import type { EnvSchema } from '@/src/core';
     },
     RedisService,
   ],
+  controllers: [HealthCheckController],
   exports: [RedisService],
 })
 export class RedisModule {}
