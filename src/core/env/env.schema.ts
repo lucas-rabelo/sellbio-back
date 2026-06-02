@@ -14,6 +14,11 @@ export const envSchema = z.object({
   DATABASE_USER: z.string(),
   DATABASE_PASS: z.string(),
   DATABASE_NAME: z.string(),
+
+  REDIS_HOST: z.string(),
+  REDIS_PORT: z.coerce.number(),
+  REDIS_PASSWORD: z.string().optional(),
+  REDIS_DB: z.coerce.number(),
 });
 
 export type EnvSchema = z.infer<typeof envSchema>;
