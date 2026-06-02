@@ -1,4 +1,5 @@
 import { NotFoundException } from '@/src/core/exceptions/not-found.exception';
+import { EncryptedBcryptService } from '@/src/modules/shared/bcrypt/application/services/encrypted/encrypted-bcrypt.service';
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from '../../../infra/http/database/users.repository';
 import { CONTEXT_USER } from '../../constants/contexts';
@@ -7,7 +8,10 @@ import type { UpdateUserRequestProps, UpdateUserResponseProps } from './types';
 
 @Injectable()
 export class UpdateUserUseCase {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly encryptedBcryptService: EncryptedBcryptService,
+  ) {}
 
   async execute({
     userUuid,
@@ -34,8 +38,10 @@ export class UpdateUserUseCase {
         body.confirmPassword,
       );
 
-      // set new password hash when password is provided
-      user.passwordHash = Password.use(body.password);
+      const encryptedPassword = await this.encryptedBcryptService.execute(
+        body.password,
+      );
+      user.passwordHash = Password.use(encryptedPassword);
     }
 
     await this.usersRepository.save(user);

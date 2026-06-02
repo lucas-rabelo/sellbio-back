@@ -9,7 +9,7 @@ describe('Find By Email User Service', () => {
     const userRepository = new InMemoryUserRepository();
     const findByEmailUser = new FindByEmailUserService(userRepository);
 
-    const userMaked = await makeUser(CONTEXT_USER.FIND);
+    const userMaked = makeUser(CONTEXT_USER.FIND);
     await userRepository.create(userMaked);
 
     const user = await findByEmailUser.execute(userMaked.email);

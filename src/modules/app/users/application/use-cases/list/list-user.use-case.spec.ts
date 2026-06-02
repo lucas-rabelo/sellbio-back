@@ -9,25 +9,25 @@ describe('List user', () => {
     const listUser = new ListUserUseCase(userRepository);
 
     await userRepository.create(
-      await makeUser(CONTEXT_USER.CREATE, {
+      makeUser(CONTEXT_USER.CREATE, {
         name: 'Teste 1',
         email: 'teste.1@email.com',
       }),
     );
     await userRepository.create(
-      await makeUser(CONTEXT_USER.CREATE, {
+      makeUser(CONTEXT_USER.CREATE, {
         name: 'Teste 2',
         email: 'teste.2@email.com',
       }),
     );
     await userRepository.create(
-      await makeUser(CONTEXT_USER.CREATE, {
+      makeUser(CONTEXT_USER.CREATE, {
         name: 'Teste 3',
         email: 'teste.3@email.com',
       }),
     );
     await userRepository.create(
-      await makeUser(CONTEXT_USER.CREATE, {
+      makeUser(CONTEXT_USER.CREATE, {
         name: 'Teste 4',
         email: 'teste.4@email.com',
       }),

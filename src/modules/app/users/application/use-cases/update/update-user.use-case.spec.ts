@@ -1,15 +1,25 @@
 import { NotFoundException } from '@/src/core/exceptions/not-found.exception';
+import { EncryptedBcryptService } from '@/src/modules/shared/bcrypt/application/services/encrypted/encrypted-bcrypt.service';
 import { makeUser } from '@/test/factories/user-factory';
 import { InMemoryUserRepository } from '@/test/repositories/in-memory-users-repository';
 import { CONTEXT_USER } from '../../constants/contexts';
 import { UpdateUserUseCase } from './update-user.use-case';
 
 describe('Update user', () => {
+  const encryptedBcryptService = new EncryptedBcryptService();
+
+  jest
+    .spyOn(encryptedBcryptService, 'execute')
+    .mockResolvedValue('encrypted-password');
+
   it('should be able update user', async () => {
     const userRepository = new InMemoryUserRepository();
-    const updateUser = new UpdateUserUseCase(userRepository);
+    const updateUser = new UpdateUserUseCase(
+      userRepository,
+      encryptedBcryptService,
+    );
 
-    const userMaked = await makeUser(CONTEXT_USER.UPDATE);
+    const userMaked = makeUser(CONTEXT_USER.UPDATE);
     await userRepository.create(userMaked);
 
     const request = {
@@ -38,9 +48,12 @@ describe('Update user', () => {
 
   it('should not be able to update user', async () => {
     const userRepository = new InMemoryUserRepository();
-    const updateUser = new UpdateUserUseCase(userRepository);
+    const updateUser = new UpdateUserUseCase(
+      userRepository,
+      encryptedBcryptService,
+    );
 
-    const userMaked = await makeUser(CONTEXT_USER.CREATE);
+    const userMaked = makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(userMaked);
 
     const request = {

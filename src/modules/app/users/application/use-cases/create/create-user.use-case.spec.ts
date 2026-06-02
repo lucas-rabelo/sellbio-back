@@ -1,5 +1,6 @@
 import { DEFAULT_MESSAGES, ROLE_ENUM } from '@/src/core';
 import { BadRequestException } from '@/src/core/exceptions/bad-request.exception';
+import { EncryptedBcryptService } from '@/src/modules/shared/bcrypt/application/services/encrypted/encrypted-bcrypt.service';
 import { makeUser } from '@/test/factories/user-factory';
 import { InMemoryUserRepository } from '@/test/repositories/in-memory-users-repository';
 import { CONTEXT_USER } from '../../constants/contexts';
@@ -18,9 +19,18 @@ describe('Create user', () => {
     isActived: true,
   };
 
+  const encryptedBcryptService = new EncryptedBcryptService();
+
+  jest
+    .spyOn(encryptedBcryptService, 'execute')
+    .mockResolvedValue('encrypted-password');
+
   it('should be able to create user', async () => {
     const userRepository = new InMemoryUserRepository();
-    const createUser = new CreateUserUseCase(userRepository);
+    const createUser = new CreateUserUseCase(
+      userRepository,
+      encryptedBcryptService,
+    );
 
     const user = await createUser.execute(request);
 
@@ -41,9 +51,12 @@ describe('Create user', () => {
 
   it('should not be able to create user with email already exist', async () => {
     const userRepository = new InMemoryUserRepository();
-    const createUser = new CreateUserUseCase(userRepository);
+    const createUser = new CreateUserUseCase(
+      userRepository,
+      encryptedBcryptService,
+    );
 
-    const user = await makeUser(CONTEXT_USER.CREATE);
+    const user = makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(user);
 
     await expect(() => {
