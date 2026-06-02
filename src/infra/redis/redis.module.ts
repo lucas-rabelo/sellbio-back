@@ -12,9 +12,7 @@ import type { EnvSchema } from '@/src/core';
     {
       provide: REDIS_CLIENT,
       inject: [ConfigService],
-      useFactory: (
-        configService: ConfigService<EnvSchema>,
-      ): Redis => {
+      useFactory: (configService: ConfigService<EnvSchema>): Redis => {
         const logger = new Logger('RedisModule');
 
         const client = new Redis({
