@@ -3,10 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { randomUUID } from 'crypto';
 import { JWT_CONSTANTS } from '../../constants/parameters';
-import {
-  GenerateAccessTokenInput,
-  GenerateAccessTokenOutput,
-} from './types';
+import { GenerateAccessTokenInput, GenerateAccessTokenOutput } from './types';
 
 @Injectable()
 export class GenerateAccessTokenUseCase {
@@ -15,7 +12,9 @@ export class GenerateAccessTokenUseCase {
     private readonly configService: ConfigService,
   ) {}
 
-  async execute(input: GenerateAccessTokenInput): Promise<GenerateAccessTokenOutput> {
+  async execute(
+    input: GenerateAccessTokenInput,
+  ): Promise<GenerateAccessTokenOutput> {
     const { userUuid, email, role } = input;
 
     const accessToken = await this.jwtService.signAsync(

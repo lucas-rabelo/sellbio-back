@@ -18,9 +18,11 @@ export class ValidateRefreshTokenUseCase {
     private readonly configService: ConfigService,
     private readonly redisService: RedisService,
     private readonly revokeAllUserSessionsUseCase: RevokeAllUserSessionsUseCase,
-  ) { }
+  ) {}
 
-  async execute(input: ValidateRefreshTokenInput): Promise<ValidateRefreshTokenOutput> {
+  async execute(
+    input: ValidateRefreshTokenInput,
+  ): Promise<ValidateRefreshTokenOutput> {
     const { token } = input;
 
     let payload: RefreshTokenPayload;
@@ -41,8 +43,12 @@ export class ValidateRefreshTokenUseCase {
 
     const isValid = await bcrypt.compare(token, storedHash);
     if (!isValid) {
-      this.logger.warn(`Possível roubo de token detectado: userUuid=${payload.sub}`);
-      await this.revokeAllUserSessionsUseCase.execute({ userUuid: payload.sub });
+      this.logger.warn(
+        `Possível roubo de token detectado: userUuid=${payload.sub}`,
+      );
+      await this.revokeAllUserSessionsUseCase.execute({
+        userUuid: payload.sub,
+      });
       throw new UnauthorizedException('Sessão inválida, faça login novamente');
     }
 

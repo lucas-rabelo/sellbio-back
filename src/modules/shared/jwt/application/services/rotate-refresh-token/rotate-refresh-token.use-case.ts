@@ -14,10 +14,14 @@ export class RotateRefreshTokenUseCase {
     private readonly generateRefreshToken: GenerateRefreshTokenUseCase,
   ) {}
 
-  async execute(input: RotateRefreshTokenInput): Promise<RotateRefreshTokenOutput> {
+  async execute(
+    input: RotateRefreshTokenInput,
+  ): Promise<RotateRefreshTokenOutput> {
     const { oldToken, userUuid, email, role } = input;
 
-    const { jti } = await this.validateRefreshToken.execute({ token: oldToken });
+    const { jti } = await this.validateRefreshToken.execute({
+      token: oldToken,
+    });
 
     await this.revokeRefreshToken.execute({ userUuid, jti });
 

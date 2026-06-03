@@ -6,10 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { randomUUID } from 'crypto';
 import { JWT_CONSTANTS } from '../../constants/parameters';
-import {
-  GenerateRefreshTokenInput,
-  GenerateRefreshTokenOutput,
-} from './types';
+import { GenerateRefreshTokenInput, GenerateRefreshTokenOutput } from './types';
 
 @Injectable()
 export class GenerateRefreshTokenUseCase {
@@ -17,9 +14,11 @@ export class GenerateRefreshTokenUseCase {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly redisService: RedisService,
-  ) { }
+  ) {}
 
-  async execute(input: GenerateRefreshTokenInput): Promise<GenerateRefreshTokenOutput> {
+  async execute(
+    input: GenerateRefreshTokenInput,
+  ): Promise<GenerateRefreshTokenOutput> {
     const { userUuid } = input;
     const jti = randomUUID();
 
@@ -31,10 +30,17 @@ export class GenerateRefreshTokenUseCase {
       },
     );
 
-    const tokenHash = await bcrypt.hash(refreshToken, JWT_CONSTANTS.BCRYPT_SALT_ROUNDS);
+    const tokenHash = await bcrypt.hash(
+      refreshToken,
+      JWT_CONSTANTS.BCRYPT_SALT_ROUNDS,
+    );
     const key = REDIS_KEYS.refreshToken(userUuid, jti);
 
-    await this.redisService.setWithTtl(key, tokenHash, JWT_CONSTANTS.REFRESH_TOKEN_TTL_SECONDS);
+    await this.redisService.setWithTtl(
+      key,
+      tokenHash,
+      JWT_CONSTANTS.REFRESH_TOKEN_TTL_SECONDS,
+    );
 
     return { refreshToken };
   }

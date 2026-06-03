@@ -2,7 +2,10 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AccessTokenPayload } from '../generate-access-token/types';
-import type { ValidateAccessTokenInput, ValidateAccessTokenOutput } from './types';
+import type {
+  ValidateAccessTokenInput,
+  ValidateAccessTokenOutput,
+} from './types';
 
 @Injectable()
 export class ValidateAccessTokenUseCase {
@@ -11,7 +14,9 @@ export class ValidateAccessTokenUseCase {
     private readonly configService: ConfigService,
   ) {}
 
-  async execute(request: ValidateAccessTokenInput): Promise<ValidateAccessTokenOutput> {
+  async execute(
+    request: ValidateAccessTokenInput,
+  ): Promise<ValidateAccessTokenOutput> {
     const { token } = request;
 
     let payload: AccessTokenPayload;

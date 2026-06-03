@@ -6,7 +6,7 @@ import { RevokeRefreshTokenInput } from './types';
 
 @Injectable()
 export class RevokeRefreshTokenUseCase {
-  constructor(private readonly redisService: RedisService) { }
+  constructor(private readonly redisService: RedisService) {}
 
   async execute(input: RevokeRefreshTokenInput): Promise<void> {
     const { userUuid, jti } = input;

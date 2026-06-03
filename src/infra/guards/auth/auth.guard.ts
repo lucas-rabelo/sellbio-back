@@ -4,13 +4,13 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ValidateTokenJwtService } from '@/src/modules/shared/jwt/application/services/validate-token/validate-token-jwt.service';
 import type { AuthenticatedRequest } from './types';
+import { ValidateAccessTokenUseCase } from '@/src/modules/shared/jwt/application/services/validate-access-token/validate-access-token.use-case';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
-    private readonly validateTokenJwtService: ValidateTokenJwtService,
+    private readonly validateTokenJwtService: ValidateAccessTokenUseCase,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -23,14 +23,14 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const validated = await this.validateTokenJwtService.execute(token, {});
+      const validated = await this.validateTokenJwtService.execute({ token });
 
-      if (!validated || !validated.uuid) {
+      if (!validated || !validated.userUuid) {
         throw new UnauthorizedException('Invalid token');
       }
 
       request.user = {
-        uuid: validated.uuid,
+        uuid: validated.userUuid,
         email: validated.email,
       };
 
