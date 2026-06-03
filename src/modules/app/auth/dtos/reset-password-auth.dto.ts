@@ -4,6 +4,7 @@ import { createUserRequestSchema } from '../../users/dtos/create-user.dto';
 import { registerAuthResponseSchema } from './register-auth.dto';
 
 const resetPasswordAuthRequestSchema = z.object({
+  token: z.jwt(),
   password: createUserRequestSchema.shape.password,
   confirmPassword: createUserRequestSchema.shape.confirmPassword,
 });

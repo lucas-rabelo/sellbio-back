@@ -3,7 +3,7 @@ import z from 'zod';
 import { registerAuthResponseSchema } from './register-auth.dto';
 
 const validateRefreshTokenAuthRequestSchema = z.object({
-  refresh_token: z
+  refreshToken: z
     .string()
     .min(1, { message: 'Refresh token is required' })
     .describe('Refresh token in format: {tokenUuid}.{rawToken}'),

@@ -6,11 +6,11 @@ import type {
 
 export type ValidateRefreshTokenAuthRequestProps = z.infer<
   typeof validateRefreshTokenAuthRequestSchema
->;
-
-export type ValidateRefreshTokenAuthMetaProps = {
-  ip?: string;
-  userAgent?: string;
+> & {
+  meta: {
+    ip?: string;
+    userAgent?: string;
+  };
 };
 
 export type ValidateRefreshTokenAuthResponseProps = z.infer<
