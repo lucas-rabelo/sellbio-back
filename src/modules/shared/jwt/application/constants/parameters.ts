@@ -1,0 +1,6 @@
+export const JWT_CONSTANTS = {
+  ACCESS_TOKEN_TTL: '15m',
+  REFRESH_TOKEN_TTL: '7d',
+  REFRESH_TOKEN_TTL_SECONDS: 60 * 60 * 24 * 7,
+  BCRYPT_SALT_ROUNDS: 10,
+} as const;
