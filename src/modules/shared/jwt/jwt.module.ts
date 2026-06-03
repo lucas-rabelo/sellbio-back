@@ -9,6 +9,7 @@ import { RevokeRefreshTokenUseCase } from './application/services/revoke-refresh
 import { RotateRefreshTokenUseCase } from './application/services/rotate-refresh-token/rotate-refresh-token.use-case';
 import { ValidateRefreshTokenUseCase } from './application/services/validate-refresh-token/validate-refresh-token.use-case';
 import { ValidateAccessTokenUseCase } from './application/services/validate-access-token/validate-access-token.use-case';
+import { RedisModule } from '@/src/infra/redis/redis.module';
 
 const services = [
   GenerateAccessTokenUseCase,
@@ -22,6 +23,7 @@ const services = [
 
 @Module({
   imports: [
+    RedisModule,
     ConfigModule.forRoot({ isGlobal: true }),
     NestJwtModule.registerAsync({
       global: true,
