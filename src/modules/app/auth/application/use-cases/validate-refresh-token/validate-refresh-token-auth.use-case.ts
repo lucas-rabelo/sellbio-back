@@ -29,7 +29,7 @@ export class ValidateRefreshTokenAuthUseCase {
     private readonly revokeRefreshTokenUseCase: RevokeRefreshTokenUseCase,
     private readonly revokeAllUserSessionsUseCase: RevokeAllUserSessionsUseCase,
     private readonly findByUuidUserService: FindByUuidUserService,
-  ) { }
+  ) {}
 
   async execute(
     request: ValidateRefreshTokenAuthRequestProps,
