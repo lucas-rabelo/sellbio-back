@@ -2,8 +2,7 @@ import { createZodDto } from 'nestjs-zod';
 import z from 'zod';
 
 const logoutAuthRequestSchema = z.object({
-  userUuid: z.string(),
-  tokenUuid: z.string(),
+  refreshToken: z.string(),
 });
 
 class LogoutAuthRequestDto extends createZodDto(logoutAuthRequestSchema) {}
