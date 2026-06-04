@@ -4,6 +4,11 @@ import type {
   loginAuthResponseSchema,
 } from '../../../dtos/login-auth.dto';
 
-export type LoginAuthRequestProps = z.infer<typeof loginAuthRequestSchema>;
+export type LoginAuthRequestProps = z.infer<typeof loginAuthRequestSchema> & {
+  meta: {
+    ip?: string;
+    userAgent?: string;
+  };
+};
 
 export type LoginAuthResponseProps = z.infer<typeof loginAuthResponseSchema>;

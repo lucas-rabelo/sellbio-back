@@ -5,8 +5,8 @@ import { createUserRequestSchema } from '../../users/dtos/create-user.dto';
 const registerAuthRequestSchema = createUserRequestSchema;
 
 const registerAuthResponseSchema = z.object({
-  access_token: z.jwt(),
-  refresh_token: z.string(),
+  accessToken: z.jwt(),
+  refreshToken: z.string(),
 });
 
 class RegisterAuthRequestDto extends createZodDto(registerAuthRequestSchema) {}

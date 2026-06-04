@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
 import { BadRequestException } from '@/src/core/exceptions/bad-request.exception';
 import { NotFoundException } from '@/src/core/exceptions/not-found.exception';
 import { FindByUuidUserService } from '@/src/modules/app/users/application/services/find-by-uuid/find-by-uuid-user.service';
-import { ValidateTokenJwtService } from '@/src/modules/shared/jwt/application/services/validate-token/validate-token-jwt.service';
+import { ValidateAccessTokenUseCase } from '@/src/modules/shared/jwt/application/services/validate-access-token/validate-access-token.use-case';
+import { Injectable } from '@nestjs/common';
 import { CONTEXT_AUTH } from '../../../application/constants/contexts';
 import type {
   ValidateTokenAuthRequestProps,
@@ -12,7 +12,7 @@ import type {
 @Injectable()
 export class ValidateTokenAuthUseCase {
   constructor(
-    private readonly validateTokenJwtService: ValidateTokenJwtService,
+    private readonly validateTokenJwtService: ValidateAccessTokenUseCase,
     private readonly findByUuidUserService: FindByUuidUserService,
   ) {}
 
@@ -21,7 +21,7 @@ export class ValidateTokenAuthUseCase {
   ): Promise<ValidateTokenAuthResponseProps> {
     const { token } = request;
 
-    const validated = await this.validateTokenJwtService.execute(token, {});
+    const validated = await this.validateTokenJwtService.execute({ token });
 
     if (!validated) {
       throw new BadRequestException(
@@ -30,7 +30,7 @@ export class ValidateTokenAuthUseCase {
       );
     }
 
-    const user = await this.findByUuidUserService.execute(validated.uuid);
+    const user = await this.findByUuidUserService.execute(validated.userUuid);
 
     if (!user) {
       throw new NotFoundException(CONTEXT_AUTH.VALIDATE_TOKEN);

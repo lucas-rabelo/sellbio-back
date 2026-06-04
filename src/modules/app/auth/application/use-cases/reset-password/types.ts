@@ -6,7 +6,12 @@ import type {
 
 export type ResetPasswordAuthRequestProps = z.infer<
   typeof resetPasswordAuthRequestSchema
->;
+> & {
+  meta: {
+    ip?: string;
+    userAgent?: string;
+  };
+};
 
 export type ResetPasswordAuthResponseProps = z.infer<
   typeof resetPasswordAuthResponseSchema

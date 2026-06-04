@@ -9,7 +9,7 @@ describe('Deactivate user', () => {
     const userRepository = new InMemoryUserRepository();
     const deactiveUser = new DeactivateUserUseCase(userRepository);
 
-    const user = await makeUser(CONTEXT_USER.CREATE);
+    const user = makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(user);
 
     await deactiveUser.execute(user.uuid);

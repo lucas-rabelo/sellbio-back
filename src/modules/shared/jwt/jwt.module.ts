@@ -1,11 +1,29 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule as NestJwtModule } from '@nestjs/jwt';
-import { CreateTokenJwtService } from './application/services/create-token/create-token-jwt.service';
-import { ValidateTokenJwtService } from './application/services/validate-token/validate-token-jwt.service';
+
+import { GenerateAccessTokenUseCase } from './application/services/generate-access-token/generate-access-token.use-case';
+import { GenerateRefreshTokenUseCase } from './application/services/generate-refresh-token/generate-refresh-token.use-case';
+import { RevokeAllUserSessionsUseCase } from './application/services/revoke-all-user-sessions/revoke-all-user-sessions.use-case';
+import { RevokeRefreshTokenUseCase } from './application/services/revoke-refresh-token/revoke-refresh-token.use-case';
+import { RotateRefreshTokenUseCase } from './application/services/rotate-refresh-token/rotate-refresh-token.use-case';
+import { ValidateRefreshTokenUseCase } from './application/services/validate-refresh-token/validate-refresh-token.use-case';
+import { ValidateAccessTokenUseCase } from './application/services/validate-access-token/validate-access-token.use-case';
+import { RedisModule } from '@/src/infra/redis/redis.module';
+
+const services = [
+  GenerateAccessTokenUseCase,
+  GenerateRefreshTokenUseCase,
+  RevokeAllUserSessionsUseCase,
+  RevokeRefreshTokenUseCase,
+  RotateRefreshTokenUseCase,
+  ValidateRefreshTokenUseCase,
+  ValidateAccessTokenUseCase,
+];
 
 @Module({
   imports: [
+    RedisModule,
     ConfigModule.forRoot({ isGlobal: true }),
     NestJwtModule.registerAsync({
       global: true,
@@ -16,7 +34,7 @@ import { ValidateTokenJwtService } from './application/services/validate-token/v
       }),
     }),
   ],
-  providers: [CreateTokenJwtService, ValidateTokenJwtService],
-  exports: [CreateTokenJwtService, ValidateTokenJwtService],
+  providers: services,
+  exports: services,
 })
 export class JwtModule {}

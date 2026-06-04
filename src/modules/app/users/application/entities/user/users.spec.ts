@@ -1,5 +1,5 @@
 import { ROLE_ENUM } from '@/src/core';
-import { InMemoryAuthRepository } from '@/test/repositories/in-memory-auth-repository';
+import { EncryptedBcryptService } from '@/src/modules/shared/bcrypt/application/services/encrypted/encrypted-bcrypt.service';
 import { CONTEXT_USER } from '../../constants/contexts';
 import { Password } from '../password/password';
 import { User } from './users';
@@ -14,10 +14,15 @@ describe('User Domain Entity', () => {
     refreshToken: '',
   };
 
+  const encryptedBcryptService = new EncryptedBcryptService();
+
+  jest
+    .spyOn(encryptedBcryptService, 'execute')
+    .mockResolvedValue('encrypted-password');
+
   it('should be able to create a new user', async () => {
-    const authRepository = new InMemoryAuthRepository();
     Password.validate(CONTEXT_USER.CREATE, '12ab34CD@', '12ab34CD@');
-    const hash = await authRepository.hash('12ab34CD@');
+    const hash = await encryptedBcryptService.execute('12ab34CD@');
     const createValidPassword = () => Password.use(hash);
 
     const user = new User({
@@ -32,9 +37,8 @@ describe('User Domain Entity', () => {
   });
 
   it('should update name and trigger updatedAt', async () => {
-    const authRepository = new InMemoryAuthRepository();
     Password.validate(CONTEXT_USER.CREATE, '12ab34CD@', '12ab34CD@');
-    const hash = await authRepository.hash('12ab34CD@');
+    const hash = await encryptedBcryptService.execute('12ab34CD@');
     const createValidPassword = () => Password.use(hash);
 
     const user = new User({
@@ -59,9 +63,8 @@ describe('User Domain Entity', () => {
   });
 
   it('should be able to deactivate and reactivate a user', async () => {
-    const authRepository = new InMemoryAuthRepository();
     Password.validate(CONTEXT_USER.CREATE, '12ab34CD@', '12ab34CD@');
-    const hash = await authRepository.hash('12ab34CD@');
+    const hash = await encryptedBcryptService.execute('12ab34CD@');
     const createValidPassword = () => Password.use(hash);
 
     const user = new User({
@@ -82,9 +85,8 @@ describe('User Domain Entity', () => {
   });
 
   it('should be able to soft delete a user', async () => {
-    const authRepository = new InMemoryAuthRepository();
     Password.validate(CONTEXT_USER.CREATE, '12ab34CD@', '12ab34CD@');
-    const hash = await authRepository.hash('12ab34CD@');
+    const hash = await encryptedBcryptService.execute('12ab34CD@');
     const createValidPassword = () => Password.use(hash);
 
     const user = new User({
@@ -105,9 +107,8 @@ describe('User Domain Entity', () => {
   });
 
   it('should accept an existing UUID when restoring from database', async () => {
-    const authRepository = new InMemoryAuthRepository();
     Password.validate(CONTEXT_USER.CREATE, '12ab34CD@', '12ab34CD@');
-    const hash = await authRepository.hash('12ab34CD@');
+    const hash = await encryptedBcryptService.execute('12ab34CD@');
     const createValidPassword = () => Password.use(hash);
 
     const fixedUuid = 'custom-uuid-123';

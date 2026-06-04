@@ -21,14 +21,9 @@ export class ValidateRefreshTokenAuthController {
     okResponse: ValidateRefreshTokenAuthResponseDto,
   })
   async handle(
-    @Body() { refresh_token }: ValidateRefreshTokenAuthRequestDto,
+    @Body() body: ValidateRefreshTokenAuthRequestDto,
     @Meta() { meta }: AuthenticatedRequest,
   ) {
-    return this.useCase.execute(
-      {
-        refresh_token,
-      },
-      meta,
-    );
+    return this.useCase.execute({ ...body, meta });
   }
 }

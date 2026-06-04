@@ -9,7 +9,7 @@ describe('Read user', () => {
     const userRepository = new InMemoryUserRepository();
     const readUser = new ReadUserUseCase(userRepository);
 
-    const userMaked = await makeUser(CONTEXT_USER.CREATE);
+    const userMaked = makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(userMaked);
 
     const user = await readUser.execute(userMaked.uuid);

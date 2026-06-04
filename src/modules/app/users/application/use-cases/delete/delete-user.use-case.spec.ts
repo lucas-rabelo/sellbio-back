@@ -9,7 +9,7 @@ describe('Delete user', () => {
     const userRepository = new InMemoryUserRepository();
     const deleteUser = new DeleteUserUseCase(userRepository);
 
-    const user = await makeUser(CONTEXT_USER.CREATE);
+    const user = makeUser(CONTEXT_USER.CREATE);
     await userRepository.create(user);
     await deleteUser.execute(user.uuid);
 
