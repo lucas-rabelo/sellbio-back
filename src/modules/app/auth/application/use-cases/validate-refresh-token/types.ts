@@ -2,7 +2,7 @@ import type z from 'zod';
 import type {
   validateRefreshTokenAuthRequestSchema,
   validateRefreshTokenAuthResponseSchema,
-} from '../../../dtos/validate-refresh-token-auth.dto';
+} from '../../../dtos';
 
 export type ValidateRefreshTokenAuthRequestProps = z.infer<
   typeof validateRefreshTokenAuthRequestSchema

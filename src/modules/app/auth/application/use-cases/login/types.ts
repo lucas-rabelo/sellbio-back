@@ -2,7 +2,7 @@ import type z from 'zod';
 import type {
   loginAuthRequestSchema,
   loginAuthResponseSchema,
-} from '../../../dtos/login-auth.dto';
+} from '../../../dtos';
 
 export type LoginAuthRequestProps = z.infer<typeof loginAuthRequestSchema> & {
   meta: {

@@ -2,7 +2,7 @@ import type z from 'zod';
 import type {
   registerAuthRequestSchema,
   registerAuthResponseSchema,
-} from '../../../dtos/register-auth.dto';
+} from '../../../dtos';
 
 export type RegisterAuthRequestProps = z.infer<
   typeof registerAuthRequestSchema
