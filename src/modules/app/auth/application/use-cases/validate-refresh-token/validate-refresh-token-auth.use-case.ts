@@ -137,11 +137,14 @@ export class ValidateRefreshTokenAuthUseCase {
     const tokenHash = await this.encryptedBcryptService.execute(rawToken);
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
-    await this.authRepository.rotateRefreshToken(oldTokenUuid, {
-      uuid: newTokenUuid,
-      hash: tokenHash,
-      expiresAt,
-      meta,
+    await this.authRepository.rotateRefreshToken({
+      oldUuid: oldTokenUuid,
+      newToken: {
+        uuid: newTokenUuid,
+        hash: tokenHash,
+        expiresAt,
+        meta,
+      },
     });
 
     await Promise.all([

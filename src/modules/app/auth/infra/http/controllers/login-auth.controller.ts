@@ -8,7 +8,7 @@ import { LoginAuthUseCase } from '@/src/modules/app/auth/application/use-cases/l
 import {
   LoginAuthRequestDto,
   LoginAuthResponseDto,
-} from '@/src/modules/app/auth/dtos/login-auth.dto';
+} from '@/src/modules/app/auth/dtos';
 
 @AppController('Auth', '1')
 export class LoginAuthController {

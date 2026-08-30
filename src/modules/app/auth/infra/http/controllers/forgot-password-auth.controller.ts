@@ -6,7 +6,7 @@ import { ForgotPasswordAuthUseCase } from '@/src/modules/app/auth/application/us
 import {
   ForgotPasswordAuthRequestDto,
   ForgotPasswordAuthResponseDto,
-} from '@/src/modules/app/auth/dtos/forgot-password-auth.dto';
+} from '@/src/modules/app/auth/dtos';
 
 @AppController('Auth', '1')
 export class ForgotPasswordAuthController {

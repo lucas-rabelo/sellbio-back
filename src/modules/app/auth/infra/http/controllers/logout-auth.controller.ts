@@ -3,7 +3,7 @@ import { AppPost } from '@/src/infra/decorators/base/post.decorator';
 import { Body, Headers, UseGuards } from '@nestjs/common';
 
 import { LogoutAuthUseCase } from '@/src/modules/app/auth/application/use-cases/logout/logout-auth.use-case';
-import { LogoutAuthRequestDto } from '@/src/modules/app/auth/dtos/logout-auth.dto';
+import { LogoutAuthRequestDto } from '@/src/modules/app/auth/dtos';
 import { User } from '@/src/infra/decorators/user.decorator';
 import type { AuthenticatedRequest } from '@/src/core/types/user-decorator';
 import { AuthGuard } from '@/src/infra/guards/auth/auth.guard';

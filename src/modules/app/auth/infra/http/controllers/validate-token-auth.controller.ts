@@ -6,7 +6,7 @@ import { ValidateTokenAuthUseCase } from '@/src/modules/app/auth/application/use
 import {
   ValidadeTokenAuthRequestDto,
   ValidadeTokenAuthResponseDto,
-} from '@/src/modules/app/auth/dtos/validate-token-auth.dto';
+} from '@/src/modules/app/auth/dtos';
 
 @AppController('Auth', '1')
 export class ValidateTokenAuthController {

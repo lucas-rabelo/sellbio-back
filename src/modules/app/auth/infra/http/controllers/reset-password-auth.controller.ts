@@ -8,7 +8,7 @@ import { ResetPasswordAuthUseCase } from '@/src/modules/app/auth/application/use
 import {
   ResetPasswordAuthRequestDto,
   ResetPasswordAuthResponseDto,
-} from '@/src/modules/app/auth/dtos/reset-password-auth.dto';
+} from '@/src/modules/app/auth/dtos';
 
 @AppController('Auth', '1')
 export class ResetPasswordAuthController {

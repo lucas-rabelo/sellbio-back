@@ -22,7 +22,6 @@ export class RefreshTokenMapper {
     if (input.userUuid) typeOrmRefreshToken.userUuid = input.userUuid;
     if (input.tokenHash) typeOrmRefreshToken.tokenHash = input.tokenHash;
 
-    // Handle expiresAt - must always have a value
     if (input.expiresAt instanceof Date) {
       typeOrmRefreshToken.expiresAt = input.expiresAt.toISOString();
     } else if (typeof input.expiresAt === 'string') {
@@ -34,7 +33,6 @@ export class RefreshTokenMapper {
     typeOrmRefreshToken.revoked = input.revoked ?? false;
     typeOrmRefreshToken.replacedBy = input.replacedBy ?? null;
 
-    // Handle replacedAt
     if (input.replacedAt instanceof Date) {
       typeOrmRefreshToken.replacedAt = input.replacedAt.toISOString();
     } else if (typeof input.replacedAt === 'string') {
@@ -43,7 +41,6 @@ export class RefreshTokenMapper {
       typeOrmRefreshToken.replacedAt = undefined;
     }
 
-    // Handle lastUsedAt
     if (input.lastUsedAt instanceof Date) {
       typeOrmRefreshToken.lastUsedAt = input.lastUsedAt.toISOString();
     } else if (typeof input.lastUsedAt === 'string') {
