@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import type { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import type { Repository } from 'typeorm';
 
-import { UsersEntity, RefreshTokenEntity } from '@/src/infra';
+import { RefreshTokenEntity, UsersEntity } from '@/src/infra';
 import type { User } from '@/src/modules/app/users/application/entities/user/users';
 
-import type { AuthRepository } from '../../auth.repository';
 import { RefreshToken as DomainRefreshToken } from '@/src/modules/app/auth/application/entities/refresh-token/refresh-token';
+import type { AuthRepository } from '../../auth.repository';
+import type {
+  CreateRefreshTokenProps,
+  RotateRefreshTokenProps,
+} from '../../auth.repository.types';
 import { RefreshTokenMapper } from '../mappers/refresh-token.mapper';
 
 import { AuthMapper } from '../mappers/auth.mapper';
@@ -36,13 +40,13 @@ export class AuthRepositoryTypeorm implements AuthRepository {
     await this.repository.save(raw);
   }
 
-  async createRefreshToken(
-    userUuid: string,
-    tokenUuid: string,
-    tokenHash: string,
-    expiresAt: Date,
-    meta?: { ip?: string; userAgent?: string },
-  ): Promise<void> {
+  async createRefreshToken({
+    userUuid,
+    tokenUuid,
+    tokenHash,
+    expiresAt,
+    meta,
+  }: CreateRefreshTokenProps): Promise<void> {
     const raw = RefreshTokenMapper.toTypeOrm({
       uuid: tokenUuid,
       userUuid,
@@ -80,27 +84,24 @@ export class AuthRepositoryTypeorm implements AuthRepository {
     await this.refreshRepository.update({ userUuid }, { revoked: true });
   }
 
-  async rotateRefreshToken(
-    oldUuid: string,
-    newToken: {
-      uuid: string;
-      hash: string;
-      expiresAt: Date;
-      meta?: { ip?: string; userAgent?: string };
-    },
-  ): Promise<void> {
+  async rotateRefreshToken({
+    oldUuid,
+    newToken,
+  }: RotateRefreshTokenProps): Promise<void> {
     const old = await this.refreshRepository.findOne({
       where: { uuid: oldUuid },
     });
     if (!old) throw new Error('Old refresh token not found');
 
+    const { uuid, hash: tokenHash, expiresAt, meta } = newToken;
+
     const rawNew = RefreshTokenMapper.toTypeOrm({
-      uuid: newToken.uuid,
-      userUuid: old.userUuid,
-      tokenHash: newToken.hash,
-      expiresAt: newToken.expiresAt,
-      ip: newToken.meta?.ip,
-      userAgent: newToken.meta?.userAgent,
+      uuid,
+      userUuid: oldUuid,
+      tokenHash,
+      expiresAt,
+      ip: meta?.ip,
+      userAgent: meta?.userAgent,
     });
 
     await this.refreshRepository.save(rawNew);

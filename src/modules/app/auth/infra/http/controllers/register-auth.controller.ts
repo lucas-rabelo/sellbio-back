@@ -8,7 +8,7 @@ import { RegisterAuthUseCase } from '@/src/modules/app/auth/application/use-case
 import {
   RegisterAuthRequestDto,
   RegisterAuthResponseDto,
-} from '@/src/modules/app/auth/dtos/register-auth.dto';
+} from '@/src/modules/app/auth/dtos';
 
 @AppController('Auth', '1')
 export class RegisterAuthController {

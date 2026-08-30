@@ -8,7 +8,7 @@ import { ValidateRefreshTokenAuthUseCase } from '@/src/modules/app/auth/applicat
 import {
   ValidateRefreshTokenAuthRequestDto,
   ValidateRefreshTokenAuthResponseDto,
-} from '@/src/modules/app/auth/dtos/validate-refresh-token-auth.dto';
+} from '@/src/modules/app/auth/dtos';
 
 @AppController('Auth', '1')
 export class ValidateRefreshTokenAuthController {

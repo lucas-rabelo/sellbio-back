@@ -2,7 +2,7 @@ import type z from 'zod';
 import type {
   resetPasswordAuthRequestSchema,
   resetPasswordAuthResponseSchema,
-} from '../../../dtos/reset-password-auth.dto';
+} from '../../../dtos';
 
 export type ResetPasswordAuthRequestProps = z.infer<
   typeof resetPasswordAuthRequestSchema
