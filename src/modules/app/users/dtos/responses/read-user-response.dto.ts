@@ -12,6 +12,6 @@ const readUserResponseSchema = z.object({
   role: z.string(),
 });
 
-class ReadUserResponseDto extends createZodDto(readUserResponseSchema) { }
+class ReadUserResponseDto extends createZodDto(readUserResponseSchema) {}
 
 export { ReadUserResponseDto, readUserResponseSchema };

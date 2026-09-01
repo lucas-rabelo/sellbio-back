@@ -9,7 +9,7 @@ import { UpdateUserRequestBodyDto } from '../../../dtos';
 @AppController('Users', '1', true)
 @UseGuards(AuthGuard)
 export class UpdateUserController {
-  constructor(private readonly useCase: UpdateUserUseCase) { }
+  constructor(private readonly useCase: UpdateUserUseCase) {}
 
   @AppPut({
     path: ':userUuid',

@@ -3,10 +3,6 @@ import { readUserResponseSchema } from './read-user-response.dto';
 
 const updateUserResponseSchema = readUserResponseSchema;
 
-class UpdateUserResponseDto extends createZodDto(updateUserResponseSchema) { }
+class UpdateUserResponseDto extends createZodDto(updateUserResponseSchema) {}
 
-export {
-  UpdateUserResponseDto,
-  updateUserResponseSchema
-};
-
+export { UpdateUserResponseDto, updateUserResponseSchema };

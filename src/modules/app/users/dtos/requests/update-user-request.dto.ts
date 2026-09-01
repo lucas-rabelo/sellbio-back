@@ -19,6 +19,5 @@ class UpdateUserRequestDto extends createZodDto(updateUserRequestSchema) {}
 export {
   UpdateUserRequestBodyDto,
   UpdateUserRequestDto,
-  updateUserRequestSchema
+  updateUserRequestSchema,
 };
-

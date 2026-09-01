@@ -11,7 +11,4 @@ class FindByEmailUserResponseDto extends createZodDto(
   findByEmailUserResponseSchema,
 ) {}
 
-export {
-  FindByEmailUserResponseDto,
-  findByEmailUserResponseSchema,
-};
+export { FindByEmailUserResponseDto, findByEmailUserResponseSchema };

@@ -1,8 +1,6 @@
 import { findByUuidRequestSchema } from '@/src/infra';
 import type z from 'zod';
-import type {
-  readUserResponseSchema
-} from '../../../dtos';
+import type { readUserResponseSchema } from '../../../dtos';
 
 export type ReadUserRequestProps = z.infer<typeof findByUuidRequestSchema>;
 

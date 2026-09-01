@@ -5,6 +5,4 @@ export type DeactivateUserRequestProps = z.infer<
   typeof findByUuidRequestSchema
 >;
 
-export type DeactivateUserResponseProps = z.infer<
-  typeof voidResponseSchema
->;
+export type DeactivateUserResponseProps = z.infer<typeof voidResponseSchema>;

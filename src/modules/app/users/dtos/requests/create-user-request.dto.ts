@@ -31,10 +31,6 @@ const createUserRequestSchema = z.object({
   refreshToken: z.string().optional(),
 });
 
-class CreateUserRequestDto extends createZodDto(createUserRequestSchema) { }
+class CreateUserRequestDto extends createZodDto(createUserRequestSchema) {}
 
-export {
-  CreateUserRequestDto,
-  createUserRequestSchema
-};
-
+export { CreateUserRequestDto, createUserRequestSchema };
