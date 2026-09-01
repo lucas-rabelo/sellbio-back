@@ -2,7 +2,7 @@ import type z from 'zod';
 import type {
   listUserRequestSchema,
   listUserResponseSchema,
-} from '../../../dtos/list-user.dto';
+} from '../../../dtos';
 
 export type ListUserRequestProps = z.infer<typeof listUserRequestSchema>;
 

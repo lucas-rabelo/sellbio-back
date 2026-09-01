@@ -1,16 +1,12 @@
+import { findByUuidRequestSchema } from '@/src/infra';
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'zod';
-import { createUserRequestSchema } from './create-user.dto';
-import { readUserResponseSchema } from './read-user.dto';
-
-const updateUserRequestParamSchema = z.uuid();
+import { createUserRequestSchema } from './create-user-request.dto';
 
 const updateUserRequestBodySchema = createUserRequestSchema.partial();
 
-const updateUserResponseSchema = readUserResponseSchema;
-
 const updateUserRequestSchema = z.object({
-  userUuid: updateUserRequestParamSchema,
+  userUuid: findByUuidRequestSchema,
   body: updateUserRequestBodySchema,
 });
 
@@ -20,12 +16,9 @@ class UpdateUserRequestBodyDto extends createZodDto(
 
 class UpdateUserRequestDto extends createZodDto(updateUserRequestSchema) {}
 
-class UpdateUserResponseDto extends createZodDto(updateUserResponseSchema) {}
-
 export {
   UpdateUserRequestBodyDto,
   UpdateUserRequestDto,
-  updateUserRequestSchema,
-  UpdateUserResponseDto,
-  updateUserResponseSchema,
+  updateUserRequestSchema
 };
+

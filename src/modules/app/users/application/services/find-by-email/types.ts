@@ -1,11 +1,11 @@
+import { findByEmailRequestSchema } from '@/src/infra';
 import z from 'zod';
 import type {
-  findByEmailUserRequestSchema,
-  findByEmailUserResponseSchema,
-} from '../../../dtos/find-by-email.dto';
+  findByEmailUserResponseSchema
+} from '../../../dtos';
 
 export type FindByEmailUserRequestProps = z.infer<
-  typeof findByEmailUserRequestSchema
+  typeof findByEmailRequestSchema
 >;
 
 export type FindByEmailUserResponseProps = z.infer<

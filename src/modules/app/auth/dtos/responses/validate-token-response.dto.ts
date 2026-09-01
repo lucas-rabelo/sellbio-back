@@ -1,5 +1,5 @@
 import { createZodDto } from 'nestjs-zod';
-import { readUserResponseSchema } from '../../../users/dtos/read-user.dto';
+import { readUserResponseSchema } from '../../../users/dtos';
 
 const validateTokenAuthResponseSchema = readUserResponseSchema;
 

@@ -2,7 +2,7 @@ import type z from 'zod';
 import type {
   updateUserRequestSchema,
   updateUserResponseSchema,
-} from '../../../dtos/update-user.dto';
+} from '../../../dtos';
 
 export type UpdateUserRequestProps = z.infer<typeof updateUserRequestSchema>;
 

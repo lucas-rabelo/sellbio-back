@@ -4,7 +4,7 @@ import { ReadUserUseCase } from '@/src/modules/app/users/application/use-cases/r
 import { Param, ParseUUIDPipe, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@/src/infra/guards/auth/auth.guard';
 import type { ReadUserRequestProps } from '../../../application/use-cases/read/types';
-import { ReadUserResponseDto } from '../../../dtos/read-user.dto';
+import { ReadUserResponseDto } from '../../../dtos';
 
 @AppController('Users', '1', true)
 @UseGuards(AuthGuard)

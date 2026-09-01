@@ -1,8 +1,6 @@
 import { createZodDto } from 'nestjs-zod';
 import z from 'zod';
-import { readUserResponseSchema } from './read-user.dto';
-
-const findByUuidUserRequestSchema = z.string();
+import { readUserResponseSchema } from './read-user-response.dto';
 
 const findByUuidUserResponseSchema = z.object({
   ...readUserResponseSchema.shape,
@@ -12,10 +10,10 @@ const findByUuidUserResponseSchema = z.object({
 
 class FindByUuidUserResponseDto extends createZodDto(
   findByUuidUserResponseSchema,
-) {}
+) { }
 
 export {
   FindByUuidUserResponseDto,
-  findByUuidUserRequestSchema,
-  findByUuidUserResponseSchema,
+  findByUuidUserResponseSchema
 };
+

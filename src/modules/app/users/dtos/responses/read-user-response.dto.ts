@@ -1,8 +1,6 @@
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'zod';
 
-const readUserRequestSchema = z.uuid();
-
 const readUserResponseSchema = z.object({
   uuid: z.uuid(),
   name: z.string(),
@@ -14,6 +12,6 @@ const readUserResponseSchema = z.object({
   role: z.string(),
 });
 
-class ReadUserResponseDto extends createZodDto(readUserResponseSchema) {}
+class ReadUserResponseDto extends createZodDto(readUserResponseSchema) { }
 
-export { ReadUserResponseDto, readUserRequestSchema, readUserResponseSchema };
+export { ReadUserResponseDto, readUserResponseSchema };

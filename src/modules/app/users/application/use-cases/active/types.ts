@@ -1,11 +1,8 @@
+import { findByUuidRequestSchema, voidResponseSchema } from '@/src/infra';
 import z from 'zod';
-import {
-  activeUserRequestSchema,
-  activeUserResponseSchema,
-} from '../../../dtos/active-user.dto';
 
-type ActiveUserRequestProps = z.infer<typeof activeUserRequestSchema>;
+type ActiveUserRequestProps = z.infer<typeof findByUuidRequestSchema>;
 
-type ActiveUserResponseProps = z.infer<typeof activeUserResponseSchema>;
+type ActiveUserResponseProps = z.infer<typeof voidResponseSchema>;
 
 export type { ActiveUserRequestProps, ActiveUserResponseProps };

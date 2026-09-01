@@ -1,6 +1,6 @@
 import { createZodDto } from 'nestjs-zod';
 import z from 'zod';
-import { createUserRequestSchema } from '../../../users/dtos/create-user.dto';
+import { createUserRequestSchema } from '../../../users/dtos';
 
 const resetPasswordAuthRequestSchema = z.object({
   token: z.jwt(),

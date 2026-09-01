@@ -1,4 +1,4 @@
-import { readUserResponseSchema } from '@/src/modules/app/users/dtos/read-user.dto';
+import { readUserResponseSchema } from '@/src/modules/app/users/dtos';
 import { createZodDto } from 'nestjs-zod';
 import z from 'zod';
 
