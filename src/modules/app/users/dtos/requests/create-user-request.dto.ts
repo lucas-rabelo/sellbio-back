@@ -1,6 +1,5 @@
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'zod';
-import { readUserResponseSchema } from './read-user.dto';
 
 const createUserRequestSchema = z.object({
   name: z
@@ -32,15 +31,10 @@ const createUserRequestSchema = z.object({
   refreshToken: z.string().optional(),
 });
 
-const createUserResponseSchema = readUserResponseSchema;
-
-class CreateUserRequestDto extends createZodDto(createUserRequestSchema) {}
-
-class CreateUserResponseDto extends createZodDto(createUserResponseSchema) {}
+class CreateUserRequestDto extends createZodDto(createUserRequestSchema) { }
 
 export {
   CreateUserRequestDto,
-  CreateUserResponseDto,
-  createUserRequestSchema,
-  createUserResponseSchema,
+  createUserRequestSchema
 };
+

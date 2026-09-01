@@ -1,5 +1,5 @@
 import { createZodDto } from 'nestjs-zod';
-import { createUserRequestSchema } from '../../../users/dtos/create-user.dto';
+import { createUserRequestSchema } from '../../../users/dtos';
 
 const registerAuthRequestSchema = createUserRequestSchema;
 

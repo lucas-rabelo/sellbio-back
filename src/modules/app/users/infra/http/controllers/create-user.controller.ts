@@ -7,7 +7,7 @@ import { CreateUserUseCase } from '@/src/modules/app/users/application/use-cases
 import {
   CreateUserRequestDto,
   CreateUserResponseDto,
-} from '../../../dtos/create-user.dto';
+} from '../../../dtos';
 
 @AppController('Users', '1', true)
 @UseGuards(AuthGuard)

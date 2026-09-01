@@ -4,7 +4,7 @@ import { ListUserUseCase } from '@/src/modules/app/users/application/use-cases/l
 import {
   ListUserRequestDto,
   ListUserResponseDto,
-} from '@/src/modules/app/users/dtos/list-user.dto';
+} from '@/src/modules/app/users/dtos';
 import { Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@/src/infra/guards/auth/auth.guard';
 import type { ListUserRequestProps } from '../../../application/use-cases/list/types';

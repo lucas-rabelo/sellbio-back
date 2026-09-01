@@ -1,11 +1,11 @@
+import { findByUuidRequestSchema } from '@/src/infra';
 import z from 'zod';
 import type {
-  findByUuidUserRequestSchema,
-  findByUuidUserResponseSchema,
-} from '../../../dtos/find-by-uuid.dto';
+  findByUuidUserResponseSchema
+} from '../../../dtos';
 
 export type FindByUuidUserRequestProps = z.infer<
-  typeof findByUuidUserRequestSchema
+  typeof findByUuidRequestSchema
 >;
 export type FindByUuidUserResponseProps = z.infer<
   typeof findByUuidUserResponseSchema

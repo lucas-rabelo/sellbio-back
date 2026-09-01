@@ -1,13 +1,10 @@
+import { findByUuidRequestSchema, voidResponseSchema } from '@/src/infra';
 import type z from 'zod';
-import type {
-  deactivateUserRequestSchema,
-  deactivateUserResponseSchema,
-} from '../../../dtos/deactivate-user.dto';
 
 export type DeactivateUserRequestProps = z.infer<
-  typeof deactivateUserRequestSchema
+  typeof findByUuidRequestSchema
 >;
 
 export type DeactivateUserResponseProps = z.infer<
-  typeof deactivateUserResponseSchema
+  typeof voidResponseSchema
 >;

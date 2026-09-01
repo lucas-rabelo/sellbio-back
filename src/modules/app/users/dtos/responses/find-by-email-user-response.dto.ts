@@ -1,8 +1,6 @@
 import z from 'zod';
-import { readUserResponseSchema } from './read-user.dto';
+import { readUserResponseSchema } from './read-user-response.dto';
 import { createZodDto } from 'nestjs-zod';
-
-const findByEmailUserRequestSchema = z.email();
 
 const findByEmailUserResponseSchema = z.object({
   ...readUserResponseSchema.shape,
@@ -15,6 +13,5 @@ class FindByEmailUserResponseDto extends createZodDto(
 
 export {
   FindByEmailUserResponseDto,
-  findByEmailUserRequestSchema,
   findByEmailUserResponseSchema,
 };

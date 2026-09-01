@@ -1,6 +1,6 @@
 import { createZodDto } from 'nestjs-zod';
 import z from 'zod';
-import { createUserRequestSchema } from '../../../users/dtos/create-user.dto';
+import { createUserRequestSchema } from '../../../users/dtos';
 
 const forgotPasswordAuthRequestSchema = z.object({
   email: createUserRequestSchema.shape.email,
