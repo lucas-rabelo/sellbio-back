@@ -8,9 +8,6 @@ const listUserResponseSchema = z.object({
   data: z.array(readUserResponseSchema),
 });
 
-class ListUserResponseDto extends createZodDto(listUserResponseSchema) { }
+class ListUserResponseDto extends createZodDto(listUserResponseSchema) {}
 
-export {
-  ListUserResponseDto, listUserResponseSchema
-};
-
+export { ListUserResponseDto, listUserResponseSchema };

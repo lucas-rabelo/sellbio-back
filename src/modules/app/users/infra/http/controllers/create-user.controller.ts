@@ -4,10 +4,7 @@ import { Body, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@/src/infra/guards/auth/auth.guard';
 
 import { CreateUserUseCase } from '@/src/modules/app/users/application/use-cases/create/create-user.use-case';
-import {
-  CreateUserRequestDto,
-  CreateUserResponseDto,
-} from '../../../dtos';
+import { CreateUserRequestDto, CreateUserResponseDto } from '../../../dtos';
 
 @AppController('Users', '1', true)
 @UseGuards(AuthGuard)
