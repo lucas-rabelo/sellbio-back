@@ -1,0 +1,25 @@
+import { AppController } from '@/src/infra/decorators/base/controller.decorator';
+import { AppGet } from '@/src/infra/decorators/base/get.decorator';
+import { ListUserUseCase } from '@/src/modules/app/users/application/use-cases/list/list-user.use-case';
+import {
+  ListUserRequestDto,
+  ListUserResponseDto,
+} from '@/src/modules/app/users/dtos';
+import { Query, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@/src/infra/guards/auth/auth.guard';
+import type { ListUserRequestProps } from '../../../application/use-cases/list/types';
+
+@AppController('Users', '1', true)
+@UseGuards(AuthGuard)
+export class ListUserController {
+  constructor(private readonly useCase: ListUserUseCase) {}
+
+  @AppGet({
+    summary: 'List users',
+    query: ListUserRequestDto,
+    okResponse: ListUserResponseDto,
+  })
+  async handle(@Query() filters: ListUserRequestProps) {
+    return this.useCase.execute(filters);
+  }
+}

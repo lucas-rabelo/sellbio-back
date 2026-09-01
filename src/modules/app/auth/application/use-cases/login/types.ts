@@ -1,0 +1,14 @@
+import type z from 'zod';
+import type {
+  loginAuthRequestSchema,
+  loginAuthResponseSchema,
+} from '../../../dtos';
+
+export type LoginAuthRequestProps = z.infer<typeof loginAuthRequestSchema> & {
+  meta: {
+    ip?: string;
+    userAgent?: string;
+  };
+};
+
+export type LoginAuthResponseProps = z.infer<typeof loginAuthResponseSchema>;
